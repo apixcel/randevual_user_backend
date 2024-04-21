@@ -6,7 +6,7 @@ businessReviews
 appointments
 userReviews                                                                                                     
 categories
-
+bookings
 
 
 yarn add axios cors express mongoose morgan
