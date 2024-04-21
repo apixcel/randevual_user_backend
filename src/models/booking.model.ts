@@ -18,6 +18,11 @@ const bookingScheama = new mongoose.Schema(
       type: String,
       require: true,
     },
+    status: {
+      type: Number,
+      require: true,
+      default: 0, // 0=incomming, 1=complete, 2=cancelled
+    },
     // user:{
     //     ref:ddd
     // },
