@@ -60,7 +60,7 @@ export const registerController = catchAsyncErrors(
 <body>
     <div>
     <h2>${h1Text}</h2>
-    <p>Please active your accont. <a href={${linkText}}>Active</a>. visit this link or copy and paste on your browser</p>
+    <p>Please active your accont. <a href={${linkText}}>Active</a>. visit this link: ${linkText} or copy and paste on your browser</p>
     </div>
 </body>
 </html>

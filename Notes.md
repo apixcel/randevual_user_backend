@@ -1,12 +1,16 @@
 Models:
+
 business
+shop
 services
-users
-businessReviews
-appointments
-userReviews                                                                                                     
-categories
+teams
+userReviews
 bookings
+
+businessReviews                                                                                                 
+categories
+supports
+blogs
 
 
 yarn add axios cors express mongoose morgan

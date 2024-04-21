@@ -12,12 +12,6 @@ const userScheama = new mongoose.Schema(
       required: false,
       default: "",
     },
-    username: {
-      type: String,
-      unique: true,
-      required: false,
-      default: "",
-    },
     email: {
       type: String,
       trim: true,
@@ -26,13 +20,8 @@ const userScheama = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
-    address: {
-      type: String,
-      default: "",
-    },
-    phone: {
-      type: String,
-      default: "",
+    password:{
+
     },
     status: {
       type: String,
@@ -42,33 +31,10 @@ const userScheama = new mongoose.Schema(
       type: String,
       default: "regular",
     },
-    avatar: {
-      public_id: {
-        type: String,
-        default: null,
-      },
-      url: {
-        type: String,
-        default: null,
-      },
-    },
-    hashed_password: {
+    picture: {
       type: String,
-      required: false,
-      select: false,
-      default: "",
-    },
-    salt: {
-      type: String,
-      select: false,
-      default: "",
-    },
-    resetPasswordLink: {
-      data: {
-        type: String,
-        select: false,
-        default: "",
-      },
+      require: false,
+      default: ""
     },
   },
   {
