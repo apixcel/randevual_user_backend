@@ -6,12 +6,15 @@ const shopScheama = new mongoose.Schema(
       type: String,
       required: true,
     },
-    images: {
-      thamnail: "",
+    media: {
+      thamnail: {
+        type: String,
+        required: true,
+      },
       gallery: {
-        e2: "",
-        f1: "",
-        f2: "",
+        e2: { type: String, required: true },
+        f1: { type: String, required: true },
+        f2: { type: String, required: true },
       },
     },
     bio: {
@@ -26,7 +29,27 @@ const shopScheama = new mongoose.Schema(
       type: Array,
       require: true,
     },
+    paymentMethod: {
+      type: String,
+      require: true,
+    },
     location: {
+      type: String,
+      require: true,
+    },
+    website: {
+      type: String,
+      require: true,
+    },
+    facebook: {
+      type: String,
+      require: true,
+    },
+    instagram: {
+      type: String,
+      require: true,
+    },
+    weekStart: {
       type: String,
       require: true,
     },
@@ -38,6 +61,10 @@ const shopScheama = new mongoose.Schema(
       type: String,
       require: true,
     },
+    cancelPolicy: {
+      type: String,
+      require: true,
+    },
   },
   {
     timestamps: true,
@@ -45,4 +72,4 @@ const shopScheama = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Shop", shopScheama);
+export default mongoose.model("shop", shopScheama);

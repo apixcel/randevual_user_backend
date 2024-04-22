@@ -15,13 +15,14 @@ const userScheama = new mongoose.Schema(
     email: {
       type: String,
       trim: true,
-      required: false,
+      required: true,
       default: "",
       unique: true,
       lowercase: true,
     },
     password:{
-
+      type: String,
+      required: true,
     },
     status: {
       type: String,
@@ -43,4 +44,4 @@ const userScheama = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("User", userScheama);
+export default mongoose.model("user", userScheama);

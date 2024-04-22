@@ -65,7 +65,7 @@ export const registerController = catchAsyncErrors(
 </body>
 </html>
       `;
-      sendMessage(senderMail, senderPassword, "user2.mail", subject, html);
+      sendMessage(senderMail, senderPassword, email, subject, html);
     }
   }
 );

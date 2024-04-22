@@ -1,10 +1,28 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const bookingScheama = new mongoose.Schema(
   {
     list: {
-      type: Array,
-      required: true,
+      type: [
+        {
+          name: { type: String, required: true },
+          cost: {
+            full: {
+              type: Number,
+              required: true,
+            },
+            down: {
+              type: Number,
+              required: true,
+            },
+          },
+          duration: { type: String, required: true },
+        },
+      ],
+    },
+    total: {
+      type: Number,
+      require: true,
     },
     date: {
       type: String,
@@ -14,7 +32,15 @@ const bookingScheama = new mongoose.Schema(
       type: String,
       require: true,
     },
+    team: {
+      type: Schema.Types.ObjectId,
+      ref: "team",
+    },
     phone: {
+      type: String,
+      require: true,
+    },
+    notes: {
       type: String,
       require: true,
     },
@@ -23,13 +49,14 @@ const bookingScheama = new mongoose.Schema(
       require: true,
       default: 0, // 0=incomming, 1=complete, 2=cancelled
     },
-    // user:{
-    //     ref:ddd
-    // },
-
-    // business:{
-    //     ref:ddd
-    // }
+    user_id: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
+    shop_id: {
+      type: Schema.Types.ObjectId,
+      ref: "shop",
+    },
   },
   {
     timestamps: true,
@@ -37,4 +64,4 @@ const bookingScheama = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Booking", bookingScheama);
+export default mongoose.model("booking", bookingScheama);

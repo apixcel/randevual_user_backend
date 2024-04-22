@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const teamScheama = new mongoose.Schema(
   {
@@ -14,9 +14,10 @@ const teamScheama = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // shop:{
-    //     ref:ddd
-    // }
+    shop_id: {
+      type: Schema.Types.ObjectId,
+      ref: "shop",
+    },
   },
   {
     timestamps: true,
@@ -24,4 +25,4 @@ const teamScheama = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Team", teamScheama);
+export default mongoose.model("team", teamScheama);

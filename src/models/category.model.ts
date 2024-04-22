@@ -4,19 +4,12 @@ const categoryScheama = new mongoose.Schema(
   {
     label: {
       type: String,
-      require: true,
+      required: true,
     },
     value: {
       type: String,
-      require: true,
+      required: true,
     },
-    // user:{
-    //     ref:ddd
-    // },
-
-    // business:{
-    //     ref:ddd
-    // }
   },
   {
     timestamps: true,
@@ -24,4 +17,4 @@ const categoryScheama = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Category", categoryScheama);
+export default mongoose.model("category", categoryScheama);

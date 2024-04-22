@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const serviceScheama = new mongoose.Schema(
   {
@@ -7,12 +7,28 @@ const serviceScheama = new mongoose.Schema(
       required: true,
     },
     list: {
-      type: Array,
+      type: [
+        {
+          name: { type: String, required: true },
+          cost: {
+            full: {
+              type: Number,
+              required: true,
+            },
+            down: {
+              type: Number,
+              required: true,
+            },
+          },
+          duration: { type: String, required: true },
+        },
+      ],
       required: true,
-    }
-    // shop:{
-    //     ref:ddd
-    // }
+    },
+    shop_id: {
+      type: Schema.Types.ObjectId,
+      ref: "shop",
+    },
   },
   {
     timestamps: true,
@@ -20,4 +36,4 @@ const serviceScheama = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Service", serviceScheama);
+export default mongoose.model("service", serviceScheama);

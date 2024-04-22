@@ -1,21 +1,27 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const reviewScheama = new mongoose.Schema(
   {
-    listName: {
+    title: {
       type: String,
       required: true,
     },
-    list: {
-      type: Array,
+    description: {
+      type: String,
       required: true,
-    }
-    // user:{
-    //     ref:ddd
-    // }
-    // shop:{
-    //     ref:ddd
-    // }
+    },
+    rating: {
+      type: Number,
+      required: true,
+    },
+    user_id: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
+    shop_id: {
+      type: Schema.Types.ObjectId,
+      ref: "shop",
+    },
   },
   {
     timestamps: true,
@@ -23,4 +29,4 @@ const reviewScheama = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Review", reviewScheama);
+export default mongoose.model("review", reviewScheama);
