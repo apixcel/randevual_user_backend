@@ -2,22 +2,22 @@ import mongoose, { Schema } from "mongoose";
 
 const teamScheama = new mongoose.Schema(
   {
-    pic: {
+    picture: {
       type: String,
       required: true,
     },
-    teamName: {
+    name: {
       type: String,
       required: true,
     },
-    specalist: {
+    profession: {
       type: String,
       required: true,
     },
-    shop_id: {
-      type: Schema.Types.ObjectId,
-      ref: "shop",
-    },
+    hourly_rate: {
+      type: Number,
+      required: true,
+    }
   },
   {
     timestamps: true,

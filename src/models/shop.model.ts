@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const shopScheama = new mongoose.Schema(
   {
@@ -7,7 +7,7 @@ const shopScheama = new mongoose.Schema(
       required: true,
     },
     media: {
-      thamnail: {
+      thumbnail: {
         type: String,
         required: true,
       },
@@ -17,53 +17,71 @@ const shopScheama = new mongoose.Schema(
         f2: { type: String, required: true },
       },
     },
-    bio: {
+    about: {
       type: String,
-      require: true,
+      required: true,
     },
     categoryTitle: {
       type: String,
-      require: true,
+      required: true,
     },
-    categories: {
-      type: Array,
-      require: true,
-    },
+    categories: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "category",
+      },
+    ],
+    services: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "service",
+      },
+    ],
+    team: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "team",
+      },
+    ],
     paymentMethod: {
       type: String,
-      require: true,
+      required: true,
     },
     location: {
       type: String,
-      require: true,
+      required: true,
     },
     website: {
       type: String,
-      require: true,
+      required: true,
     },
     facebook: {
       type: String,
-      require: true,
+      required: true,
     },
     instagram: {
       type: String,
-      require: true,
+      required: true,
     },
     weekStart: {
       type: String,
-      require: true,
+      required: true,
+    },
+    weekEnd: {
+      type: String,
+      required: true,
     },
     onHour: {
       type: String,
-      require: true,
+      required: true,
     },
     offHour: {
       type: String,
-      require: true,
+      required: true,
     },
     cancelPolicy: {
       type: String,
-      require: true,
+      required: true,
     },
   },
   {

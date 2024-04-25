@@ -12,6 +12,11 @@ const userScheama = new mongoose.Schema(
       required: false,
       default: "",
     },
+    username: {
+      type: String,
+      required: false,
+      default: "",
+    },
     email: {
       type: String,
       trim: true,

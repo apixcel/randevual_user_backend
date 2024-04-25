@@ -3,10 +3,9 @@ import { validationResult } from "express-validator";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import User from "../models/auth.model";
 import ErrorHandler from "../utils/errorhandler";
-import { errorHandler } from "../helpers/dbErrorHandling";
+import bcrypt from "bcrypt";
 import createToken from "../utils/jwtToken";
 import jwt from "jsonwebtoken";
-import _ from "lodash";
 import sendMessage from "../utils/sendMessage";
 
 // Register Account
@@ -65,7 +64,17 @@ export const registerController = catchAsyncErrors(
 </body>
 </html>
       `;
-      sendMessage(senderMail, senderPassword, email, subject, html);
+      const mailsent = await sendMessage(
+        senderMail,
+        senderPassword,
+        email,
+        subject,
+        html
+      );
+      if (!mailsent)
+        return next({ message: "Invalid email or password", status: 404 });
+      
+      return res.status(200).json({ message: "Thanks to create an account. Please check your mail to active the account", status: 201});
     }
   }
 );
@@ -78,7 +87,7 @@ export const activationController = catchAsyncErrors(
       jwt.verify(
         token,
         process.env.JWT_SECRET as string,
-        (err: any, decoded: any) => {
+        async (err: any, decoded: any) => {
           if (err) {
             return res.status(401).json({
               errors: "Expired link. Signup again",
@@ -89,19 +98,13 @@ export const activationController = catchAsyncErrors(
             const user = new User(userData);
             const newToken = createToken(user, "7d");
 
-            user.save((err, user) => {
-              if (err) {
-                return res.status(401).json({
-                  errors: errorHandler(err),
-                });
-              } else {
-                return res.json({
-                  success: true,
-                  message: "Signup success",
-                  token: newToken,
-                  user,
-                });
-              }
+            await user.save();
+
+            return res.json({
+              success: true,
+              message: "Signup success",
+              token: newToken,
+              user,
             });
           }
         }
@@ -125,153 +128,23 @@ export const signinController = catchAsyncErrors(
         errors: firstError,
       });
     } else {
-      User.findOne({
-        email,
-      })
-        .select("+hashed_password")
-        .select("+salt")
-        .exec(async (err, user: any) => {
-          if (err || !user) {
-            return res.status(400).json({
-              errors: "Invalid email or password.",
-            });
-          }
-          if (!user.authenticate(password)) {
-            return res.status(400).json({
-              errors: "Invalid email or password.",
-            });
-          }
-          const token = createToken(user, "7d");
-          return res.json({
-            success: true,
-            message: "Signin success",
-            token,
-            user,
-          });
-        });
-    }
-  }
-);
-
-// Forgot Password
-export const forgotPasswordController = catchAsyncErrors(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { email } = req.body;
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      const firstError = errors.array().map((error) => error.msg)[0];
-      return res.status(422).json({
-        errors: firstError,
-      });
-    } else {
-      User.findOne(
-        {
-          email,
-        },
-        (err: any, user: any) => {
-          if (err || !user) {
-            return res.status(400).json({
-              error: "User with that email does not exist",
-            });
-          }
-
-          const token = jwt.sign(
-            {
-              _id: user._id,
-            },
-            process.env.JWT_RESET_PASSWORD as string,
-            {
-              expiresIn: "10m",
-            }
-          );
-
-          // console.log(token);
-          return user.updateOne(
-            {
-              resetPasswordLink: token,
-            },
-            (err: any, success: any) => {
-              if (err) {
-                return res.status(400).json({
-                  error:
-                    "Database connection error on user password forgot request",
-                });
-              } else {
-                // email sent to user
-                const h1Text =
-                  "Please use the following link to reset your password";
-                const link = `${process.env.CLIENT_URL}/users/password/reset/${token}`;
-                const subject = "Reset password of your Randevual account.";
-                const paramsHeadline =
-                  "Reset password of your Randevual account.";
-                sendMessage(email, subject, h1Text, link, paramsHeadline, res);
-              }
-            }
-          );
-        }
+      const user = await User.findOne({ email, isVerified: true }).select(
+        "+password"
       );
-    }
-  }
-);
-
-// Reset Password
-export const resetPasswordController = catchAsyncErrors(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { resetPasswordLink, newPassword } = req.body;
-
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      const firstError = errors.array().map((error) => error.msg)[0];
-      return res.status(422).json({
-        errors: firstError,
-      });
-    } else {
-      if (resetPasswordLink) {
-        jwt.verify(
-          resetPasswordLink,
-          process.env.JWT_RESET_PASSWORD as string,
-          function (err: any, decoded: any) {
-            if (err) {
-              return res.status(400).json({
-                error: "Expired link. Try again",
-              });
-            }
-
-            User.findOne(
-              {
-                resetPasswordLink,
-              },
-              (err: any, user: any) => {
-                if (err || !user) {
-                  return res.status(400).json({
-                    error: "Something went wrong. Try later",
-                  });
-                }
-
-                const updatedFields = {
-                  password: newPassword,
-                  resetPasswordLink: "",
-                };
-
-                user = _.extend(user, updatedFields);
-
-                user.save((err: any, result: any) => {
-                  if (err) {
-                    return res.status(400).json({
-                      error: "Error resetting user password",
-                    });
-                  }
-                  res.json({
-                    message: `Great! Now you can login with your new password`,
-                  });
-                });
-              }
-            );
-          }
-        );
+      if (!user) {
+        return next({ message: "Invalid email or password", status: 404 });
       }
+      const isMatched = await bcrypt.compare(password, `${user?.password}`);
+
+      if (!isMatched)
+        return next({ message: "Invalid email or password", status: 404 });
+
+      const token = await jwt.sign(
+        { _id: user?._id },
+        `${process.env.JWT_SECRET}`,
+        { expiresIn: "7d" }
+      );
+      return res.status(200).json({ success: true, token, data: user });
     }
   }
 );

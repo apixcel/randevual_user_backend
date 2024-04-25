@@ -6,17 +6,21 @@ const bookingScheama = new mongoose.Schema(
       type: [
         {
           name: { type: String, required: true },
-          cost: {
-            full: {
-              type: Number,
-              required: true,
-            },
-            down: {
-              type: Number,
-              required: true,
-            },
+          option: {
+            type: [
+              {
+                cost: {
+                  type: Number,
+                  required: true,
+                },
+                duration: { type: String, required: true },
+              },
+            ],
           },
-          duration: { type: String, required: true },
+          down: {
+            type: Number,
+            required: true,
+          },
         },
       ],
     },

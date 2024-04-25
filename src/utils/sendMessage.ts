@@ -7,14 +7,16 @@ const sendMessage = async (
   subject: string,
   html: string
 ) => {
-
   const transporter = nodemailer.createTransport({
-  host: "mail.randevual.co",
-  port: 587,
-  secure: true,
+    host: "mail.randevual.co",
+    port: 587,
+    secure: true,
     auth: {
       user: senderMail,
       pass: senderPassword,
+    },
+    tls: {
+      rejectUnauthorized: false,
     },
   });
 
