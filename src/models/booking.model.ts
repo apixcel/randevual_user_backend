@@ -5,36 +5,37 @@ const bookingScheama = new mongoose.Schema(
     list: {
       type: [
         {
-          name: { type: String, required: true },
+          name: { type: String, requiredd: true },
           option: {
             type: [
               {
                 cost: {
                   type: Number,
-                  required: true,
+                  requiredd: true,
                 },
-                duration: { type: String, required: true },
+                duration: { type: String, requiredd: true },
               },
             ],
           },
           down: {
             type: Number,
-            required: true,
+            requiredd: false,
+            default: 0,
           },
         },
       ],
     },
     total: {
       type: Number,
-      require: true,
+      required: true,
     },
     date: {
       type: String,
-      require: true,
+      required: true,
     },
     time: {
       type: String,
-      require: true,
+      required: true,
     },
     team: {
       type: Schema.Types.ObjectId,
@@ -42,15 +43,25 @@ const bookingScheama = new mongoose.Schema(
     },
     phone: {
       type: String,
-      require: true,
+      required: true,
     },
     notes: {
       type: String,
-      require: true,
+      required: true,
+    },
+    visit: {
+      type: Boolean,
+      required: true,
+      default:false
+    },
+    payment: {
+      type: String,
+      required: true,
+      default:"cash"
     },
     status: {
       type: Number,
-      require: true,
+      required: true,
       default: 0, // 0=incomming, 1=complete, 2=cancelled
     },
     user_id: {
@@ -69,3 +80,6 @@ const bookingScheama = new mongoose.Schema(
 );
 
 export default mongoose.model("booking", bookingScheama);
+
+
+// Save card info in db and get info and cutt off charge after the completation

@@ -26,3 +26,6 @@ SMTP Server:	mail.randevual.co port 587
 
 eval $(ssh-agent) && ssh-add ~/.ssh/apixcel
 
+
+
+First save card info, then after complete the service then other side panel user can clcik to pay selceted amount

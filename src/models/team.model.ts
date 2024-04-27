@@ -17,7 +17,13 @@ const teamScheama = new mongoose.Schema(
     hourly_rate: {
       type: Number,
       required: true,
-    }
+    },
+    schedule: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "schedule",
+      },
+    ],
   },
   {
     timestamps: true,

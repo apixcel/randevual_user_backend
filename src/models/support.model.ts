@@ -10,10 +10,6 @@ const supportScheama = new mongoose.Schema(
       type: String,
       required: true,
     },
-    attachment: {
-      type: String,
-      required: true,
-    },
     user_id: {
       type: Schema.Types.ObjectId,
       ref: "user",

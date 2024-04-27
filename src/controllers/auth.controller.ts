@@ -50,19 +50,52 @@ export const registerController = catchAsyncErrors(
       const subject = "Randevual account activation.";
       const html = `
       <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Randevual</title>
-</head>
-<body>
-    <div>
-    <h2>${h1Text}</h2>
-    <p>Please active your accont. <a href={${linkText}}>Active</a>. visit this link: ${linkText} or copy and paste on your browser</p>
-    </div>
-</body>
-</html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Welcome to Randevual</title>
+          <style>
+              body {
+                  font-family: Arial, sans-serif;
+                  line-height: 1.6;
+                  background-color: #f5f5f5;
+                  padding: 20px;
+                  margin: 0;
+                  text-align: center;
+              }
+              .container {
+                  max-width: 600px;
+                  margin: 0 auto;
+                  background-color: #ffffff;
+                  border-radius: 8px;
+                  padding: 20px;
+                  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+              }
+              h2 {
+                  color: #333333;
+              }
+              p {
+                  color: #666666;
+              }
+              a {
+                  color: #007bff;
+                  text-decoration: none;
+                  font-weight: bold;
+              }
+              a:hover {
+                  text-decoration: underline;
+              }
+          </style>
+      </head>
+      <body>
+          <div class="container">
+              <h2>${h1Text}</h2>
+              <p>Please activate your account. <a href="${link}" style="color: #007bff;">Activate</a>. Visit this link: <a href="${link}" style="color: #007bff;">${link}</a> or copy and paste it into your browser.</p>
+          </div>
+      </body>
+      </html>
+      
       `;
       const mailsent = await sendMessage(
         senderMail,
@@ -73,8 +106,14 @@ export const registerController = catchAsyncErrors(
       );
       if (!mailsent)
         return next({ message: "Invalid email or password", status: 404 });
-      
-      return res.status(200).json({ message: "Thanks to create an account. Please check your mail to active the account", status: 201});
+
+      return res
+        .status(200)
+        .json({
+          message:
+            "Thanks to create an account. Please check your mail to active the account",
+          status: 201,
+        });
     }
   }
 );
@@ -148,3 +187,146 @@ export const signinController = catchAsyncErrors(
     }
   }
 );
+
+// Update Password
+export const updatePasswordController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { userId, currentPassword, newPassword } = req.body;
+
+  try {
+    // Find user by ID
+    const user = await User.findById(userId).select("+password");
+    if (!user) {
+      return next({ message: "User not found", status: 404 });
+    }
+
+    // Verify current password
+    const isMatched = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatched) {
+      return next({ message: "Incorrect current password", status: 400 });
+    }
+
+    // Update password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    await user.save();
+
+    return res
+      .status(200)
+      .json({ message: "Password updated successfully", status: 200 });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Forgot Password - Send Reset Email
+export const forgotPasswordController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { email } = req.body;
+
+  try {
+    // Find user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return next({ message: "User not found", status: 404 });
+    }
+
+    // Generate JWT token for password reset
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET as string,
+      { expiresIn: "15m" }
+    );
+
+    // Send password reset email
+    const resetLink = `${process.env.CLIENT_URL}/reset-password/${token}`;
+    
+    const mailSent = await sendMessage(
+      process.env.INFO_MAIL_NAME,
+      process.env.INFO_MAIL_PASS,
+      email,
+      "Reset your Randevual password",
+      `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Reset Password</title>
+          <style>
+              /* Your inline styles here */
+          </style>
+      </head>
+      <body>
+          <div class="container">
+              <h2>Reset Your Password</h2>
+              <p>You have requested to reset your password. Click the following link to reset your password:</p>
+              <p><a href="${resetLink}">Reset Password</a></p>
+              <p>If you did not request this, you can safely ignore this email.</p>
+          </div>
+      </body>
+      </html>
+    `
+    );
+
+    if (!mailSent) {
+      return next({
+        message: "Failed to send password reset email",
+        status: 500,
+      });
+    }
+
+    return res
+      .status(200)
+      .json({
+        message: "Password reset email sent. Please check your inbox",
+        status: 200,
+      });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Reset Password
+export const resetPasswordController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { token, newPassword } = req.body;
+
+  try {
+    // Verify token and decode user ID
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
+      userId: string;
+    };
+
+    // Find user by ID
+    const user = await User.findById(decoded.userId).select("+password");
+    if (!user) {
+      return next({ message: "User not found", status: 404 });
+    }
+
+    // Update password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    await user.save();
+
+    return res
+      .status(200)
+      .json({ message: "Password reset successful", status: 200 });
+  } catch (error) {
+    return res
+      .status(401)
+      .json({
+        message: "Expired or invalid token. Reset password again",
+        status: 401,
+      });
+  }
+};
