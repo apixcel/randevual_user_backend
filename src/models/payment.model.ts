@@ -1,18 +1,14 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
 const paymentScheama = new mongoose.Schema(
   {
-    amount: {
-      type: String,
-      required: true,
-    },
-    transactionId: {
+    customerId: {
       type: String,
       required: true,
     },
     userId: {
-      type: Schema.Types.ObjectId,
-      ref: "user",
+      type: String,
+      required: true,
     },
   },
   {

@@ -23,3 +23,15 @@ export const createServiceController = catchAsyncErrors(
     }
   }
 );
+
+export const getMoreServiceController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const getService = await serviceModel.find();
+
+    return res.status(201).json({
+      success: true,
+      msg: "All services",
+      getService,
+    })
+  }
+)

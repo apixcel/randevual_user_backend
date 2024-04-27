@@ -7,15 +7,19 @@ import booking from "./booking.route";
 import service from "./service.route";
 import category from "./category.route";
 import team from "./team.route";
+import userReview from "./review.route";
+import payment from "./payment.route";
 
 
 router.use("/auth", auth);
 router.use("/user", user);
 router.use("/shop", shop);
+router.use("/payment", payment);
 router.use("/booking", booking);
 router.use("/service", service);
 router.use("/category", category);
 router.use("/team", team);
+router.use("/review", userReview)
 
 
 export default router;

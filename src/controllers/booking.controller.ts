@@ -24,3 +24,22 @@ export const createBookingController = catchAsyncErrors(
     }
   }
 );
+
+export const getAllBookingController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const booking = await bookingModel.find();
+      return res.status(201).json({
+        success: true,
+        msg: "All Booking controller",
+        booking,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        msg: "Something went wrong",
+        error,
+      });
+    }
+  }
+);

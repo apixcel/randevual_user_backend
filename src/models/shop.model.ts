@@ -43,6 +43,12 @@ const shopScheama = new mongoose.Schema(
         ref: "team",
       },
     ],
+    review: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "review",
+      },
+    ],
     paymentMethod: {
       type: String,
       required: true,

@@ -26,3 +26,14 @@ export const createCategoryController = catchAsyncErrors(
 );
 
 //get all
+
+export const getAllCategorycontroller = catchAsyncErrors( async(req:Request, res:Response, next:NextFunction) => {
+const category = await categoryModel.find();
+
+return res.status(201).json({
+  success: true,
+  msg: "More category has been retrived successfully.",
+  category,
+})
+
+})

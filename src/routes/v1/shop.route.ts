@@ -12,3 +12,4 @@ router.get("/s/more", getShopMoreController);
 router.get("/s/:id", getShopByIdController);
 
 export default router;
+

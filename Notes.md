@@ -29,3 +29,20 @@ eval $(ssh-agent) && ssh-add ~/.ssh/apixcel
 
 
 First save card info, then after complete the service then other side panel user can clcik to pay selceted amount
+
+
+Earnings:
+total earnings
+list of earning sources
+
+transacion:
+business withdraw money
+
+payment:
+
+user store their stipe customer id
+and userid
+
+
+
+

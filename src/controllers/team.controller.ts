@@ -24,3 +24,14 @@ export const createTeamController = catchAsyncErrors(
     }
   }
 );
+
+export const getAllTeamController = catchAsyncErrors(
+  async(req: Request, res: Response, next: NextFunction) => {
+    const team = await teamModel.find();
+    return res.status(201).json({
+      success: true,
+      msg: "Get all team members!",
+      team
+    })
+  }
+)
