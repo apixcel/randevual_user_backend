@@ -107,13 +107,11 @@ export const registerController = catchAsyncErrors(
       if (!mailsent)
         return next({ message: "Invalid email or password", status: 404 });
 
-      return res
-        .status(200)
-        .json({
-          message:
-            "Thanks to create an account. Please check your mail to active the account",
-          status: 201,
-        });
+      return res.status(200).json({
+        message:
+          "Thanks to create an account. Please check your mail to active the account",
+        status: 201,
+      });
     }
   }
 );
@@ -246,10 +244,10 @@ export const forgotPasswordController = async (
 
     // Send password reset email
     const resetLink = `${process.env.CLIENT_URL}/reset-password/${token}`;
-    
+
     const mailSent = await sendMessage(
-      process.env.INFO_MAIL_NAME,
-      process.env.INFO_MAIL_PASS,
+      process.env.INFO_MAIL_NAME as string,
+      process.env.INFO_MAIL_PASS as string,
       email,
       "Reset your Randevual password",
       `
@@ -282,12 +280,10 @@ export const forgotPasswordController = async (
       });
     }
 
-    return res
-      .status(200)
-      .json({
-        message: "Password reset email sent. Please check your inbox",
-        status: 200,
-      });
+    return res.status(200).json({
+      message: "Password reset email sent. Please check your inbox",
+      status: 200,
+    });
   } catch (error) {
     next(error);
   }
@@ -322,11 +318,9 @@ export const resetPasswordController = async (
       .status(200)
       .json({ message: "Password reset successful", status: 200 });
   } catch (error) {
-    return res
-      .status(401)
-      .json({
-        message: "Expired or invalid token. Reset password again",
-        status: 401,
-      });
+    return res.status(401).json({
+      message: "Expired or invalid token. Reset password again",
+      status: 401,
+    });
   }
 };
