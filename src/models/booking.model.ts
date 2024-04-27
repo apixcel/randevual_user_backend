@@ -11,15 +11,15 @@ const bookingScheama = new mongoose.Schema(
               {
                 cost: {
                   type: Number,
-                  requiredd: true,
+                  required: true,
                 },
-                duration: { type: String, requiredd: true },
+                duration: { type: String, required: true },
               },
             ],
           },
           down: {
             type: Number,
-            requiredd: false,
+            required: false,
             default: 0,
           },
         },
