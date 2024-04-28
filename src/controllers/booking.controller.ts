@@ -43,3 +43,10 @@ export const getAllBookingController = catchAsyncErrors(
     }
   }
 );
+
+
+export const getBookingByIdController = catchAsyncErrors(
+async(req: Request, res: Response, next: NextFunction) => {
+
+}
+)
