@@ -29,10 +29,11 @@ export const getShopByIdController = catchAsyncErrors(
     const id = req.params.id;
     const shop = await shopModel
       .findById(id)
+      .populate("categories")
       .populate("team")
       .populate("services")
-      .populate("categories"); // included the team service and category
-      
+      .populate("review");
+
     return res.status(201).json({
       success: true,
       msg: "Shop has been retrived successfully.",
@@ -60,3 +61,30 @@ export const getShopMoreController = catchAsyncErrors(
     });
   }
 );
+
+export const getShopMoreINServiceController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+    const shops = await shopModel
+      .find()
+      .skip(skip)
+      .limit(Number(limit))
+      .select("shopName media categoryTitle")
+      .populate("services")
+      .populate("reviews")
+      .exec();
+      
+    res.status(200).json({
+      success: true,
+      msg: "Shops retrieved successfully.",
+      shops,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
