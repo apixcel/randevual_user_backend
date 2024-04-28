@@ -40,7 +40,7 @@ business withdraw money
 
 payment:
 
-user store their stipe customer id
+user store their stripe customer id
 and userid
 
 

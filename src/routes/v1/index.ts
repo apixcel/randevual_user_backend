@@ -9,6 +9,8 @@ import category from "./category.route";
 import team from "./team.route";
 import userReview from "./review.route";
 import payment from "./payment.route";
+import contact from "./contact.route";
+import support from "./support.route";
 
 
 router.use("/auth", auth);
@@ -19,7 +21,10 @@ router.use("/booking", booking);
 router.use("/service", service);
 router.use("/category", category);
 router.use("/team", team);
-router.use("/review", userReview)
+router.use("/review", userReview);
+router.use("/contact", contact);
+router.use("/support", support);
+
 
 
 export default router;
