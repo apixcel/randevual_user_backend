@@ -1,4 +1,4 @@
-import { NextFunction, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import bookingModel from "../models/booking.model";
@@ -47,6 +47,14 @@ export const getAllBookingController = catchAsyncErrors(
 
 export const getBookingByIdController = catchAsyncErrors(
 async(req: Request, res: Response, next: NextFunction) => {
+  const id = req.params.id;
+const data = await bookingModel.findById(id)
+return res.status(201).json({
+success: true,
+msg: "Single user booking",
+data
+})
+
 
 }
 )

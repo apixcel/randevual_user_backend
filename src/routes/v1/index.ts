@@ -11,6 +11,7 @@ import userReview from "./review.route";
 import payment from "./payment.route";
 import contact from "./contact.route";
 import support from "./support.route";
+import clientReview from "./client.review.route";
 
 
 router.use("/auth", auth);
@@ -24,6 +25,7 @@ router.use("/team", team);
 router.use("/review", userReview);
 router.use("/contact", contact);
 router.use("/support", support);
+router.use("/clientreview", clientReview);
 
 
 
