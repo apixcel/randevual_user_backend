@@ -1,0 +1,231 @@
+[{
+  "_id": {
+    "$oid": "662fba11858e5f56dd3eb2ce"
+  },
+  "listName": "Hair Services",
+  "list": [
+    {
+      "name": "Haircut",
+      "option": [
+        {
+          "cost": 20,
+          "duration": "30 minutes",
+          "_id": {
+            "$oid": "662fba11858e5f56dd3eb2d0"
+          }
+        },
+        {
+          "cost": 30,
+          "duration": "45 minutes",
+          "_id": {
+            "$oid": "662fba11858e5f56dd3eb2d1"
+          }
+        },
+        {
+          "cost": 40,
+          "duration": "1 hour",
+          "_id": {
+            "$oid": "662fba11858e5f56dd3eb2d2"
+          }
+        }
+      ],
+      "down": 0,
+      "_id": {
+        "$oid": "662fba11858e5f56dd3eb2cf"
+      }
+    },
+    {
+      "name": "Hair Coloring",
+      "option": [
+        {
+          "cost": 50,
+          "duration": "1 hour",
+          "_id": {
+            "$oid": "662fba11858e5f56dd3eb2d4"
+          }
+        },
+        {
+          "cost": 70,
+          "duration": "1.5 hours",
+          "_id": {
+            "$oid": "662fba11858e5f56dd3eb2d5"
+          }
+        },
+        {
+          "cost": 90,
+          "duration": "2 hours",
+          "_id": {
+            "$oid": "662fba11858e5f56dd3eb2d6"
+          }
+        }
+      ],
+      "down": 0,
+      "_id": {
+        "$oid": "662fba11858e5f56dd3eb2d3"
+      }
+    }
+  ],
+  "team_id": {
+    "$oid": "662fb918858e5f56dd3eb2c8"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:17:37.479Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:17:37.479Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fba4c858e5f56dd3eb2d8"
+  },
+  "listName": "Hair Services",
+  "list": [
+    {
+      "name": "Haircut",
+      "option": [
+        {
+          "cost": 20,
+          "duration": "30 minutes",
+          "_id": {
+            "$oid": "662fba4c858e5f56dd3eb2da"
+          }
+        },
+        {
+          "cost": 30,
+          "duration": "45 minutes",
+          "_id": {
+            "$oid": "662fba4c858e5f56dd3eb2db"
+          }
+        },
+        {
+          "cost": 40,
+          "duration": "1 hour",
+          "_id": {
+            "$oid": "662fba4c858e5f56dd3eb2dc"
+          }
+        }
+      ],
+      "down": 0,
+      "_id": {
+        "$oid": "662fba4c858e5f56dd3eb2d9"
+      }
+    },
+    {
+      "name": "Hair Coloring",
+      "option": [
+        {
+          "cost": 50,
+          "duration": "1 hour",
+          "_id": {
+            "$oid": "662fba4c858e5f56dd3eb2de"
+          }
+        },
+        {
+          "cost": 70,
+          "duration": "1.5 hours",
+          "_id": {
+            "$oid": "662fba4c858e5f56dd3eb2df"
+          }
+        },
+        {
+          "cost": 90,
+          "duration": "2 hours",
+          "_id": {
+            "$oid": "662fba4c858e5f56dd3eb2e0"
+          }
+        }
+      ],
+      "down": 0,
+      "_id": {
+        "$oid": "662fba4c858e5f56dd3eb2dd"
+      }
+    }
+  ],
+  "team_id": {
+    "$oid": "662fb933858e5f56dd3eb2ca"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:18:36.071Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:18:36.071Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fba52858e5f56dd3eb2e2"
+  },
+  "listName": "Hair Services",
+  "list": [
+    {
+      "name": "Haircut",
+      "option": [
+        {
+          "cost": 20,
+          "duration": "30 minutes",
+          "_id": {
+            "$oid": "662fba52858e5f56dd3eb2e4"
+          }
+        },
+        {
+          "cost": 30,
+          "duration": "45 minutes",
+          "_id": {
+            "$oid": "662fba52858e5f56dd3eb2e5"
+          }
+        },
+        {
+          "cost": 40,
+          "duration": "1 hour",
+          "_id": {
+            "$oid": "662fba52858e5f56dd3eb2e6"
+          }
+        }
+      ],
+      "down": 0,
+      "_id": {
+        "$oid": "662fba52858e5f56dd3eb2e3"
+      }
+    },
+    {
+      "name": "Hair Coloring",
+      "option": [
+        {
+          "cost": 50,
+          "duration": "1 hour",
+          "_id": {
+            "$oid": "662fba52858e5f56dd3eb2e8"
+          }
+        },
+        {
+          "cost": 70,
+          "duration": "1.5 hours",
+          "_id": {
+            "$oid": "662fba52858e5f56dd3eb2e9"
+          }
+        },
+        {
+          "cost": 90,
+          "duration": "2 hours",
+          "_id": {
+            "$oid": "662fba52858e5f56dd3eb2ea"
+          }
+        }
+      ],
+      "down": 0,
+      "_id": {
+        "$oid": "662fba52858e5f56dd3eb2e7"
+      }
+    }
+  ],
+  "team_id": {
+    "$oid": "662fb942858e5f56dd3eb2cc"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:18:42.168Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:18:42.168Z"
+  }
+}]

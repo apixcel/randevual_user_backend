@@ -1,0 +1,323 @@
+[{
+  "_id": {
+    "$oid": "662fc0a9f63d8e057062fb96"
+  },
+  "description": "Great service and friendly staff!",
+  "rating": 5,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2eb"
+  },
+  "shop": {
+    "$oid": "662fbb01858e5f56dd3eb2ec"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:45:45.329Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:45:45.329Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc132a3edb592e4e43d0b"
+  },
+  "description": "Great service and friendly staff!",
+  "rating": 5,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2eb"
+  },
+  "shop": {
+    "$oid": "662fbb01858e5f56dd3eb2ec"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:48:02.128Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:48:02.128Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc154a3edb592e4e43d0e"
+  },
+  "description": "Great service and friendly staff!",
+  "rating": 5,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2eb"
+  },
+  "shop": {
+    "$oid": "662fbb01858e5f56dd3eb2ec"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:48:36.792Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:48:36.792Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc179a3edb592e4e43d11"
+  },
+  "description": "Great service and friendly staff!",
+  "rating": 5,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2eb"
+  },
+  "shop": {
+    "$oid": "662fbb01858e5f56dd3eb2ec"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:49:13.314Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:49:13.314Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc17aa3edb592e4e43d14"
+  },
+  "description": "Great service and friendly staff!",
+  "rating": 5,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2eb"
+  },
+  "shop": {
+    "$oid": "662fbb01858e5f56dd3eb2ec"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:49:14.978Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:49:14.978Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc17ca3edb592e4e43d17"
+  },
+  "description": "Great service and friendly staff!",
+  "rating": 5,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2eb"
+  },
+  "shop": {
+    "$oid": "662fbb01858e5f56dd3eb2ec"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:49:16.290Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:49:16.290Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc1cac564f447fa6ef772"
+  },
+  "description": "Great service and friendly staff!",
+  "rating": 5,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2eb"
+  },
+  "shop": {
+    "$oid": "662fbb01858e5f56dd3eb2ec"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:50:34.730Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:50:34.730Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc1ee7a6416d70c7e0874"
+  },
+  "description": "Great service and friendly staff!",
+  "rating": 5,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2eb"
+  },
+  "shop": {
+    "$oid": "662fbb01858e5f56dd3eb2ec"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:51:10.708Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:51:10.708Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc22450a62672e0be9402"
+  },
+  "description": "Great service and friendly staff!",
+  "rating": 5,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2eb"
+  },
+  "shop": {
+    "$oid": "662fbb01858e5f56dd3eb2ec"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:52:04.111Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:52:04.111Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc22550a62672e0be9404"
+  },
+  "description": "Great service and friendly staff!",
+  "rating": 5,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2eb"
+  },
+  "shop": {
+    "$oid": "662fbb01858e5f56dd3eb2ec"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:52:05.509Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:52:05.509Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc38f4c3f292828358466"
+  },
+  "description": "Great service and friendly staff!",
+  "rating": 5,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2eb"
+  },
+  "shop": {
+    "$oid": "662fbb01858e5f56dd3eb2ec"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:58:07.991Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:58:07.991Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc3ad4c3f29282835846a"
+  },
+  "description": "bad service and friendly staff!",
+  "rating": 2,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2ef"
+  },
+  "shop": {
+    "$oid": "662fbb01858e5f56dd3eb2ec"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:58:37.958Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:58:37.958Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc3f7493750674d434c87"
+  },
+  "description": "bad service and friendly staff!",
+  "rating": 2,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2ef"
+  },
+  "shop": {
+    "$oid": "662fbb2d858e5f56dd3eb2f4"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T15:59:51.456Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:59:51.456Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc401493750674d434c8b"
+  },
+  "description": "Great service and friendly staff!",
+  "rating": 4,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2ef"
+  },
+  "shop": {
+    "$oid": "662fbb2d858e5f56dd3eb2f4"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T16:00:01.404Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T16:00:01.404Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc5656df8235e8fc8d88f"
+  },
+  "description": "Great service and friendly staff!",
+  "rating": 4,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2ef"
+  },
+  "shop": {
+    "$oid": "662fbb2d858e5f56dd3eb5f4"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T16:05:57.337Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T16:05:57.337Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc5928a1b62bc4bee27b7"
+  },
+  "description": "kazi",
+  "rating": 4,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2ef"
+  },
+  "shop": {
+    "$oid": "662fbb2d858e5f56dd3eb5f4"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T16:06:42.236Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T16:06:42.236Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fc60bd6f4d3c7a3d043c2"
+  },
+  "description": "vvvvd",
+  "rating": 5,
+  "user": {
+    "$oid": "662fbb01858e5f56dd3eb2ef"
+  },
+  "shop": {
+    "$oid": "662fbb2d858e5f56dd3eb2f4"
+  },
+  "createdAt": {
+    "$date": "2024-04-29T16:08:43.526Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T16:08:43.526Z"
+  }
+}]
