@@ -1,0 +1,364 @@
+[{
+  "_id": {
+    "$oid": "662fbb01858e5f56dd3eb2ec"
+  },
+  "shopName": "Sample Shop",
+  "media": {
+    "thumbnail": "https://example.com/thumbnail.jpg",
+    "gallery": {
+      "e2": "https://example.com/gallery/e2.jpg",
+      "f1": "https://example.com/gallery/f1.jpg",
+      "f2": "https://example.com/gallery/f2.jpg"
+    }
+  },
+  "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "categories": [
+    {
+      "$oid": "662fb7907b1ddfbb9da53afe"
+    },
+    {
+      "$oid": "662fb7b67b1ddfbb9da53b00"
+    },
+    {
+      "$oid": "662fb7de7b1ddfbb9da53b02"
+    },
+    {
+      "$oid": "662fb8077b1ddfbb9da53b04"
+    }
+  ],
+  "services": [
+    {
+      "$oid": "662fba11858e5f56dd3eb2ce"
+    },
+    {
+      "$oid": "662fba4c858e5f56dd3eb2d8"
+    },
+    {
+      "$oid": "662fba52858e5f56dd3eb2e2"
+    }
+  ],
+  "team": [
+    {
+      "$oid": "662fb918858e5f56dd3eb2c8"
+    },
+    {
+      "$oid": "662fb933858e5f56dd3eb2ca"
+    },
+    {
+      "$oid": "662fb942858e5f56dd3eb2cc"
+    }
+  ],
+  "ratings": 3.5,
+  "numOfratings": 2,
+  "paymentMethod": "Credit Card, Cash",
+  "location": "123 Sample St, City, Country",
+  "website": "https://example.com",
+  "facebook": "https://facebook.com/example",
+  "instagram": "https://instagram.com/example",
+  "weekStart": "Monday",
+  "weekEnd": "Sunday",
+  "onHour": "9:00 AM",
+  "offHour": "6:00 PM",
+  "cancelPolicy": "24 hours in advance",
+  "createdAt": {
+    "$date": "2024-04-29T15:21:37.366Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:58:37.964Z"
+  },
+  "reviews": [
+    {
+      "$oid": "662fc38f4c3f292828358466"
+    },
+    {
+      "$oid": "662fc3ad4c3f29282835846a"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "662fbb0b858e5f56dd3eb2ee"
+  },
+  "shopName": "Tample run",
+  "media": {
+    "thumbnail": "https://example.com/thumbnail.jpg",
+    "gallery": {
+      "e2": "https://example.com/gallery/e2.jpg",
+      "f1": "https://example.com/gallery/f1.jpg",
+      "f2": "https://example.com/gallery/f2.jpg"
+    }
+  },
+  "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "categories": [
+    {
+      "$oid": "662fb7907b1ddfbb9da53afe"
+    },
+    {
+      "$oid": "662fb7b67b1ddfbb9da53b00"
+    },
+    {
+      "$oid": "662fb7de7b1ddfbb9da53b02"
+    },
+    {
+      "$oid": "662fb8077b1ddfbb9da53b04"
+    }
+  ],
+  "services": [
+    {
+      "$oid": "662fba11858e5f56dd3eb2ce"
+    },
+    {
+      "$oid": "662fba4c858e5f56dd3eb2d8"
+    },
+    {
+      "$oid": "662fba52858e5f56dd3eb2e2"
+    }
+  ],
+  "team": [
+    {
+      "$oid": "662fb918858e5f56dd3eb2c8"
+    },
+    {
+      "$oid": "662fb933858e5f56dd3eb2ca"
+    },
+    {
+      "$oid": "662fb942858e5f56dd3eb2cc"
+    }
+  ],
+  "ratings": 0,
+  "numOfratings": 0,
+  "paymentMethod": "Credit Card, Cash",
+  "location": "123 Sample St, City, Country",
+  "website": "https://example.com",
+  "facebook": "https://facebook.com/example",
+  "instagram": "https://instagram.com/example",
+  "weekStart": "Monday",
+  "weekEnd": "Sunday",
+  "onHour": "9:00 AM",
+  "offHour": "6:00 PM",
+  "cancelPolicy": "24 hours in advance",
+  "createdAt": {
+    "$date": "2024-04-29T15:21:47.591Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:21:47.591Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fbb15858e5f56dd3eb2f0"
+  },
+  "shopName": "Kalam food corner",
+  "media": {
+    "thumbnail": "https://example.com/thumbnail.jpg",
+    "gallery": {
+      "e2": "https://example.com/gallery/e2.jpg",
+      "f1": "https://example.com/gallery/f1.jpg",
+      "f2": "https://example.com/gallery/f2.jpg"
+    }
+  },
+  "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "categories": [
+    {
+      "$oid": "662fb7907b1ddfbb9da53afe"
+    },
+    {
+      "$oid": "662fb7b67b1ddfbb9da53b00"
+    },
+    {
+      "$oid": "662fb7de7b1ddfbb9da53b02"
+    },
+    {
+      "$oid": "662fb8077b1ddfbb9da53b04"
+    }
+  ],
+  "services": [
+    {
+      "$oid": "662fba11858e5f56dd3eb2ce"
+    },
+    {
+      "$oid": "662fba4c858e5f56dd3eb2d8"
+    },
+    {
+      "$oid": "662fba52858e5f56dd3eb2e2"
+    }
+  ],
+  "team": [
+    {
+      "$oid": "662fb918858e5f56dd3eb2c8"
+    },
+    {
+      "$oid": "662fb933858e5f56dd3eb2ca"
+    },
+    {
+      "$oid": "662fb942858e5f56dd3eb2cc"
+    }
+  ],
+  "ratings": 0,
+  "numOfratings": 0,
+  "paymentMethod": "Credit Card, Cash",
+  "location": "123 Sample St, City, Country",
+  "website": "https://example.com",
+  "facebook": "https://facebook.com/example",
+  "instagram": "https://instagram.com/example",
+  "weekStart": "Monday",
+  "weekEnd": "Sunday",
+  "onHour": "9:00 AM",
+  "offHour": "6:00 PM",
+  "cancelPolicy": "24 hours in advance",
+  "createdAt": {
+    "$date": "2024-04-29T15:21:57.874Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:21:57.874Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fbb22858e5f56dd3eb2f2"
+  },
+  "shopName": "Mina Bazar",
+  "media": {
+    "thumbnail": "https://example.com/thumbnail.jpg",
+    "gallery": {
+      "e2": "https://example.com/gallery/e2.jpg",
+      "f1": "https://example.com/gallery/f1.jpg",
+      "f2": "https://example.com/gallery/f2.jpg"
+    }
+  },
+  "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "categories": [
+    {
+      "$oid": "662fb7907b1ddfbb9da53afe"
+    },
+    {
+      "$oid": "662fb7b67b1ddfbb9da53b00"
+    },
+    {
+      "$oid": "662fb7de7b1ddfbb9da53b02"
+    },
+    {
+      "$oid": "662fb8077b1ddfbb9da53b04"
+    }
+  ],
+  "services": [
+    {
+      "$oid": "662fba11858e5f56dd3eb2ce"
+    },
+    {
+      "$oid": "662fba4c858e5f56dd3eb2d8"
+    },
+    {
+      "$oid": "662fba52858e5f56dd3eb2e2"
+    }
+  ],
+  "team": [
+    {
+      "$oid": "662fb918858e5f56dd3eb2c8"
+    },
+    {
+      "$oid": "662fb933858e5f56dd3eb2ca"
+    },
+    {
+      "$oid": "662fb942858e5f56dd3eb2cc"
+    }
+  ],
+  "ratings": 0,
+  "numOfratings": 0,
+  "paymentMethod": "Credit Card, Cash",
+  "location": "123 Sample St, City, Country",
+  "website": "https://example.com",
+  "facebook": "https://facebook.com/example",
+  "instagram": "https://instagram.com/example",
+  "weekStart": "Monday",
+  "weekEnd": "Sunday",
+  "onHour": "9:00 AM",
+  "offHour": "6:00 PM",
+  "cancelPolicy": "24 hours in advance",
+  "createdAt": {
+    "$date": "2024-04-29T15:22:10.448Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:22:10.448Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fbb2d858e5f56dd3eb2f4"
+  },
+  "shopName": "Alom super shop",
+  "media": {
+    "thumbnail": "https://example.com/thumbnail.jpg",
+    "gallery": {
+      "e2": "https://example.com/gallery/e2.jpg",
+      "f1": "https://example.com/gallery/f1.jpg",
+      "f2": "https://example.com/gallery/f2.jpg"
+    }
+  },
+  "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "categories": [
+    {
+      "$oid": "662fb7907b1ddfbb9da53afe"
+    },
+    {
+      "$oid": "662fb7b67b1ddfbb9da53b00"
+    },
+    {
+      "$oid": "662fb7de7b1ddfbb9da53b02"
+    },
+    {
+      "$oid": "662fb8077b1ddfbb9da53b04"
+    }
+  ],
+  "services": [
+    {
+      "$oid": "662fba11858e5f56dd3eb2ce"
+    },
+    {
+      "$oid": "662fba4c858e5f56dd3eb2d8"
+    },
+    {
+      "$oid": "662fba52858e5f56dd3eb2e2"
+    }
+  ],
+  "team": [
+    {
+      "$oid": "662fb918858e5f56dd3eb2c8"
+    },
+    {
+      "$oid": "662fb933858e5f56dd3eb2ca"
+    },
+    {
+      "$oid": "662fb942858e5f56dd3eb2cc"
+    }
+  ],
+  "ratings": 3.6666666666666665,
+  "numOfratings": 3,
+  "paymentMethod": "Credit Card, Cash",
+  "location": "123 Sample St, City, Country",
+  "website": "https://example.com",
+  "facebook": "https://facebook.com/example",
+  "instagram": "https://instagram.com/example",
+  "weekStart": "Monday",
+  "weekEnd": "Sunday",
+  "onHour": "9:00 AM",
+  "offHour": "6:00 PM",
+  "cancelPolicy": "24 hours in advance",
+  "createdAt": {
+    "$date": "2024-04-29T15:22:21.423Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T16:08:43.532Z"
+  },
+  "reviews": [
+    {
+      "$oid": "662fc3f7493750674d434c87"
+    },
+    {
+      "$oid": "662fc401493750674d434c8b"
+    },
+    {
+      "$oid": "662fc60bd6f4d3c7a3d043c2"
+    }
+  ]
+}]

@@ -1,0 +1,48 @@
+[{
+  "_id": {
+    "$oid": "662fb918858e5f56dd3eb2c8"
+  },
+  "picture": "https://example.com/profile-picture.jpg",
+  "name": "John Doe",
+  "profession": "Hair cut",
+  "hourly_rate": 50,
+  "schedule": [],
+  "createdAt": {
+    "$date": "2024-04-29T15:13:28.146Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:13:28.146Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fb933858e5f56dd3eb2ca"
+  },
+  "picture": "https://example.com/profile-picture.jpg",
+  "name": "Jordan sumiit",
+  "profession": "Hair cut",
+  "hourly_rate": 70,
+  "schedule": [],
+  "createdAt": {
+    "$date": "2024-04-29T15:13:55.074Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:13:55.074Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fb942858e5f56dd3eb2cc"
+  },
+  "picture": "https://example.com/profile-picture.jpg",
+  "name": "jackon aliva",
+  "profession": "Hair cut",
+  "hourly_rate": 80,
+  "schedule": [],
+  "createdAt": {
+    "$date": "2024-04-29T15:14:10.991Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:14:10.991Z"
+  }
+}]

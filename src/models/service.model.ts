@@ -23,7 +23,8 @@ const serviceScheama = new mongoose.Schema(
           },
           down: {
             type: Number,
-            required: true,
+            required: false,
+            default:0
           },
         },
       ],

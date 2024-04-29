@@ -3,7 +3,7 @@ import { createServiceController, getMoreServiceController, updateServiceControl
 const router = express.Router();
 
 // router.get("/read");
-router.post("/create",createServiceController);
+router.post("/s/create",createServiceController);
 router.get("/s/more",getMoreServiceController);
 router.patch("/s/:id", updateServiceController);
 

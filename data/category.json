@@ -1,0 +1,52 @@
+[{
+  "_id": {
+    "$oid": "662fb7907b1ddfbb9da53afe"
+  },
+  "label": "Cleaning Services",
+  "value": "Cleaning_Services",
+  "createdAt": {
+    "$date": "2024-04-29T15:06:56.644Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:06:56.644Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fb7b67b1ddfbb9da53b00"
+  },
+  "label": "Schools",
+  "value": "schools",
+  "createdAt": {
+    "$date": "2024-04-29T15:07:34.678Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:07:34.678Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fb7de7b1ddfbb9da53b02"
+  },
+  "label": "Face & skin care",
+  "value": "face-skin-care",
+  "createdAt": {
+    "$date": "2024-04-29T15:08:14.310Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:08:14.310Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "662fb8077b1ddfbb9da53b04"
+  },
+  "label": "Business events",
+  "value": "business-events",
+  "createdAt": {
+    "$date": "2024-04-29T15:08:55.922Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T15:08:55.922Z"
+  }
+}]

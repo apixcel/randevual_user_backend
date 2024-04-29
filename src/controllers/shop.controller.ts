@@ -32,7 +32,7 @@ export const getShopByIdController = catchAsyncErrors(
       .populate("categories")
       .populate("team")
       .populate("services")
-      .populate("review");
+      .populate("reviews");
 
     return res.status(201).json({
       success: true,
@@ -51,7 +51,7 @@ export const getShopMoreController = catchAsyncErrors(
       .find()
       .skip(Number(skip))
       .limit(Number(limit))
-      .select("shopName media categoryTitle")
+      .select("shopName media categoryTitle ratings numOfratings")
       .exec();
 
     return res.status(201).json({
@@ -76,7 +76,6 @@ export const getShopMoreINServiceController = async (
       .limit(Number(limit))
       .select("shopName media categoryTitle")
       .populate("services")
-      .populate("reviews")
       .exec();
       
     res.status(200).json({
