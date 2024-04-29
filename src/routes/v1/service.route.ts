@@ -3,7 +3,7 @@ import { createServiceController, getMoreServiceController } from "../../control
 const router = express.Router();
 
 // router.get("/read");
-router.post("/create",createServiceController);
+router.post("/s/create",createServiceController);
 router.get("/s/more",getMoreServiceController);
 
 

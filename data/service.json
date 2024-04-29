@@ -1,0 +1,128 @@
+[
+  {
+    "listName": "Hair Services",
+    "list": [
+      {
+        "name": "Haircut",
+        "option": [
+          {
+            "cost": 20,
+            "duration": "30 minutes"
+          },
+          {
+            "cost": 30,
+            "duration": "45 minutes"
+          },
+          {
+            "cost": 40,
+            "duration": "1 hour"
+          }
+        ],
+        "down": 0
+      },
+      {
+        "name": "Hair Coloring",
+        "option": [
+          {
+            "cost": 50,
+            "duration": "1 hour"
+          },
+          {
+            "cost": 70,
+            "duration": "1.5 hours"
+          },
+          {
+            "cost": 90,
+            "duration": "2 hours"
+          }
+        ],
+        "down": 0
+      }
+    ],
+    "team_id": "662fb918858e5f56dd3eb2c8"
+  },
+  {
+    "listName": "Hair Services",
+    "list": [
+      {
+        "name": "Haircut",
+        "option": [
+          {
+            "cost": 20,
+            "duration": "30 minutes"
+          },
+          {
+            "cost": 30,
+            "duration": "45 minutes"
+          },
+          {
+            "cost": 40,
+            "duration": "1 hour"
+          }
+        ],
+        "down": 0
+      },
+      {
+        "name": "Hair Coloring",
+        "option": [
+          {
+            "cost": 50,
+            "duration": "1 hour"
+          },
+          {
+            "cost": 70,
+            "duration": "1.5 hours"
+          },
+          {
+            "cost": 90,
+            "duration": "2 hours"
+          }
+        ],
+        "down": 0
+      }
+    ],
+    "team_id": "662fb933858e5f56dd3eb2ca"
+  },
+  {
+    "listName": "Hair Services",
+    "list": [
+      {
+        "name": "Haircut",
+        "option": [
+          {
+            "cost": 20,
+            "duration": "30 minutes"
+          },
+          {
+            "cost": 30,
+            "duration": "45 minutes"
+          },
+          {
+            "cost": 40,
+            "duration": "1 hour"
+          }
+        ],
+        "down": 0
+      },
+      {
+        "name": "Hair Coloring",
+        "option": [
+          {
+            "cost": 50,
+            "duration": "1 hour"
+          },
+          {
+            "cost": 70,
+            "duration": "1.5 hours"
+          },
+          {
+            "cost": 90,
+            "duration": "2 hours"
+          }
+        ],
+        "down": 0
+      }
+    ],
+    "team_id": "662fb942858e5f56dd3eb2cc"
+  }
+]

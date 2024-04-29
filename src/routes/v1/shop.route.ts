@@ -8,7 +8,7 @@ import {
 
 const router = express.Router();
 
-router.post("/create", createShopController);
+router.post("/s/create", createShopController);
 router.get("/s/more", getShopMoreController);
 router.get("/s/in", getShopMoreINServiceController);
 router.get("/s/:id", getShopByIdController);

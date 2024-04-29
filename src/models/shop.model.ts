@@ -21,10 +21,6 @@ const shopScheama = new mongoose.Schema(
       type: String,
       required: true,
     },
-    categoryTitle: {
-      type: String,
-      required: true,
-    },
     categories: [
       {
         type: Schema.Types.ObjectId,
@@ -43,12 +39,22 @@ const shopScheama = new mongoose.Schema(
         ref: "team",
       },
     ],
-    review: [
+    reviews: [
       {
         type: Schema.Types.ObjectId,
         ref: "review",
       },
     ],
+    ratings:{
+      type: Number,
+      required: false,
+      default: 0,
+    },
+    numOfratings: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
     paymentMethod: {
       type: String,
       required: true,
