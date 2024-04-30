@@ -4,11 +4,11 @@
   },
   "shopName": "Sample Shop",
   "media": {
-    "thumbnail": "https://example.com/thumbnail.jpg",
+    "thumbnail": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409330/shop_q2xecb.jpg",
     "gallery": {
-      "e2": "https://example.com/gallery/e2.jpg",
-      "f1": "https://example.com/gallery/f1.jpg",
-      "f2": "https://example.com/gallery/f2.jpg"
+      "e2": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409561/signupImg_okybgm.jpg",
+      "f1": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409561/signupImg_okybgm.jpg",
+      "f2": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409561/signupImg_okybgm.jpg"
     }
   },
   "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -81,11 +81,11 @@
   },
   "shopName": "Tample run",
   "media": {
-    "thumbnail": "https://example.com/thumbnail.jpg",
+    "thumbnail": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409330/shop_q2xecb.jpg",
     "gallery": {
-      "e2": "https://example.com/gallery/e2.jpg",
-      "f1": "https://example.com/gallery/f1.jpg",
-      "f2": "https://example.com/gallery/f2.jpg"
+      "e2": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409561/signupImg_okybgm.jpg",
+      "f1": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409561/signupImg_okybgm.jpg",
+      "f2": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409561/signupImg_okybgm.jpg"
     }
   },
   "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -150,11 +150,11 @@
   },
   "shopName": "Kalam food corner",
   "media": {
-    "thumbnail": "https://example.com/thumbnail.jpg",
+    "thumbnail": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409561/signupImg_okybgm.jpg",
     "gallery": {
-      "e2": "https://example.com/gallery/e2.jpg",
-      "f1": "https://example.com/gallery/f1.jpg",
-      "f2": "https://example.com/gallery/f2.jpg"
+      "e2": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409330/shop_q2xecb.jpg",
+      "f1": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409330/shop_q2xecb.jpg",
+      "f2": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409561/signupImg_okybgm.jpg"
     }
   },
   "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -219,11 +219,11 @@
   },
   "shopName": "Mina Bazar",
   "media": {
-    "thumbnail": "https://example.com/thumbnail.jpg",
+    "thumbnail": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409561/signupImg_okybgm.jpg",
     "gallery": {
-      "e2": "https://example.com/gallery/e2.jpg",
-      "f1": "https://example.com/gallery/f1.jpg",
-      "f2": "https://example.com/gallery/f2.jpg"
+      "e2": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409330/shop_q2xecb.jpg",
+      "f1": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409561/signupImg_okybgm.jpg",
+      "f2": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409330/shop_q2xecb.jpg"
     }
   },
   "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -288,11 +288,11 @@
   },
   "shopName": "Alom super shop",
   "media": {
-    "thumbnail": "https://example.com/thumbnail.jpg",
+    "thumbnail": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409330/shop_q2xecb.jpg",
     "gallery": {
-      "e2": "https://example.com/gallery/e2.jpg",
-      "f1": "https://example.com/gallery/f1.jpg",
-      "f2": "https://example.com/gallery/f2.jpg"
+      "e2": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409561/signupImg_okybgm.jpg",
+      "f1": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409561/signupImg_okybgm.jpg",
+      "f2": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714409330/shop_q2xecb.jpg"
     }
   },
   "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
