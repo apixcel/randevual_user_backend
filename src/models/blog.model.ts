@@ -7,7 +7,7 @@ const blogScheama = new mongoose.Schema(
       required: true,
     },
     images: {
-      thamnail: {
+      thumbnail: {
         type: String,
         required: true,
       },
