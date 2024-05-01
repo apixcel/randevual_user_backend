@@ -4,7 +4,7 @@ import { CreateBlogController, GetBlogByIdController, GetMoreBlogsController } f
 const router = express.Router();
 
 router.post("/create", CreateBlogController);
-router.post("/b/more", GetMoreBlogsController);
+router.get("/b/more", GetMoreBlogsController);
 router.get("/b/:id", GetBlogByIdController);
 
 export default router;

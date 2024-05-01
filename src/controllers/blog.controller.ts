@@ -28,13 +28,7 @@ export const CreateBlogController = catchAsyncError(
 
 export const GetMoreBlogsController = catchAsyncError(
     async(req:Request, res:Response, next:NextFunction) => {
-        const { page = 1, limit = 10 } = req.query;
-        const skip = (Number(page) - 1) * Number(limit);
-        const blog = await blogModel
-        .find()
-        // .skip(Number(skip))
-        // .limit(Number(limit))
-        // .exec();
+        const blog = await blogModel.find()
 
         return res.status(201).json({
             success: true,
