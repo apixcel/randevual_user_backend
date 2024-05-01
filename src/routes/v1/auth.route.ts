@@ -1,5 +1,5 @@
 import express from "express";
-import { validLogin, validSign } from "../../helpers/valid/validAuth";
+import { validateLogin, validateSign } from "../../helpers/valid/validAuth";
 
 import {
   activationController,
@@ -12,9 +12,9 @@ import {
 
 const router = express.Router();
 
-router.post("/register", validSign, registerController);
+router.post("/register", validateSign, registerController);
 
-router.post("/login", validLogin, signinController);
+router.post("/login", validateLogin, signinController);
 
 router.post("/activation", activationController);
 

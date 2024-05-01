@@ -1,12 +1,15 @@
 import express from "express";
-import { createServiceController, getMoreServiceController, updateServiceController } from "../../controllers/service.controller";
+import {
+  createServiceController,
+  getMoreServiceController,
+  updateServiceController,
+} from "../../controllers/service.controller";
+import { validateService } from "../../helpers/valid/validService";
 const router = express.Router();
 
 // router.get("/read");
-router.post("/s/create",createServiceController);
-router.get("/s/more",getMoreServiceController);
+router.post("/s/create", validateService, createServiceController);
+router.get("/s/more", getMoreServiceController);
 router.patch("/s/:id", updateServiceController);
-
-
 
 export default router;
