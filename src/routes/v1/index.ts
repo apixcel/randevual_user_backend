@@ -12,6 +12,7 @@ import payment from "./payment.route";
 import contact from "./contact.route";
 import support from "./support.route";
 import clientReview from "./client.review.route";
+import blog from "./blog.route";
 
 
 router.use("/auth", auth);
@@ -26,6 +27,7 @@ router.use("/review", userReview);
 router.use("/contact", contact);
 router.use("/support", support);
 router.use("/clientreview", clientReview);
+router.use("/blog", blog);
 
 
 

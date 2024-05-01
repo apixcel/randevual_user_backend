@@ -2,7 +2,19 @@ import mongoose, { Schema } from "mongoose";
 
 const supportScheama = new mongoose.Schema(
   {
-    subject: {
+    help: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    helpsubject: {
       type: String,
       required: true,
     },
