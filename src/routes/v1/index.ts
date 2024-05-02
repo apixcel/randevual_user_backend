@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import auth from "./auth.route";
+
 import user from "./user.route";
 import shop from "./shop.route";
 import booking from "./booking.route";
@@ -12,8 +12,6 @@ import payment from "./payment.route";
 import contact from "./contact.route";
 import support from "./support.route";
 
-
-router.use("/auth", auth);
 router.use("/user", user);
 router.use("/shop", shop);
 router.use("/payment", payment);

@@ -38,6 +38,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
+
 const port: any = process.env.PORT || 5000;
 
 server.listen(port, () => {

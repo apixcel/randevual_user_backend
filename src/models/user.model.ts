@@ -29,6 +29,16 @@ const userScheama = new mongoose.Schema(
       type: String,
       required: true,
     },
+    picture: {
+      type: String,
+      require: false,
+      default: ""
+    },
+    phone: {
+      type: String,
+      require: false,
+      default: ""
+    },
     status: {
       type: String,
       default: "unverified",
@@ -36,11 +46,6 @@ const userScheama = new mongoose.Schema(
     user_type: {
       type: String,
       default: "regular",
-    },
-    picture: {
-      type: String,
-      require: false,
-      default: ""
     },
   },
   {

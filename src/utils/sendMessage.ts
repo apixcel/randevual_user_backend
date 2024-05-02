@@ -1,4 +1,4 @@
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 
 const sendMessage = async (
   senderMail: string,
@@ -16,7 +16,7 @@ const sendMessage = async (
       pass: senderPassword,
     },
     tls: {
-      rejectUnauthorized: false,
+      rejectUnauthorized: false
     },
   });
 
@@ -29,15 +29,9 @@ const sendMessage = async (
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    const responseParts = info.response.split(" ");
-    const statusCode = responseParts[0];
-    if (statusCode === "250") {
-      return true;
-    } else {
-      return false;
-    }
   } catch (error) {
     console.error("Error sending email:", error);
+    throw error; 
   }
 };
 
