@@ -8,30 +8,68 @@ import createToken from "../utils/jwtToken";
 import jwt from "jsonwebtoken";
 import sendMessage from "../utils/sendMessage";
 
-
-export const registerController = catchAsyncErrors(
+// Get Single User
+export const getSingleUser = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { email, password } = req.body;
-    const errors = validationResult(req);
+    const user = await User.findById(req.params.id);
 
-    if (!errors.isEmpty()) {
-      const firstError = errors.array().map((error: any) => error.msg)[0];
-      return res.status(422).json({
-        errors: firstError,
-      });
-    } else {
-      const user = await User.findOne({ email }).select("+password");
-
-      if (user) {
-        return next(new ErrorHandler("This email is already used!", 400));
-      }
-
-      return res.status(200).json({
-        message:
-          "Thanks to create an account. Please check your mail to active the account",
-        status: 201,
-      });
+    if (!user) {
+      return next(
+        new ErrorHandler(`User does not exist with Id: ${req.params.id}`, 400)
+      );
     }
+
+    res.status(200).json({
+      success: true,
+      user,
+    });
   }
 );
 
+// update
+export const updateSingleUser = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const newUserData = req.body;
+
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return next(
+        new ErrorHandler(`User does not exist with Id: ${req.params.id}`, 400)
+      );
+    }
+
+    const updateUserData = await User.findByIdAndUpdate(
+      req.params.id,
+      newUserData,
+      {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+      }
+    );
+
+    res.status(200).json({
+      success: true,
+      updateUserData,
+    });
+  }
+);
+
+export const deleteSingleUser = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return next(
+        new ErrorHandler(`User does not exist with Id: ${req.params.id}`, 400)
+      );
+    }
+    await User.findOneAndDelete({ _id: req.params.id });
+
+    res.status(200).json({
+      success: true,
+      message: "User Deleted Successfully",
+    });
+  }
+);

@@ -1,22 +1,15 @@
 import express from "express";
-import { validLogin, validSign } from "../../helpers/valid/validAuth";
-
-import {
-  activationController,
-} from "../../controllers/user.controller";
+import { deleteSingleUser, getSingleUser, updateSingleUser } from "../../controllers/user.controller";
 
 const router = express.Router();
 
-router.post("/register",validLogin);
+// Route to get a single user by ID
+router.get("/u/:id", getSingleUser);
 
-router.post("/login");
+// Route to update a user by ID
+router.put("/u/:id", updateSingleUser);
 
-router.post("/activation");
-
-router.post("/update-password");
-
-router.post("/forgot-password");
-
-router.post("/reset-password");
+// Route to delete a user by ID
+router.delete("/u/:id", deleteSingleUser);
 
 export default router;
