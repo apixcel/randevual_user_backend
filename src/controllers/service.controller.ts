@@ -36,3 +36,16 @@ export const getMoreServiceController = catchAsyncErrors(
   }
 )
 // update delete
+
+export const updateServiceController = catchAsyncErrors(
+  async(req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
+    const updateService = await serviceModel.findByIdAndUpdate(id, req.body);
+
+    return res.status(201).json({
+      success: true,
+      msg: "service updated successfully",
+      updateService
+    })
+  }
+)

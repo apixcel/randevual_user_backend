@@ -2,7 +2,7 @@
   "_id": {
     "$oid": "662fb918858e5f56dd3eb2c8"
   },
-  "picture": "https://example.com/profile-picture.jpg",
+  "picture": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714410745/2341527_bhqb5g.jpg",
   "name": "John Doe",
   "profession": "Hair cut",
   "hourly_rate": 50,
@@ -18,7 +18,7 @@
   "_id": {
     "$oid": "662fb933858e5f56dd3eb2ca"
   },
-  "picture": "https://example.com/profile-picture.jpg",
+  "picture": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714410745/2341527_bhqb5g.jpg",
   "name": "Jordan sumiit",
   "profession": "Hair cut",
   "hourly_rate": 70,
@@ -34,7 +34,7 @@
   "_id": {
     "$oid": "662fb942858e5f56dd3eb2cc"
   },
-  "picture": "https://example.com/profile-picture.jpg",
+  "picture": "https://res.cloudinary.com/da3bmr3yo/image/upload/v1714410745/2341527_bhqb5g.jpg",
   "name": "jackon aliva",
   "profession": "Hair cut",
   "hourly_rate": 80,
