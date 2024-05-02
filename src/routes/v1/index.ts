@@ -14,7 +14,7 @@ import support from "./support.route";
 import clientReview from "./client.review.route";
 import blog from "./blog.route";
 
-router.use("/user", user);
+router.use("/users", user);
 router.use("/shop", shop);
 router.use("/payment", payment);
 router.use("/booking", booking);

@@ -2,7 +2,7 @@ import express from "express";
 import { deleteSingleUser, getSingleUser, updateSingleUser } from "../../controllers/user.controller";
 
 const router = express.Router();
-
+// /user
 // Route to get a single user by ID
 router.get("/u/:id", getSingleUser);
 
