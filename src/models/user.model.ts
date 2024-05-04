@@ -4,19 +4,15 @@ const userScheama = new mongoose.Schema(
   {
     firstname: {
       type: String,
-      required: false,
+      required: true,
       default: "",
     },
     lastname: {
       type: String,
-      required: false,
+      required: true,
       default: "",
     },
-    username: {
-      type: String,
-      required: false,
-      default: "",
-    },
+
     email: {
       type: String,
       trim: true,
@@ -25,20 +21,28 @@ const userScheama = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
-    password:{
+    password: {
       type: String,
       required: true,
     },
     picture: {
       type: String,
-      require: false,
-      default: ""
+      required: false,
+      default: "",
     },
     phone: {
       type: String,
-      require: false,
-      default: ""
+      required: true,
+      default: "",
     },
+    country: {
+      type: String,
+      required: false,
+      default: "",
+    },
+    timeZone: { type: String, required: false, default: "" },
+    currency: { type: String, required: false, default: "" },
+    language: { type: String, required: false, default: "" },
     status: {
       type: String,
       default: "unverified",
