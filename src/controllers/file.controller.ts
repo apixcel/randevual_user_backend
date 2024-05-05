@@ -44,7 +44,7 @@ export const uploadFile = async (
   }
 };
 
-export const destroyFile = async (
+export const replaceFile = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -55,15 +55,28 @@ export const destroyFile = async (
     if (!errors.isEmpty()) {
       throw new ErrorHandler("Validation Error", 400);
     }
+    if (!req.file) {
+      throw new ErrorHandler("No file uploaded", 400);
+    }
+
     const publicId = req.params.publicId;
 
     const folder = "kazi"; // Specify your folder name here
     // Perform deletion
-    const result = await cloudinary.v2.uploader.destroy(
+    const result1 = await cloudinary.v2.uploader.destroy(
       `${folder}/${publicId}`
     );
-    console.log(result);
-    res.status(200).json(result);
+    // Upload file to Cloudinary
+    const result2 = await cloudinary.v2.uploader.upload(req.file.path, {
+      folder: "kazi",
+    });
+    // Remove file from server after uploading to Cloudinary
+    fs.unlink(req.file.path, (err) => {
+      if (err) {
+        console.error("Error deleting file:", err);
+      }
+    });
+    res.status(200).json({ url: result2.secure_url });
   } catch (error) {
     next(error);
   }

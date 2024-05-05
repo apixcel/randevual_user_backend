@@ -49,3 +49,7 @@ export const updateServiceController = catchAsyncErrors(
     })
   }
 )
+
+/*
+booking only logged shop
+*/

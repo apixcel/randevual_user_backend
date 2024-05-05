@@ -1,5 +1,5 @@
 import express from "express";
-import { destroyFile, uploadFile } from "../../controllers/file.controller";
+import { replaceFile, uploadFile } from "../../controllers/file.controller";
 import multer from "multer";
 
 const router = express.Router();
@@ -9,6 +9,6 @@ const upload = multer({ dest: "uploads/" });
 
 // POST route for uploading files
 router.post("/upload", upload.single("file"), uploadFile);
-router.post("/destroy/:publicId", destroyFile);
+router.post("/replace/:publicId", upload.single("file"), replaceFile);
 
 export default router;
