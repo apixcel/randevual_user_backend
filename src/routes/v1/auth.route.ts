@@ -10,7 +10,7 @@ import {
 
 const router = express.Router();
 
-router.post("/u/exsit", checkEmailController);
+router.post("/u/exist", checkEmailController);
 router.post("/register", registerCustomerController);
 
 router.post("/login", signinController);
