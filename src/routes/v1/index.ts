@@ -14,7 +14,6 @@ import contact from "./contact.route";
 import support from "./support.route";
 // import clientReview from "./client.review.route";
 import uploadFile from "./fileupload.route";
-
 import blog from "./blog.route";
 
 router.use("/auth", auth);

@@ -5,6 +5,7 @@ import ErrorHandler from "../utils/errorhandler";
 import userModel from "../models/user.model";
 import createToken from "../utils/jwtToken";
 import sendMessage from "../utils/sendMessage";
+import bcrypt from "bcryptjs";
 
 // Register Account
 export const registerCustomerController = async (
@@ -22,20 +23,25 @@ export const registerCustomerController = async (
     if (existingEmail) {
       throw new ErrorHandler("This email is already used!", 400);
     }
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const user = await userModel.create({
       email,
       firstname,
       lastname,
-      password,
+      password: hashedPassword,
       phone,
     });
+
     const token = createToken(user, "7d");
+    const userWithoutPassword = user.toObject();
+    const { password: _, ...userResponse } = userWithoutPassword;
 
     return res.json({
       success: true,
-      message: "Signin success",
+      message: "Account created success",
       token,
-      user,
+      user: userResponse,
     });
   } catch (error) {
     next(error);
@@ -54,11 +60,11 @@ export const activationController = async (
       return res.json({ message: "Error: Token missing." });
     }
     const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
- 
+
     return res.json({
       success: true,
       message: "Signup success",
-      token: ""
+      token: "",
     });
   } catch (error) {
     next(error);
@@ -74,12 +80,27 @@ export const signinController = async (
   try {
     const { email, password } = req.body;
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       throw new ErrorHandler(errors.array()[0].msg, 422);
     }
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      throw new ErrorHandler("Email is not registered", 400);
+    }
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      throw new ErrorHandler("Password is not match", 400);
+    }
+    const token = createToken(user, "7d");
+    const userWithoutPassword = user.toObject();
+    const { password: _, ...userResponse } = userWithoutPassword;
+
     return res.json({
       success: true,
-      message: "Signin success"
+      message: "Signin success",
+      token,
+      user: userResponse
     });
   } catch (error) {
     next(error);
@@ -102,7 +123,6 @@ export const forgotPasswordController = async (
     if (!user) {
       throw new ErrorHandler("User with that email does not exist", 400);
     }
-
   } catch (error) {
     next(error);
   }
