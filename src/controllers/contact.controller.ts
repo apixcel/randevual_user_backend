@@ -26,8 +26,8 @@ export const CreateContactController = catchAsyncErrors(
         subject,
         html
       );
-      if (!mailsent)
-        return next({ message: "Invalid email or password", status: 404 });
+      // if (!mailsent)
+      //   return next({ message: "Invalid email or password", status: 404 });
 
       return res.status(200).json({
         message: "Message sent successfully",

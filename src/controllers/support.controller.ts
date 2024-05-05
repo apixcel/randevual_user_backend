@@ -29,8 +29,8 @@ export const SendSupportEmailController = catchAsyncError(
             );
 
 
-            if (!mailsent)
-                return next({ message: "Invalid email or password", status: 404,errors });
+            // if (!mailsent)
+            //     return next({ message: "Invalid email or password", status: 404,errors });
 
 
             return res.status(200).json({
