@@ -29,7 +29,6 @@ router.use("/contact", contact);
 router.use("/support", support);
 // router.use("/clientreview", clientReview);
 router.use("/file", uploadFile);
-
 router.use("/blog", blog);
 
 
