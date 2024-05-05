@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer";
 
 const sendMessage = async (
+  senderMail: string,
+  senderPassword: string,
   receiverMail: string,
   subject: string,
   html: string
