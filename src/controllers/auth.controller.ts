@@ -8,6 +8,38 @@ import sendMessage from "../utils/sendMessage";
 import bcrypt from "bcryptjs";
 
 // Register Account
+export const checkEmailController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email } = req.body;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      throw new ErrorHandler(errors.array()[0].msg, 422);
+    }
+    const existingEmail = await userModel.findOne({ email });
+
+    if (existingEmail) {
+      return res.json({
+        success: true,
+        exsit: true,
+        message: "Email checked",
+      });
+    }
+
+    return res.json({
+      success: true,
+      exsit: false,
+      message: "Email checked",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Register Account
 export const registerCustomerController = async (
   req: Request,
   res: Response,
@@ -100,7 +132,7 @@ export const signinController = async (
       success: true,
       message: "Signin success",
       token,
-      user: userResponse
+      user: userResponse,
     });
   } catch (error) {
     next(error);

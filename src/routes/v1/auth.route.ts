@@ -1,6 +1,7 @@
 import express from "express";
 import {
   activationController,
+  checkEmailController,
   forgotPasswordController,
   registerCustomerController,
   resetPasswordController,
@@ -9,6 +10,7 @@ import {
 
 const router = express.Router();
 
+router.post("/u/exsit", checkEmailController);
 router.post("/register", registerCustomerController);
 
 router.post("/login", signinController);
