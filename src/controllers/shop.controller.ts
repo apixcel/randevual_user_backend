@@ -24,6 +24,19 @@ export const createShopController = catchAsyncErrors(
   }
 );
 
+export const findShopByuserIdController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.userId;
+    const shop = await shopModel.findOne({ userId });
+
+    return res.status(201).json({
+      success: true,
+      msg: "User shop has been retrived successfully.",
+      shop,
+    });
+  }
+);
+
 export const getShopByIdController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
@@ -77,7 +90,7 @@ export const getShopMoreINServiceController = async (
       .select("shopName media categoryTitle")
       .populate("services")
       .exec();
-      
+
     res.status(200).json({
       success: true,
       msg: "Shops retrieved successfully.",
@@ -87,4 +100,3 @@ export const getShopMoreINServiceController = async (
     next(error);
   }
 };
-

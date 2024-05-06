@@ -4,46 +4,41 @@ import { validationResult } from "express-validator";
 import sendMessage from "../utils/sendMessage";
 import supportModel from "../models/support.model";
 
-
 export const SendSupportEmailController = catchAsyncError(
-    async(req: Request, res: Response, next:NextFunction) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            const firstError = errors.array().map((error: any) => error.msg)[0];
-            return res.status(422).json({
-              errors: firstError,
-            });
-          } else {
-            const { ...supportData } = req.body;
-            const senderMail = `${process.env.SUPPORT_MAIL_NAME}`;
-            console.log(supportData)
-            const senderPassword = `${process.env.SUPPORT_MAIL_PASS}`;
-            const subject = `A new message from ${supportData.name}`;
-            const html = `<p>${supportData.message}</p>`;
-            const mailsent = await sendMessage(
-              senderMail,
-              senderPassword,
-              supportData.email,
-              subject,
-              html
-            );
+  async (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const firstError = errors.array().map((error: any) => error.msg)[0];
+      return res.status(422).json({
+        errors: firstError,
+      });
+    } else {
+      const { ...supportData } = req.body;
+      const senderMail = `${process.env.SUPPORT_MAIL_NAME}`;
+      const senderPassword = `${process.env.SUPPORT_MAIL_PASS}`;
+      const subject = `A new message from ${supportData.name}`;
+      const html = `<p>${supportData.message}</p>`;
+      const mailsent = await sendMessage(
+        senderMail,
+        senderPassword,
+        supportData.email,
+        subject,
+        html
+      );
 
+      // if (!mailsent)
+      //     return next({ message: "Invalid email or password", status: 404,errors });
 
-            // if (!mailsent)
-            //     return next({ message: "Invalid email or password", status: 404,errors });
-
-
-            return res.status(200).json({
-                message: "Message sent successfully",
-                status: 201,
-              });
-          }
+      return res.status(200).json({
+        message: "Message sent successfully",
+        status: 201,
+      });
     }
-)
-
+  }
+);
 
 export const CreateSupportController = catchAsyncError(
-  async(req:Request, res:Response, next:NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const firstError = errors.array().map((error) => error.msg)[0];
@@ -60,4 +55,4 @@ export const CreateSupportController = catchAsyncError(
       });
     }
   }
-)
+);

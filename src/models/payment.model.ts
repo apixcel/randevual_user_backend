@@ -10,6 +10,10 @@ const paymentScheama = new mongoose.Schema(
       type: String,
       required: true,
     },
+    paymentIntentId: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

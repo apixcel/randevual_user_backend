@@ -35,3 +35,15 @@ export const getAllTeamController = catchAsyncErrors(
     })
   }
 )
+
+export const getAllTeamAShopController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const shop_id = req.params.id;
+    const data = await teamModel.find({ shop_id });
+    return res.status(201).json({
+      success: true,
+      msg: "Single shop teams",
+      data,
+    });
+  }
+);

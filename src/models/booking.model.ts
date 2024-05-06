@@ -52,25 +52,21 @@ const bookingScheama = new mongoose.Schema(
     visit: {
       type: Boolean,
       required: true,
-      default:false
+      default: false,
     },
     payment: {
       type: String,
       required: true,
-      default:"cash"
+      default: "cash",
     },
     status: {
       type: Number,
       required: true,
       default: 0, // 0=incomming, 1=complete, 2=cancelled
     },
-    user_id: {
-      type: Schema.Types.ObjectId,
-      ref: "user",
-    },
     shop_id: {
-      type: Schema.Types.ObjectId,
-      ref: "shop",
+      type: String,
+      required: true,
     },
   },
   {
@@ -80,6 +76,5 @@ const bookingScheama = new mongoose.Schema(
 );
 
 export default mongoose.model("booking", bookingScheama);
-
 
 // Save card info in db and get info and cutt off charge after the completation
