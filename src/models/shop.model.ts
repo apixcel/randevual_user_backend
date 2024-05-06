@@ -6,6 +6,11 @@ const shopScheama = new mongoose.Schema(
       type: String,
       required: true,
     },
+    username: {
+      type: String,
+      required: false,
+      default: "",
+    },
     media: {
       thumbnail: {
         type: String,
@@ -18,6 +23,10 @@ const shopScheama = new mongoose.Schema(
       },
     },
     about: {
+      type: String,
+      required: true,
+    },
+    categoryTitle: {
       type: String,
       required: true,
     },
@@ -45,7 +54,7 @@ const shopScheama = new mongoose.Schema(
         ref: "review",
       },
     ],
-    ratings:{
+    ratings: {
       type: Number,
       required: false,
       default: 0,

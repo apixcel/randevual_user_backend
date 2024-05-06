@@ -63,3 +63,8 @@ export const getOwnerService = catchAsyncErrors(
     });
   }
 );
+
+
+/*
+booking only logged shop
+*/
