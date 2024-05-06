@@ -100,3 +100,21 @@ export const getShopMoreINServiceController = async (
     next(error);
   }
 };
+
+export const getShopByIdUpdateController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
+    const newUserData = req.body;
+    const shop = await shopModel.findByIdAndUpdate(id, newUserData, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+
+    return res.status(201).json({
+      success: true,
+      msg: "Shop has been updated successfully.",
+      shop,
+    });
+  }
+);

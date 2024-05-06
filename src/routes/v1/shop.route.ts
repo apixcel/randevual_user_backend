@@ -3,6 +3,7 @@ import {
   createShopController,
   findShopByuserIdController,
   getShopByIdController,
+  getShopByIdUpdateController,
   getShopMoreController,
   getShopMoreINServiceController,
 } from "../../controllers/shop.controller";
@@ -14,5 +15,5 @@ router.get("/s/more", getShopMoreController);
 router.get("/s/in", getShopMoreINServiceController);
 router.get("/s/u/:userId", findShopByuserIdController);
 router.get("/s/:id", getShopByIdController);
-
+router.patch("/s/update/:id",getShopByIdUpdateController);
 export default router;
