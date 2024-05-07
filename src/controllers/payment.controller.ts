@@ -13,68 +13,43 @@ If the card is not already saved for the customer, save it as a payment method.
 If the payment intent with the same card already exists, return its ID.
 If not, create a new payment intent without confirming it immediately.
 
-*/ 
+*/
 
 export const createPaymentController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
-    const { userId, email } = req.body;
+    const { paymentMethodId, amount, confirmNow, email } = req.body;
 
     if (!errors.isEmpty()) {
       // Handle validation errors
     }
 
     try {
-      // Check if the customer exists in Stripe
-      let customer = await stripe.customers.list({ email: email, limit: 1 });
-
-      if (customer.data.length === 0) {
-        // Customer doesn't exist, create a new customer in Stripe
-        customer = await stripe.customers.create({
-          email: email,
-          name: req.body.name || "",
-          userId
-        });
-      } else {
-        customer = customer.data[0];
-      }
-
-      // Check if the card already exists for the customer
-      const existingCard = customer.sources.data.find(
-        (source: { fingerprint: any; }) => source.fingerprint === req.body.cardFingerprint
-      );
-
-      if (!existingCard) {
-        // Card doesn't exist, save it as a payment method for the customer
-        const paymentMethod = await stripe.paymentMethods.create({
-          type: "card",
-          card: {
-            // Card details
-          },
-        });
-
-        // Attach the payment method to the customer
-        await stripe.paymentMethods.attach(paymentMethod.id, {
-          customer: customer.id,
-        });
-      }
-
-      // Create a payment intent without confirming it immediately
-      const intent = await stripe.paymentIntents.create({
-        customer: customer.id,
-        amount: req.body.amount,
-        currency: req.body.currency || "usd",
-        confirm: false,
-        // Add other payment intent details
+      const customer = await stripe.customers.create({
+        email,
       });
 
+      const intent = await stripe.paymentIntents.create({
+        customer: customer.id,
+        payment_method: paymentMethodId,
+        amount: 2000,
+        currency: "usd",
+        confirm: confirmNow,
+      });
+      
+      // // Attach the payment method to the customer
+      // await stripe.paymentMethods.attach(paymentMethodId, {
+      //   customer: customer.id,
+      // });
+      
+      console.log(intent);
       return res.status(201).json({
         success: true,
         msg: "Payment intent created successfully",
         paymentIntentId: intent.id,
       });
     } catch (error) {
-      console.error("Error creating payment:", error);
+      console.log("Error creating payment:", error);
       return res.status(500).json({
         success: false,
         error: "Internal server error",
@@ -82,7 +57,6 @@ export const createPaymentController = catchAsyncErrors(
     }
   }
 );
-
 
 export const confirmPaymentController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
