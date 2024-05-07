@@ -3,7 +3,6 @@ import { validationResult } from "express-validator";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 const stripe = require("stripe")(process.env.STRIPE_S_K);
 
-
 export const createPaymentController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);

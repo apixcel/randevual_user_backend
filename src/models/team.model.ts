@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const teamScheama = new mongoose.Schema(
+const teamSchema = new mongoose.Schema(
   {
     picture: {
       type: String,
@@ -31,4 +31,4 @@ const teamScheama = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("team", teamScheama);
+export default mongoose.model("team", teamSchema);
