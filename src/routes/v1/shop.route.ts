@@ -7,10 +7,11 @@ import {
   getShopMoreController,
   getShopMoreINServiceController,
 } from "../../controllers/shop.controller";
+import { validateShop } from "../../helpers/valid/validShop";
 
 const router = express.Router();
 
-router.post("/s/create", createShopController);
+router.post("/s/create", validateShop, createShopController);
 router.get("/s/more", getShopMoreController);
 router.get("/s/in", getShopMoreINServiceController);
 router.get("/s/u/:userId", findShopByuserIdController);
