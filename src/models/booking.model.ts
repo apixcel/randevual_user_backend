@@ -68,6 +68,10 @@ const bookingScheama = new mongoose.Schema(
       type: String,
       required: true,
     },
+    user_id: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
