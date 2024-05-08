@@ -12,7 +12,7 @@ const shopScheama = new mongoose.Schema(
     },
     username: {
       type: String,
-      required: false,
+      // required: false,
       default: "",
     },
     media: {
@@ -60,12 +60,12 @@ const shopScheama = new mongoose.Schema(
     ],
     ratings: {
       type: Number,
-      required: false,
+      // required: false,
       default: 0,
     },
     numOfratings: {
       type: Number,
-      required: false,
+      // required: false,
       default: 0,
     },
     paymentMethod: {
