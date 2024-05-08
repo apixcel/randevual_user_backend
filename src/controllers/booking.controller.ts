@@ -55,7 +55,18 @@ export const getBookingByIdController = catchAsyncErrors(
   }
 );
 
+export const getBookingByShopIdController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const shop_id = req.params.id;
+    const data = await bookingModel.find({ shop_id });
+    return res.status(201).json({
+      success: true,
+      msg: "Single shop bookings",
+      data,
+    });
+  }
+);
+
 /*
 booking only logged shop
-*/ 
-
+*/

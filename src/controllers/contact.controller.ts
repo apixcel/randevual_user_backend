@@ -5,7 +5,7 @@ import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 export const CreateContactController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
+    sgMail.setApiKey(`${process.env.SENDGRID_API_KEY}`);
 
     if (!errors.isEmpty()) {
       const firstError = errors.array().map((error: any) => error.msg)[0];
@@ -21,8 +21,8 @@ export const CreateContactController = catchAsyncErrors(
       const html = `<p>${contactData.message}</p>`;
 
       const msg = {
-        to: process.env.SENDGRID_FROM, // Change to your recipient
-        from: process.env.SENDGRID_FROM, // Change to your verified sender
+        to: `${process.env.SENDGRID_FROM}`, // Change to your recipient
+        from: `${process.env.SENDGRID_FROM}`, // Change to your verified sender
         subject,
         html: `
               <div style="display:flex;"><strong>Name</strong>:<p> ${contactData.name}</p></div>
@@ -31,7 +31,8 @@ export const CreateContactController = catchAsyncErrors(
               <div style="display:flex;"><strong>Message</strong>: <p> ${contactData.message}</p></div>
               `,
       };
-      await sgMail.send(msg);
+      const mailRes = await sgMail.send(msg);
+
       // if (!mailsent)
       //   return next({ message: "Invalid email or password", status: 404 });
 
@@ -39,6 +40,8 @@ export const CreateContactController = catchAsyncErrors(
         message: "Message sent successfully",
         status: 201,
       });
+
+      
     }
   }
 );
