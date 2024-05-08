@@ -71,7 +71,20 @@ export const getBookingByShopIdController = catchAsyncErrors(
 export const getUserBookingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const user_id = req.params.id;
-    const data = await bookingModel.find({ user_id });
+    const { filterType } = req.query;
+    let find: { [key: string]: any } = {
+      user_id,
+    };
+
+    if (filterType === "upcoming") {
+      find.date = { $gte: new Date() };
+    }
+    if (filterType === "previous") {
+      find.date = { $lte: new Date() };
+    }
+
+    const data = await bookingModel.find(find);
+
     return res.status(201).json({
       success: true,
       msg: "single User bookings",
