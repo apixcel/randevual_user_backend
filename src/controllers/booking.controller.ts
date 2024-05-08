@@ -67,6 +67,19 @@ export const getBookingByShopIdController = catchAsyncErrors(
   }
 );
 
+// get user id based booking
+export const getUserBookingController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const user_id = req.params.id;
+    const data = await bookingModel.find({ user_id });
+    return res.status(201).json({
+      success: true,
+      msg: "single User bookings",
+      data,
+    });
+  }
+);
+
 /*
 booking only logged shop
 */

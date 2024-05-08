@@ -13,6 +13,18 @@ app.use(morgan("dev"));
 // Connect to Database
 connectDB();
 
+/*
+1. secure rate limit https
+2. cors proper config
+3. routing name conventaion
+4. regular update package
+5. req.body validate
+6. schema validation
+7. seeders
+8. logger
+9. 
+*/ 
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

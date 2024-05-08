@@ -18,7 +18,7 @@ If not, create a new payment intent without confirming it immediately.
 export const createPaymentController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
-    const { paymentMethodId, amount, confirmNow, email } = req.body;
+    const { paymentMethodId, userId, amount, confirmNow, email } = req.body;
 
     if (!errors.isEmpty()) {
       // Handle validation errors
@@ -36,13 +36,18 @@ export const createPaymentController = catchAsyncErrors(
         currency: "usd",
         confirm: confirmNow,
       });
-      
+
       // // Attach the payment method to the customer
       // await stripe.paymentMethods.attach(paymentMethodId, {
       //   customer: customer.id,
       // });
-      
-      console.log(intent);
+
+      const payment = await paymentModel.create({
+        customerId: customer.id,
+        userId,
+        paymentIntentId: intent.id,
+      });
+
       return res.status(201).json({
         success: true,
         msg: "Payment intent created successfully",
