@@ -69,7 +69,7 @@ const shopScheama = new mongoose.Schema(
       default: 0,
     },
     paymentMethod: {
-      type: String,
+      type: [String],
       // required: true,
     },
     location: {

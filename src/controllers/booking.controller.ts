@@ -6,6 +6,8 @@ import bookingModel from "../models/booking.model";
 export const createBookingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
+    console.log(errors);
+    
 
     if (!errors.isEmpty()) {
       const firstError = errors.array().map((error) => error.msg)[0];
@@ -13,13 +15,17 @@ export const createBookingController = catchAsyncErrors(
         errors: firstError,
       });
     } else {
-      const { ...bookingData } = req.body;
-      const booking = await bookingModel.create(bookingData);
-      return res.status(201).json({
-        success: true,
-        msg: "Booking has been created successfully.",
-        booking,
-      });
+      try {
+        const { ...bookingData } = req.body;
+        const booking = await bookingModel.create(bookingData);
+        return res.status(201).json({
+          success: true,
+          msg: "Booking has been created successfully.",
+          booking,
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 );
