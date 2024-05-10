@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from "express";
 import cloudinary from "cloudinary";
+import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
-import ErrorHandler from "../utils/errorhandler";
 import fs from "fs";
+import ErrorHandler from "../utils/errorhandler";
 
 cloudinary.v2.config({
   cloud_name: "dp4yhqrnh",

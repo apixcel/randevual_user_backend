@@ -32,6 +32,4 @@ router.use("/file", uploadFile);
 
 router.use("/blog", blog);
 
-
-
 export default router;

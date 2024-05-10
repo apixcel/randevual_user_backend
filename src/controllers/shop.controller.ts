@@ -13,13 +13,18 @@ export const createShopController = catchAsyncErrors(
         errors: firstError,
       });
     } else {
-      const { ...shopData } = req.body;
-      const shop = await shopModel.create(shopData);
-      return res.status(201).json({
-        success: true,
-        msg: "Shop has been created successfully.",
-        shop,
-      });
+      try {
+        const { ...shopData } = req.body.data;
+        const shop = await shopModel.create(shopData);
+
+        return res.status(201).json({
+          success: true,
+          msg: "Shop has been created successfully.",
+          shop,
+        });
+      } catch (error) {
+        console.log("error", error);
+      }
     }
   }
 );

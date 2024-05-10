@@ -2,37 +2,37 @@ import mongoose, { Schema } from "mongoose";
 
 const shopScheama = new mongoose.Schema(
   {
-    userId: {
+    business_id: {
       type: Schema.Types.ObjectId,
       ref: "user",
     },
     shopName: {
       type: String,
-      required: true,
+      // required: true,
     },
     username: {
       type: String,
-      required: false,
+      // required: false,
       default: "",
     },
     media: {
       thumbnail: {
         type: String,
-        required: true,
+        // required: true,
       },
       gallery: {
-        e2: { type: String, required: true },
-        f1: { type: String, required: true },
-        f2: { type: String, required: true },
+        e2: { type: String  },
+        f1: { type: String },
+        f2: { type: String },
       },
     },
     about: {
       type: String,
-      required: true,
+      // required: true,
     },
     categoryTitle: {
       type: String,
-      required: true,
+      // required: true,
     },
     categories: [
       {
@@ -60,53 +60,53 @@ const shopScheama = new mongoose.Schema(
     ],
     ratings: {
       type: Number,
-      required: false,
+      // required: false,
       default: 0,
     },
     numOfratings: {
       type: Number,
-      required: false,
+      // required: false,
       default: 0,
     },
     paymentMethod: {
-      type: String,
-      required: true,
+      type: [String],
+      // required: true,
     },
     location: {
       type: String,
-      required: true,
+      // required: true,
     },
     website: {
       type: String,
-      required: true,
+      // required: true,
     },
     facebook: {
       type: String,
-      required: true,
+      // required: true,
     },
     instagram: {
       type: String,
-      required: true,
+      // required: true,
     },
     weekStart: {
       type: String,
-      required: true,
+      // required: true,
     },
     weekEnd: {
       type: String,
-      required: true,
+      // required: true,
     },
     onHour: {
       type: String,
-      required: true,
+      // required: true,
     },
     offHour: {
       type: String,
-      required: true,
+      // required: true,
     },
     cancelPolicy: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   {
