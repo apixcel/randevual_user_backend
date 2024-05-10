@@ -13,6 +13,7 @@ export const createBookingController = catchAsyncErrors(
         errors: firstError,
       });
     } else {
+     try {
       const { ...bookingData } = req.body;
       const booking = await bookingModel.create(bookingData);
       return res.status(201).json({
@@ -20,6 +21,9 @@ export const createBookingController = catchAsyncErrors(
         msg: "Booking has been created successfully.",
         booking,
       });
+     } catch (error) {
+      console.log(error)
+     }
     }
   }
 );
