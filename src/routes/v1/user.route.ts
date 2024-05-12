@@ -1,12 +1,18 @@
 import express from "express";
 import {
   deleteSingleUser,
+  getAuthor,
   getSingleUser,
   updateSingleUser,
 } from "../../controllers/user.controller";
+import { isValidToekn } from "../../middlewares/checkToken";
 
 const router = express.Router();
 // /user
+
+// get singleUserBy access Token
+router.get("/u/auth", isValidToekn, getAuthor);
+
 // Route to get a single user by ID
 router.get("/u/:id", getSingleUser);
 
