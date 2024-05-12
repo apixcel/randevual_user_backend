@@ -18,7 +18,7 @@ const shopScheama = new mongoose.Schema(
     media: {
       thumbnail: {
         type: String,
-        // required: true,
+        required: false,
       },
       gallery: {
         e2: { type: String  },
@@ -69,7 +69,7 @@ const shopScheama = new mongoose.Schema(
       default: 0,
     },
     paymentMethod: {
-      type: [String],
+      type: [String] || String,
       // required: true,
     },
     location: {

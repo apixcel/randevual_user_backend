@@ -30,10 +30,8 @@ export const getSingleUser = catchAsyncErrors(
 export const updateSingleUser = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const newUserData = req.body;
-    console.log("body",newUserData);
     
     const user = await User.findById(req.params.id);
-    console.log("user", user);
     
 
     if (!user) {
