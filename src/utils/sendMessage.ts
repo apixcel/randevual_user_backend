@@ -16,7 +16,7 @@ const sendMessage = async (
       pass: senderPassword,
     },
     tls: {
-      rejectUnauthorized: false
+      rejectUnauthorized: false,
     },
   });
 
@@ -31,7 +31,7 @@ const sendMessage = async (
     const info = await transporter.sendMail(mailOptions);
   } catch (error) {
     console.error("Error sending email:", error);
-    throw error; 
+    throw error;
   }
 };
 
