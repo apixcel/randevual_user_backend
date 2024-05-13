@@ -5,6 +5,7 @@ import errorMiddleware from "./middlewares/error";
 import morgan from "morgan";
 import connectDB from "./config/db";
 import routes from "./routes/v1";
+import path from "path";
 
 const app: Application = express();
 app.use(cors());
@@ -27,6 +28,10 @@ connectDB();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, 'shop')));
+
+app.set('view engine', 'html');
 
 const server = http.createServer(app);
 
