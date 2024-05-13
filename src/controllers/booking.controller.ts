@@ -77,6 +77,7 @@ export const getBookingByShopIdController = catchAsyncErrors(
 export const getUserBookingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const user_id = req.params.id;
+    
     const { filterType } = req.query;
     let find: { [key: string]: any } = {
       user_id,
