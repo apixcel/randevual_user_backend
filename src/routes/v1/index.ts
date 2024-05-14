@@ -15,6 +15,7 @@ import support from "./support.route";
 // import clientReview from "./client.review.route";
 import uploadFile from "./fileupload.route";
 import blog from "./blog.route";
+import whiteLabel from "./white.label.route";
 
 router.use("/auth", auth);
 router.use("/users", user);
@@ -31,5 +32,6 @@ router.use("/support", support);
 router.use("/file", uploadFile);
 
 router.use("/blog", blog);
+router.use("/whitelabel", whiteLabel);
 
 export default router;

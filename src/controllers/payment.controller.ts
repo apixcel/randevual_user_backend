@@ -1,24 +1,19 @@
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
-import billingModel from "../models/billing.model";
 import paymentModel from "../models/payment.model";
-
 const stripe = require("stripe")(process.env.STRIPE_S_K);
-
-/*
-Check if the customer exists in Stripe using the provided userId.
-If the customer doesn't exist, create a new customer in Stripe.
-If the card is not already saved for the customer, save it as a payment method.
-If the payment intent with the same card already exists, return its ID.
-If not, create a new payment intent without confirming it immediately.
-
-*/
 
 export const createPaymentController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
-    const { paymentMethodId, userId, amount, confirmNow, email } = req.body;
+    const {
+      paymentMethodId,
+      userId,
+      amount,
+      confirmNow = false,
+      email,
+    } = req.body;
 
     if (!errors.isEmpty()) {
       // Handle validation errors
@@ -32,7 +27,7 @@ export const createPaymentController = catchAsyncErrors(
       const intent = await stripe.paymentIntents.create({
         customer: customer.id,
         payment_method: paymentMethodId,
-        amount: 2000,
+        amount: parseInt(amount),
         currency: "usd",
         confirm: confirmNow,
       });

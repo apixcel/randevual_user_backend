@@ -6,8 +6,6 @@ import bookingModel from "../models/booking.model";
 export const createBookingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
-    console.log(errors);
-    
 
     if (!errors.isEmpty()) {
       const firstError = errors.array().map((error) => error.msg)[0];

@@ -2,9 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import billingModel from "../models/billing.model";
-const stripe = require("stripe")(
-  "sk_test_51Ih9MaIx2Kgj710NHWTajhRo4vRIEuLlZi6ye1SKf4DjFZJUOYuYoXKY6AFjnZBlCVy0udCDQ2BjU2l51zU3G7ER00qKakJoEu"
-);
+const stripe = require("stripe")(process.env.STRIPE_S_K);
 
 export const createBillingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -58,10 +56,10 @@ export const createBillingController = catchAsyncErrors(
   }
 );
 
-export const updateBillingController = catchAsyncErrors(
+export const getBillingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
-    const { customerId, paymentMethodId } = req.body;
+    const { userId } = req.body;
 
     if (!errors.isEmpty()) {
       const firstError = errors.array().map((error) => error.msg)[0];
@@ -70,13 +68,67 @@ export const updateBillingController = catchAsyncErrors(
       });
     } else {
       try {
+        const exsitBiller = await billingModel.findOne({ userId });
+        if (!exsitBiller) {
+          return res.status(422).json({
+            errors: "No biller at this user",
+          });
+        }
+        const customer = await stripe.customers.retrieve(
+          exsitBiller.customerId
+        );
+        //  if not have then return with mesg
+        if (!customer) {
+          return res.status(422).json({
+            errors: "No customer at this user",
+          });
+        }
+        const sources = await stripe.customers.listSources(customer.id, {
+          object: "card",
+        });
+
+        res.status(200).json({ success: true, sources: sources });
+      } catch (error) {
+        console.error("Error adding customer and payment method:", error);
+        res
+          .status(500)
+          .json({ error: "Unable to add customer and payment method" });
+      }
+    }
+  }
+);
+
+export const updateBillingController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    const { userId, paymentMethodId } = req.body;
+
+    if (!errors.isEmpty()) {
+      const firstError = errors.array().map((error) => error.msg)[0];
+      return res.status(422).json({
+        errors: firstError,
+      });
+    } else {
+      try {
+        const exsitBiller = await billingModel.findOne({ userId });
+        if (!exsitBiller) {
+          return res.status(422).json({
+            errors: "No biller at this user",
+          });
+        }
+        // also find a customer in stripe
+        const customer = await stripe.customers.retrieve(
+          exsitBiller.customerId
+        );
+        //  if not have then return with mesg
+
         // Attach the payment method to the customer
         await stripe.paymentMethods.attach(paymentMethodId, {
-          customer: customerId,
+          customer: customer.id,
         });
 
         // Set the payment method as the default for the customer
-        await stripe.customers.update(customerId, {
+        await stripe.customers.update(customer.id, {
           invoice_settings: {
             default_payment_method: paymentMethodId,
           },
@@ -90,5 +142,3 @@ export const updateBillingController = catchAsyncErrors(
     }
   }
 );
-
-// need to save paymentid and userid
