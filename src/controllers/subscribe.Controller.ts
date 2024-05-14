@@ -8,6 +8,18 @@ export const addSubscriber = catchAsyncError(
     try {
       sgMail.setApiKey(`${process.env.SENDGRID_API_KEY}`);
       const body = req.body;
+
+      const isExist = await subscribeModel.findOne(body);
+      if (isExist) {
+        return res.json({
+          message: "Already exist",
+          success: false,
+          isExist: true,
+          status: 201,
+          res: isExist,
+        });
+      }
+
       const addNewSubscriber = await subscribeModel.create(body);
 
       const emailSubject = `Request for Randevual Subscription`;
