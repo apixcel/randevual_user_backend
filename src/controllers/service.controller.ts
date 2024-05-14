@@ -65,6 +65,19 @@ export const getOwnerService = catchAsyncErrors(
 );
 
 
+export const deleteServiceController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
+    const updateService = await serviceModel.findByIdAndDelete(id);
+
+    return res.status(201).json({
+      success: true,
+      msg: "service deleted successfully",
+      updateService,
+    });
+  }
+);
+
 /*
 booking only logged shop
 */

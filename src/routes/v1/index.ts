@@ -16,6 +16,7 @@ import billings from "./billing.route";
 import uploadFile from "./fileupload.route";
 import blog from "./blog.route";
 import whiteLabel from "./white.label.route";
+import earning from "./earnning.route";
 
 router.use("/auth", auth);
 router.use("/users", user);
@@ -32,5 +33,6 @@ router.use("/billings", billings);
 router.use("/file", uploadFile);
 router.use("/blog", blog);
 router.use("/whitelabel", whiteLabel);
+router.use("/earning", earning);
 
 export default router;

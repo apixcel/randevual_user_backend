@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createBookingController,
+  deleteBookingByIdController,
   getAllBookingController,
   getBookingByIdController,
   getBookingByShopIdController,
@@ -15,5 +16,6 @@ router.get("/s/more", getAllBookingController);
 router.get("/s/:id", getBookingByIdController);
 router.get("/s/shop/:id", getBookingByShopIdController);
 router.get("/u/bookings/:id", getUserBookingController);
+router.delete("/b/delete/:id", deleteBookingByIdController);
 
 export default router;
