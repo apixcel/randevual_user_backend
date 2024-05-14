@@ -2,9 +2,12 @@ import express from "express";
 const router = express.Router();
 
 import auth from "./auth.route";
+import billings from "./billing.route";
+import blog from "./blog.route";
 import booking from "./booking.route";
 import category from "./category.route";
 import contact from "./contact.route";
+import uploadFile from "./fileupload.route";
 import payment from "./payment.route";
 import userReview from "./review.route";
 import service from "./service.route";
@@ -12,11 +15,8 @@ import shop from "./shop.route";
 import support from "./support.route";
 import team from "./team.route";
 import user from "./user.route";
-// import clientReview from "./client.review.route";
-import billing from "./billing.route";
-import blog from "./blog.route";
-import uploadFile from "./fileupload.route";
 import whiteLabel from "./white.label.route";
+
 router.use("/auth", auth);
 router.use("/users", user);
 router.use("/shop", shop);
@@ -28,9 +28,8 @@ router.use("/team", team);
 router.use("/review", userReview);
 router.use("/contact", contact);
 router.use("/support", support);
-// router.use("/clientreview", clientReview);
+router.use("/billings", billings);
 router.use("/file", uploadFile);
-router.use("/billing", billing);
 router.use("/blog", blog);
 router.use("/whitelabel", whiteLabel);
 
