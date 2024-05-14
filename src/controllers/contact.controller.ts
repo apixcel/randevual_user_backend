@@ -44,15 +44,12 @@ export const CreateContactController = catchAsyncErrors(
             `,
         };
 
-
-        
         const mailRes = await sgMail.send(msg);
 
-        if(mailRes[0].statusCode !== 202){
-return 
+        if (mailRes[0].statusCode !== 202) {
+          return;
         }
         console.log(mailRes);
-        
 
         // if (!mailsent)
         //   return next({ message: "Invalid email or password", status: 404 });
