@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const whiteLabelScheama = new mongoose.Schema(
   {
-    businessId: {
+    shopId: {
       type: String,
       required: true,
       unique: true,

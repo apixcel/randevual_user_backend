@@ -29,7 +29,7 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, 'shop')));
+app.use(express.static(path.join(__dirname, 'shops')));
 
 app.set('view engine', 'html');
 
