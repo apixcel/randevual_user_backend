@@ -24,14 +24,14 @@ export const checkEmailController = async (
     if (existingEmail) {
       return res.json({
         success: true,
-        exsit: true,
+        exist: true,
         message: "Email checked",
       });
     }
 
     return res.json({
       success: true,
-      exsit: false,
+      exist: false,
       message: "Email checked",
     });
   } catch (error) {

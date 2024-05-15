@@ -7,7 +7,7 @@ import connectDB from "./config/db";
 import routes from "./routes/v1";
 
 const app: Application = express();
-app.use(cors());
+app.use(cors({ origin: ["http://localhost:5173", "http://localhost:3000"] }));
 app.use(morgan("dev"));
 
 // Connect to Database
@@ -37,7 +37,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   });
   next();
 });
-
 
 const port: any = process.env.PORT || 5000;
 
