@@ -88,7 +88,7 @@ export const createBillingController = catchAsyncErrors(
 export const getBillingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
-    const { userId } = req.body;
+    const { userId } = req.query;
 
     if (!errors.isEmpty()) {
       const firstError = errors.array().map((error) => error.msg)[0];

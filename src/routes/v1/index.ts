@@ -12,11 +12,11 @@ import payment from "./payment.route";
 import userReview from "./review.route";
 import service from "./service.route";
 import shop from "./shop.route";
-import subscribe from "./subscribe.route";
 import support from "./support.route";
 import team from "./team.route";
 import user from "./user.route";
 import whiteLabel from "./white.label.route";
+
 router.use("/auth", auth);
 router.use("/users", user);
 router.use("/shop", shop);
@@ -32,6 +32,5 @@ router.use("/billings", billings);
 router.use("/file", uploadFile);
 router.use("/blog", blog);
 router.use("/whitelabel", whiteLabel);
-router.use("/subscribe", subscribe);
 
 export default router;

@@ -98,6 +98,19 @@ export const getUserBookingController = catchAsyncErrors(
   }
 );
 
+export const deleteBookingByIdController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
+    const deleteBooking = await bookingModel.findByIdAndDelete(id);
+
+    return res.status(201).json({
+      success: true,
+      msg: "Booking deleted successfully",
+      deleteBooking,
+    });
+  }
+);
+
 /*
 booking only logged shop
 */

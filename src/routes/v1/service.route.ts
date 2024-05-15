@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createServiceController,
+  deleteServiceController,
   getMoreServiceController,
   updateServiceController,
 } from "../../controllers/service.controller";
@@ -11,5 +12,6 @@ const router = express.Router();
 router.post("/s/create", validateService, createServiceController);
 router.get("/s/more", getMoreServiceController);
 router.patch("/s/:id", updateServiceController);
+router.delete("/s/:id", deleteServiceController);
 
 export default router;
