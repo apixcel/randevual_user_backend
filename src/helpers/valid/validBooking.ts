@@ -17,7 +17,7 @@ export const validateBooking = [
     .withMessage("Total must be a number"),
   check("date", "Date is required").notEmpty(),
   check("time", "Time is required").notEmpty(),
-  check("team", "Team ID is required").notEmpty(),
+  // check("team", "Team ID is required").notEmpty(),
   check("phone", "Phone number is required").notEmpty(),
   check("notes", "Notes are required").notEmpty(),
   check("visit", "Visit flag is required")
