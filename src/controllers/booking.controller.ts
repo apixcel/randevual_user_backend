@@ -75,20 +75,49 @@ export const getBookingByShopIdController = catchAsyncErrors(
 export const getUserBookingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const user_id = req.params.id;
-    
+
     const { filterType } = req.query;
-    let find: { [key: string]: any } = {
-      user_id,
-    };
+    let compareDateStage;
 
     if (filterType === "upcoming") {
-      find.date = { $gte: new Date() };
+      compareDateStage = {
+        $gte: new Date(),
+      };
     }
     if (filterType === "previous") {
-      find.date = { $lte: new Date() };
+      compareDateStage = {
+        $lt: new Date(),
+      };
     }
 
-    const data = await bookingModel.find(find);
+    const data = await bookingModel
+      .aggregate([
+        // stage -1 => find id based user booking
+        {
+          $match: {
+            user_id: user_id,
+          },
+        },
+
+        // stage - 2 => overwrite the existing date with dateString formate
+        {
+          $addFields: {
+            date: {
+              $dateFromString: {
+                dateString: "$date",
+              },
+            },
+          },
+        },
+
+        // stage-3 => find data based on the upcoming/previous
+        {
+          $match: {
+            date: compareDateStage,
+          },
+        },
+      ])
+      .exec();
 
     return res.status(201).json({
       success: true,
