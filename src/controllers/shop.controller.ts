@@ -32,7 +32,9 @@ export const createShopController = catchAsyncErrors(
 export const findShopByuserIdController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.params.userId;
-    const shop = await shopModel.findOne({ userId });
+    // console.log("");
+    
+    const shop = await shopModel.findOne({ business_id: userId });
 
     return res.status(200).json({
       success: true,
