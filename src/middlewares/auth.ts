@@ -1,8 +1,7 @@
-import { Response, NextFunction } from "express";
-import User from "../models/user.model";
+import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
+import User from "../models/user.model";
 import ErrorHandler from "../utils/errorhandler";
-
 
 export const isAuthenticatedUser = async (
   req: any,

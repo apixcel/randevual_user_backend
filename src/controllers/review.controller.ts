@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import catchAsyncError from "../middlewares/catchAsyncErrors";
 import { validationResult } from "express-validator";
-import userReviewModel from "../models/user.review.model";
+import catchAsyncError from "../middlewares/catchAsyncErrors";
 import shopModel from "../models/shop.model";
+import userReviewModel from "../models/user.review.model";
 
 //create
 export const createReviewController = async (req: Request, res: Response) => {
@@ -60,7 +60,7 @@ export const createReviewController = async (req: Request, res: Response) => {
 
 export const getAllUserReviewController = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
-    const getReviews = await userReviewModel.find();
+    const getReviews = await userReviewModel.find().populate("user");
 
     return res.status(201).json({
       success: true,

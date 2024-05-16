@@ -8,7 +8,9 @@ import routes from "./routes/v1";
 import path from "path";
 
 const app: Application = express();
-app.use(cors());
+app.use(cors({
+  origin:["http://localhost:3000","https://randevual-user-frontend.vercel.app","https://randevual.co"]
+}));
 app.use(morgan("dev"));
 
 // Connect to Database

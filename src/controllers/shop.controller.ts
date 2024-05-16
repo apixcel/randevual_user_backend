@@ -52,7 +52,13 @@ export const getShopByIdController = catchAsyncErrors(
       .populate("categories")
       .populate("team")
       .populate("services")
-      .populate("reviews");
+      .populate("reviews")
+      .populate({
+        path: "reviews",
+        populate: {
+          path: "user",
+        },
+      });
 
     return res.status(200).json({
       success: true,
