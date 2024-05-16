@@ -33,7 +33,7 @@ export const findShopByuserIdController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.params.userId;
     // console.log("");
-    
+
     const shop = await shopModel.findOne({ business_id: userId });
 
     return res.status(200).json({
@@ -52,7 +52,13 @@ export const getShopByIdController = catchAsyncErrors(
       .populate("categories")
       .populate("team")
       .populate("services")
-      .populate("reviews");
+      .populate("reviews")
+      .populate({
+        path: "reviews",
+        populate: {
+          path: "user",
+        },
+      });
 
     return res.status(200).json({
       success: true,
