@@ -16,6 +16,7 @@ import support from "./support.route";
 import team from "./team.route";
 import user from "./user.route";
 import whiteLabel from "./white.label.route";
+import subscribe from "./subscribe.route"
 
 router.use("/auth", auth);
 router.use("/users", user);
@@ -32,5 +33,6 @@ router.use("/billings", billings);
 router.use("/file", uploadFile);
 router.use("/blog", blog);
 router.use("/whitelabel", whiteLabel);
+router.use("/subscribe",subscribe)
 
 export default router;
