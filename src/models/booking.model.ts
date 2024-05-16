@@ -40,6 +40,7 @@ const bookingScheama = new mongoose.Schema(
     team: {
       type: Schema.Types.ObjectId,
       ref: "team",
+      default: "any"
     },
     phone: {
       type: String,
