@@ -16,13 +16,10 @@ export const SendSupportEmailController = catchAsyncError(
       });
     } else {
       const { ...supportData } = req.body;
-      const senderMail = `${process.env.SUPPORT_MAIL_NAME}`;
-      const senderPassword = `${process.env.SUPPORT_MAIL_PASS}`;
       const subject = `A new message from ${supportData.name}`;
-      const html = `<p>${supportData.message}</p>`;
       const msg = {
-        to: `${process.env.SENDGRID_FROM}`, // Change to your recipient
-        from: `${process.env.SENDGRID_FROM}`, // Change to your verified sender
+        to: `${process.env.SENDGRID_SUPPORT_FROM}`, 
+        from: `${process.env.SENDGRID_SUPPORT_FROM}`,
         subject,
         html: `
               <div style="display:flex;"><strong>Name</strong>:<p> ${supportData.name}</p></div>
@@ -32,10 +29,6 @@ export const SendSupportEmailController = catchAsyncError(
               `,
       };
       const mailRes = await sgMail.send(msg);
-
-      // if (!mailsent)
-      //     return next({ message: "Invalid email or password", status: 404,errors });
-
       return res.status(200).json({
         message: "Message sent successfully",
         status: 201,

@@ -14,15 +14,10 @@ export const CreateContactController = catchAsyncErrors(
       });
     } else {
       const { ...contactData } = req.body;
-
-      const senderMail = `${process.env.INFO_MAIL_NAME}`;
-      const senderPassword = `${process.env.INFO_MAIL_PASS}`;
       const subject = `A new message from ${contactData.name}`;
-      const html = `<p>${contactData.message}</p>`;
-
       const msg = {
-        to: `${process.env.SENDGRID_FROM}`, // Change to your recipient
-        from: `${process.env.SENDGRID_FROM}`, // Change to your verified sender
+        to: `${process.env.SENDGRID_CONTACT_FROM}`,
+        from: `${process.env.SENDGRID_CONTACT_FROM}`,
         subject,
         html: `
               <div style="display:flex;"><strong>Name</strong>:<p> ${contactData.name}</p></div>
@@ -32,16 +27,10 @@ export const CreateContactController = catchAsyncErrors(
               `,
       };
       const mailRes = await sgMail.send(msg);
-
-      // if (!mailsent)
-      //   return next({ message: "Invalid email or password", status: 404 });
-
       return res.status(200).json({
         message: "Message sent successfully",
         status: 201,
       });
-
-      
     }
   }
 );
