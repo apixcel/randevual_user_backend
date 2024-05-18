@@ -9,7 +9,7 @@ import path from "path";
 
 const app: Application = express();
 app.use(cors({
-  origin:["http://localhost:3000","https://randevual-user-frontend.vercel.app","https://randevual.co"]
+  origin:["http://localhost:3000","https://randevual-user-frontend.vercel.app","https://randevual.co", "http://localhost:4173"]
 }));
 app.use(morgan("dev"));
 

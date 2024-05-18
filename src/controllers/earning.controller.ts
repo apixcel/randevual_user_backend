@@ -10,6 +10,9 @@ export const getShopEarningController = catchAsyncError(
     const errors = validationResult(req);
     const shopId = req.params.id;
 
+    console.log("shopid", shopId);
+    
+
     if (!errors.isEmpty()) {
       const firstError = errors.array().map((error) => error.msg)[0];
       return res.status(422).json({
