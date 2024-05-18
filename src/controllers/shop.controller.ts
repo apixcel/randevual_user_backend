@@ -34,8 +34,9 @@ export const findShopByuserIdController = catchAsyncErrors(
   
     const userId = req.user?._id;
 
+    
+
     const shop = await shopModel.findOne({ business_id: userId });
-    console.log(shop, "shop name");
 
     return res.status(200).json({
       success: true,
@@ -83,7 +84,6 @@ export const getShopByServiceController = catchAsyncErrors(
         .populate("services")
         .populate("reviews");
 
-      console.log(shop);
 
       return res.status(200).json({
         success: true,

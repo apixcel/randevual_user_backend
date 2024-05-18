@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import bookingModel from "../models/booking.model";
+import mongoose from "mongoose";
+const { ObjectId } = mongoose.Types;
 
 export const createBookingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -30,14 +32,21 @@ export const createBookingController = catchAsyncErrors(
 
 export const getAllBookingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
+    const shop_id = req.params.id;
+
     try {
-      const booking = await bookingModel.find();
+      const booking = await bookingModel
+        .find({ shop_id })
+        .populate("shop_id")
+        .populate("user_id");
       return res.status(201).json({
         success: true,
         msg: "All Booking controller",
         booking,
       });
     } catch (error) {
+      console.log(error);
+
       res.status(500).json({
         success: false,
         msg: "Something went wrong",
@@ -73,18 +82,11 @@ export const getBookingByShopIdController = catchAsyncErrors(
     const data = await bookingModel.aggregate([
       {
         $match: {
-          shop_id: shop_id,
-        },
-      },
-      {
-        $lookup: {
-          from: "users", // The name of the User collection
-          localField: "user_id", // Field in bookingModel
-          foreignField: "_id", // Field in User collection
-          as: "userDetails", // Alias for the joined data
+          shop_id: new ObjectId(shop_id),
         },
       },
     ]);
+
     return res.status(201).json({
       success: true,
       msg: "Single shop bookings",
