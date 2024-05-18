@@ -14,7 +14,7 @@ export const createShopController = catchAsyncErrors(
       });
     } else {
       try {
-        const { ...shopData } = req.body.data;
+        const { ...shopData } = req.body;
         const shop = await shopModel.create(shopData);
 
         return res.status(201).json({
@@ -32,7 +32,9 @@ export const createShopController = catchAsyncErrors(
 export const findShopByuserIdController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.params.userId;
-    const shop = await shopModel.findOne({ userId });
+    // console.log("");
+
+    const shop = await shopModel.findOne({ business_id: userId });
 
     return res.status(200).json({
       success: true,
@@ -50,13 +52,48 @@ export const getShopByIdController = catchAsyncErrors(
       .populate("categories")
       .populate("team")
       .populate("services")
-      .populate("reviews");
+      .populate("reviews")
+      .populate({
+        path: "reviews",
+        populate: {
+          path: "user",
+        },
+      });
 
     return res.status(200).json({
       success: true,
       msg: "Shop has been retrived successfully.",
       shop,
     });
+  }
+);
+
+export const getShopByServiceController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { data: subService } = req.query;
+
+      const shop = await shopModel
+        .find({
+          categoryTitle: { $regex: new RegExp("^" + subService + "$", "i") },
+        })
+        .populate("categories")
+        .populate("team")
+        .populate("services")
+        .populate("reviews");
+
+      console.log(shop);
+
+      return res.status(200).json({
+        success: true,
+        msg: "Shop has been retrived successfully.",
+        shop,
+      });
+    } catch (error) {
+      return res.json({
+        data: "failed",
+      });
+    }
   }
 );
 
