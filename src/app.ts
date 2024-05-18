@@ -5,6 +5,7 @@ import errorMiddleware from "./middlewares/error";
 import morgan from "morgan";
 import connectDB from "./config/db";
 import routes from "./routes/v1";
+import path from "path";
 
 const app: Application = express();
 app.use(cors({ origin: ["http://localhost:5173", "http://localhost:3000"] }));
@@ -13,8 +14,24 @@ app.use(morgan("dev"));
 // Connect to Database
 connectDB();
 
+/*
+1. secure rate limit https
+2. cors proper config
+3. routing name conventaion
+4. regular update package
+5. req.body validate
+6. schema validation
+7. seeders
+8. logger
+9. 
+*/ 
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, 'shops')));
+
+app.set('view engine', 'html');
 
 const server = http.createServer(app);
 

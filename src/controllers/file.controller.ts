@@ -1,14 +1,14 @@
-import { NextFunction, Request, Response } from "express";
 import cloudinary from "cloudinary";
+import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
-import ErrorHandler from "../utils/errorhandler";
 import fs from "fs";
+import ErrorHandler from "../utils/errorhandler";
 
 cloudinary.v2.config({
-  cloud_name: "dp4yhqrnh",
-  api_key: "914369766169688",
-  api_secret: "CVODMe2XenCM6San6Xj2xGseZJg",
-  folder: "kazi",
+  cloud_name: process.env.CN_Cloud_name,
+  api_key: process.env.CN_Api_key,
+  api_secret: process.env.CN_Api_secret,
+  folder: process.env.CN_Folder,
 });
 
 export const uploadFile = async (
@@ -30,7 +30,7 @@ export const uploadFile = async (
 
     // Upload file to Cloudinary
     const result = await cloudinary.v2.uploader.upload(req.file.path, {
-      folder: "kazi",
+      folder: process.env.CN_Folder,
     });
     // Remove file from server after uploading to Cloudinary
     fs.unlink(req.file.path, (err) => {
@@ -61,14 +61,14 @@ export const replaceFile = async (
 
     const publicId = req.params.publicId;
 
-    const folder = "kazi"; // Specify your folder name here
+    const folder = process.env.CN_Folder;
     // Perform deletion
     const result1 = await cloudinary.v2.uploader.destroy(
       `${folder}/${publicId}`
     );
     // Upload file to Cloudinary
     const result2 = await cloudinary.v2.uploader.upload(req.file.path, {
-      folder: "kazi",
+      folder: process.env.CN_Folder,
     });
     // Remove file from server after uploading to Cloudinary
     fs.unlink(req.file.path, (err) => {

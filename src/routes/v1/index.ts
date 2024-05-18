@@ -12,9 +12,11 @@ import userReview from "./review.route";
 import payment from "./payment.route";
 import contact from "./contact.route";
 import support from "./support.route";
-// import clientReview from "./client.review.route";
+import billings from "./billing.route";
 import uploadFile from "./fileupload.route";
 import blog from "./blog.route";
+import whiteLabel from "./white.label.route";
+import earning from "./earnning.route";
 
 router.use("/auth", auth);
 router.use("/users", user);
@@ -27,11 +29,10 @@ router.use("/team", team);
 router.use("/review", userReview);
 router.use("/contact", contact);
 router.use("/support", support);
-// router.use("/clientreview", clientReview);
+router.use("/billings", billings);
 router.use("/file", uploadFile);
-
 router.use("/blog", blog);
-
-
+router.use("/whitelabel", whiteLabel);
+router.use("/earning", earning);
 
 export default router;

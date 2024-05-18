@@ -13,13 +13,17 @@ export const createBookingController = catchAsyncErrors(
         errors: firstError,
       });
     } else {
-      const { ...bookingData } = req.body;
-      const booking = await bookingModel.create(bookingData);
-      return res.status(201).json({
-        success: true,
-        msg: "Booking has been created successfully.",
-        booking,
-      });
+      try {
+        const { ...bookingData } = req.body;
+        const booking = await bookingModel.create(bookingData);
+        return res.status(201).json({
+          success: true,
+          msg: "Booking has been created successfully.",
+          booking,
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 );
@@ -63,6 +67,45 @@ export const getBookingByShopIdController = catchAsyncErrors(
       success: true,
       msg: "Single shop bookings",
       data,
+    });
+  }
+);
+
+// get user id based booking
+export const getUserBookingController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const user_id = req.params.id;
+    const { filterType } = req.query;
+    let find: { [key: string]: any } = {
+      user_id,
+    };
+
+    if (filterType === "upcoming") {
+      find.date = { $gte: new Date() };
+    }
+    if (filterType === "previous") {
+      find.date = { $lte: new Date() };
+    }
+
+    const data = await bookingModel.find(find);
+
+    return res.status(201).json({
+      success: true,
+      msg: "single User bookings",
+      data,
+    });
+  }
+);
+
+export const deleteBookingByIdController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
+    const deleteBooking = await bookingModel.findByIdAndDelete(id);
+
+    return res.status(201).json({
+      success: true,
+      msg: "Booking deleted successfully",
+      deleteBooking,
     });
   }
 );

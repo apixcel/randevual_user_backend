@@ -1,12 +1,26 @@
-import { Request, Response, NextFunction } from "express";
-import { validationResult } from "express-validator";
+import { NextFunction, Request, Response } from "express";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import User from "../models/user.model";
 import ErrorHandler from "../utils/errorhandler";
-import bcrypt from "bcrypt";
-import createToken from "../utils/jwtToken";
-import jwt from "jsonwebtoken";
-import sendMessage from "../utils/sendMessage";
+
+// get single use by token
+export const getAuthor = catchAsyncErrors(
+  async (req: any, res: Response, next: NextFunction) => {
+    const { userInfo } = req;
+
+    const user = await User.findById(userInfo._id).select("-password");
+
+    if (!user)
+      return next(
+        new ErrorHandler(`User does not exist with Id: ${userInfo._id}`, 400)
+      );
+
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  }
+);
 
 // Get Single User
 export const getSingleUser = catchAsyncErrors(

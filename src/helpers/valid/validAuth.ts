@@ -1,6 +1,6 @@
 import { check } from "express-validator";
 
-export const validSign = [
+export const validateSign = [
   check("firstname", "Firstname is required")
     .notEmpty()
     .isLength({
@@ -33,7 +33,7 @@ export const validSign = [
     .withMessage("password must contain a number"),
 ];
 
-export const validLogin = [
+export const validateLogin = [
   check("email").isEmail().withMessage("Must be a valid email address"),
   check("password", "password is required").notEmpty(),
   check("password")
@@ -44,4 +44,3 @@ export const validLogin = [
     .matches(/\d/)
     .withMessage("password must contain a number"),
 ];
-

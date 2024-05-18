@@ -1,4 +1,6 @@
 import express from "express";
+import { validateLogin, validateSign } from "../../helpers/valid/validAuth";
+
 import {
   activationController,
   checkEmailController,
@@ -12,7 +14,10 @@ const router = express.Router();
 router.post("/u/exist", checkEmailController);
 router.post("/register", registerCustomerController);
 
-router.post("/login", signinController);
+// router.post("/login", signinController);
+router.post("/register", validateSign, registerCustomerController);
+
+router.post("/login", validateLogin, signinController);
 
 router.post("/activation", activationController);
 

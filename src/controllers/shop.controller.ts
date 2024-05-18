@@ -13,13 +13,18 @@ export const createShopController = catchAsyncErrors(
         errors: firstError,
       });
     } else {
-      const { ...shopData } = req.body;
-      const shop = await shopModel.create(shopData);
-      return res.status(201).json({
-        success: true,
-        msg: "Shop has been created successfully.",
-        shop,
-      });
+      try {
+        const { ...shopData } = req.body.data;
+        const shop = await shopModel.create(shopData);
+
+        return res.status(201).json({
+          success: true,
+          msg: "Shop has been created successfully.",
+          shop,
+        });
+      } catch (error) {
+        console.log("error", error);
+      }
     }
   }
 );
@@ -29,7 +34,7 @@ export const findShopByuserIdController = catchAsyncErrors(
     const userId = req.params.userId;
     const shop = await shopModel.findOne({ userId });
 
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
       msg: "User shop has been retrived successfully.",
       shop,
@@ -47,7 +52,7 @@ export const getShopByIdController = catchAsyncErrors(
       .populate("services")
       .populate("reviews");
 
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
       msg: "Shop has been retrived successfully.",
       shop,
@@ -67,7 +72,7 @@ export const getShopMoreController = catchAsyncErrors(
       .select("shopName media categoryTitle ratings numOfratings")
       .exec();
 
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
       msg: "More shop has been retrived successfully.",
       shop,
@@ -111,7 +116,7 @@ export const getShopByIdUpdateController = catchAsyncErrors(
       useFindAndModify: false,
     });
 
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
       msg: "Shop has been updated successfully.",
       shop,

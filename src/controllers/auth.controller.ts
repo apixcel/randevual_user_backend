@@ -1,11 +1,10 @@
-import { Request, Response, NextFunction } from "express";
+import bcrypt from "bcryptjs";
+import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
-import ErrorHandler from "../utils/errorhandler";
 import userModel from "../models/user.model";
+import ErrorHandler from "../utils/errorhandler";
 import createToken from "../utils/jwtToken";
-import sendMessage from "../utils/sendMessage";
-import bcrypt from "bcryptjs";
 
 // Register Account
 export const checkEmailController = async (
