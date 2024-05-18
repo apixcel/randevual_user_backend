@@ -10,12 +10,7 @@ import routes from "./routes/v1";
 const app: Application = express();
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://randevual-user-frontend.vercel.app",
-      "https://randevual.co",
-      "http://127.0.0.1:3000",
-    ],
+    origin: "*",
   })
 );
 app.use(morgan("dev"));

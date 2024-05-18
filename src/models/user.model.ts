@@ -49,6 +49,7 @@ const userScheama = new mongoose.Schema(
     },
     user_type: {
       type: String,
+      enum: ["regular", "business"],
       default: "regular",
     },
   },

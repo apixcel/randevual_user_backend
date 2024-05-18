@@ -1,5 +1,5 @@
+import { NextFunction, Request, Response } from "express";
 import ErrorHandler from "../utils/errorhandler";
-import { Request, Response, NextFunction } from "express";
 
 const errorMiddleware = (
   err: any,
@@ -9,6 +9,7 @@ const errorMiddleware = (
 ) => {
   err.statusCode = err.statusCode || 500;
   err.message = err.message || "Internal Server Error";
+  console.log(err, "err");
 
   // Wrong Mongodb Id error
   if (err.name === "CastError") {

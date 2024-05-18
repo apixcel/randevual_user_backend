@@ -31,10 +31,11 @@ export const createShopController = catchAsyncErrors(
 
 export const findShopByuserIdController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
-    const userId = req.params.userId;
-    // console.log("");
+  
+    const userId = req.user?._id;
 
     const shop = await shopModel.findOne({ business_id: userId });
+    console.log(shop, "shop name");
 
     return res.status(200).json({
       success: true,
@@ -144,8 +145,8 @@ export const getShopMoreINServiceController = async (
 };
 
 export const getShopByIdUpdateController = catchAsyncErrors(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const id = req.params.id;
+  async (req: any, res: Response, next: NextFunction) => {
+    const id = req.user?._id;
     const newUserData = req.body;
     const shop = await shopModel.findByIdAndUpdate(id, newUserData, {
       new: true,
