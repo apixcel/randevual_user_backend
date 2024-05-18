@@ -62,7 +62,29 @@ export const getBookingByIdController = catchAsyncErrors(
 export const getBookingByShopIdController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const shop_id = req.params.id;
-    const data = await bookingModel.find({ shop_id });
+    const { date } = req.query;
+    let find: { [key: string]: any } = {
+      shop_id,
+    };
+    if (date) {
+      find.date = date;
+    }
+    // const data = await bookingModel.find(find).populate("user_id");
+    const data = await bookingModel.aggregate([
+      {
+        $match: {
+          shop_id: shop_id,
+        },
+      },
+      {
+        $lookup: {
+          from: "users", // The name of the User collection
+          localField: "user_id", // Field in bookingModel
+          foreignField: "_id", // Field in User collection
+          as: "userDetails", // Alias for the joined data
+        },
+      },
+    ]);
     return res.status(201).json({
       success: true,
       msg: "Single shop bookings",

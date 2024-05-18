@@ -40,7 +40,7 @@ const bookingScheama = new mongoose.Schema(
     team: {
       type: Schema.Types.ObjectId,
       ref: "team",
-      default: "any"
+      default: "any",
     },
     phone: {
       type: String,
@@ -70,8 +70,9 @@ const bookingScheama = new mongoose.Schema(
       required: true,
     },
     user_id: {
-      type: String,
-      required: true,
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      default: "any",
     },
   },
   {

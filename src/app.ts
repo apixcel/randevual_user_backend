@@ -1,18 +1,24 @@
-import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
+import express, { Application, NextFunction, Request, Response } from "express";
 import http from "http";
-import errorMiddleware from "./middlewares/error";
 import morgan from "morgan";
-import connectDB from "./config/db";
-import routes from "./routes/v1";
 import path from "path";
+import connectDB from "./config/db";
+import errorMiddleware from "./middlewares/error";
+import routes from "./routes/v1";
 
 const app: Application = express();
-app.use(cors({
-  origin:["http://localhost:3000","https://randevual-user-frontend.vercel.app","https://randevual.co"]
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://randevual-user-frontend.vercel.app",
+      "https://randevual.co",
+      "http://127.0.0.1:3000",
+    ],
+  })
+);
 app.use(morgan("dev"));
-
 // Connect to Database
 connectDB();
 
@@ -26,14 +32,14 @@ connectDB();
 7. seeders
 8. logger
 9. 
-*/ 
+*/
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, 'shops')));
+app.use(express.static(path.join(__dirname, "shops")));
 
-app.set('view engine', 'html');
+app.set("view engine", "html");
 
 const server = http.createServer(app);
 
@@ -56,7 +62,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   });
   next();
 });
-
 
 const port: any = process.env.PORT || 5000;
 
