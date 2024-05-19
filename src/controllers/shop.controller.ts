@@ -31,10 +31,7 @@ export const createShopController = catchAsyncErrors(
 
 export const findShopByuserIdController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
-  
     const userId = req.user?._id;
-
-    
 
     const shop = await shopModel.findOne({ business_id: userId });
 
@@ -83,7 +80,6 @@ export const getShopByServiceController = catchAsyncErrors(
         .populate("team")
         .populate("services")
         .populate("reviews");
-
 
       return res.status(200).json({
         success: true,
@@ -147,12 +143,22 @@ export const getShopMoreINServiceController = async (
 export const getShopByIdUpdateController = catchAsyncErrors(
   async (req: any, res: Response, next: NextFunction) => {
     const id = req.user?._id;
+    console.log(id);
+
     const newUserData = req.body;
-    const shop = await shopModel.findByIdAndUpdate(id, newUserData, {
-      new: true,
-      runValidators: true,
-      useFindAndModify: false,
-    });
+    const shop = await shopModel.updateOne(
+      { business_id: id },
+      {
+        $set: {
+          ...newUserData,
+        },
+      },
+      {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+      }
+    );
 
     return res.status(200).json({
       success: true,
