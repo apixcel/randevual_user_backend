@@ -160,20 +160,21 @@ export const getUserBookingController = catchAsyncErrors(
     const user_id = req.params.id;
 
     const { filterType } = req.query;
-    let status;
+    let filter: { [key: string]: any } = {
+      user_id,
+    };
 
     if (filterType === "upcoming") {
-      status = 0;
+      filter.status = 0;
     }
     if (filterType === "previous") {
-      status = 1;
+      filter.status = 1;
     }
     if (filterType === "cancel") {
-      status = 2;
+      filter.status = 2;
     }
 
-    const data = await bookingModel.find({ status });
-   
+    const data = await bookingModel.find(filter);
 
     return res.status(201).json({
       success: true,
