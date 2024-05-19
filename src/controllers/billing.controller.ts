@@ -111,7 +111,7 @@ export const getBillingController = catchAsyncErrors(
             errors: "No customer at this user",
           });
         }
-        console.log(customer, "sourse");
+        // console.log(customer, "sourse");
         const paymentMethods = await stripe.customers.listPaymentMethods(
           customer.id,
           {

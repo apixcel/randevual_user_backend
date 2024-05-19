@@ -61,49 +61,17 @@ export const createPaymentController = catchAsyncErrors(
 export const confirmPaymentController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // Retrieve the payment intent ID from the request body
+    
       const paymentIntentId = req.body.paymentIntentId;
 
-      // Confirm the payment intent
       const paymentIntent = await stripe.paymentIntents.confirm(
         paymentIntentId
       );
 
-      // Handle the payment confirmation response
-      if (paymentIntent.status === "succeeded") {
-        // Payment succeeded, split the payment between client and company
-        const transferGroup = paymentIntent.id; // Use the payment intent ID as the transfer group
-
-        // Transfer 80% to client's account
-        const clientTransfer = await stripe.transfers.create({
-          amount: Math.round(paymentIntent.amount * 0.8), // 80% of the payment amount
-          currency: paymentIntent.currency,
-          destination: "client_connected_account_id", // Replace with your client's connected account ID
-          transfer_group: "",
-        });
-
-        // Transfer 20% to company's account
-        const companyTransfer = await stripe.transfers.create({
-          amount: Math.round(paymentIntent.amount * 0.2), // 20% of the payment amount
-          currency: paymentIntent.currency,
-          destination: "company_connected_account_id", // Replace with your company's connected account ID
-          transfer_group: "",
-        });
-
-        // Handle successful transfers
-        return res.status(200).json({
-          success: true,
-          msg: "Payment confirmed and split successfully",
-          clientTransferId: clientTransfer.id,
-          companyTransferId: companyTransfer.id,
-        });
-      } else {
-        // Payment failed
-        return res.status(400).json({
-          success: false,
-          error: "Payment confirmation failed",
-        });
-      }
+      return res.status(400).json({
+        success: false,
+        error: "Payment confirmation failed",
+      });
     } catch (error) {
       console.error("Error confirming payment:", error);
       return res.status(500).json({
