@@ -16,8 +16,57 @@ export const createBookingController = catchAsyncErrors(
       });
     } else {
       try {
-        const { ...bookingData } = req.body;
-        const booking = await bookingModel.create(bookingData);
+        const {
+          list,
+          total,
+          date,
+          time,
+          team,
+          phone,
+          notes,
+          visit,
+          payment,
+          status,
+          user_id,
+          shop_id,
+        } = req.body;
+
+        // if no team id
+        if (team === "any" || !team) {
+          const booking = await bookingModel.create({
+            list,
+            total,
+            date,
+            time,
+            phone,
+            notes,
+            visit,
+            payment,
+            status,
+            user_id,
+            shop_id,
+          });
+          return res.status(201).json({
+            success: true,
+            msg: "Booking has been created successfully.",
+            booking,
+          });
+        }
+
+        const booking = await bookingModel.create({
+          team,
+          list,
+          total,
+          date,
+          time,
+          phone,
+          notes,
+          visit,
+          payment,
+          status,
+          user_id,
+          shop_id,
+        });
         return res.status(201).json({
           success: true,
           msg: "Booking has been created successfully.",
