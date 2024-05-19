@@ -69,9 +69,31 @@ export const getShopByIdController = catchAsyncErrors(
 
 export const getShopByServiceController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { data: subService } = req.query;
 
+    /*
+    address: '123 Main St',
+    location: {
+      type: 'Point',
+      coordinates: [-73.856077, 40.848447],
+    }
+    */ 
+    try {
+      // const { lng, lat, maxDistance = 5000 } = req.query;
+      const { data: subService } = req.query;
+/*
+{
+      location: {
+        $near: {
+          $geometry: {
+            type: 'Point',
+            coordinates: [parseFloat(lng), parseFloat(lat)],
+          },
+          $maxDistance: parseInt(maxDistance), // Convert to meters
+        },
+      },
+      categoryTitle: { $regex: new RegExp("^" + subService + "$", "i") },
+    }
+*/ 
       const shop = await shopModel
         .find({
           categoryTitle: { $regex: new RegExp("^" + subService + "$", "i") },
