@@ -15,7 +15,7 @@ router.post("/u/exist", checkEmailController);
 router.post("/register", registerCustomerController);
 
 // router.post("/login", signinController);
-router.post("/register", validateSign, registerCustomerController);
+// router.post("/register", validateSign, registerCustomerController);
 
 router.post("/login", validateLogin, signinController);
 
