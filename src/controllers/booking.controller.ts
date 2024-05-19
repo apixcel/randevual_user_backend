@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
+import mongoose from "mongoose";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import bookingModel from "../models/booking.model";
-import mongoose from "mongoose";
 const { ObjectId } = mongoose.Types;
 
 export const createBookingController = catchAsyncErrors(
@@ -95,7 +95,6 @@ export const getBookingByShopIdController = catchAsyncErrors(
     //     },
     //   },
     // ]);
-
 
     const data = await bookingModel.find(find).populate("user_id");
     return res.status(201).json({
