@@ -160,47 +160,20 @@ export const getUserBookingController = catchAsyncErrors(
     const user_id = req.params.id;
 
     const { filterType } = req.query;
-    let compareDateStage;
+    let status;
 
     if (filterType === "upcoming") {
-      compareDateStage = {
-        $gte: new Date(),
-      };
+      status = 0;
     }
     if (filterType === "previous") {
-      compareDateStage = {
-        $lt: new Date(),
-      };
+      status = 1;
+    }
+    if (filterType === "cancel") {
+      status = 2;
     }
 
-    const data = await bookingModel
-      .aggregate([
-        // stage -1 => find id based user booking
-        {
-          $match: {
-            user_id: user_id,
-          },
-        },
-
-        // stage - 2 => overwrite the existing date with dateString formate
-        {
-          $addFields: {
-            date: {
-              $dateFromString: {
-                dateString: "$date",
-              },
-            },
-          },
-        },
-
-        // stage-3 => find data based on the upcoming/previous
-        {
-          $match: {
-            date: compareDateStage,
-          },
-        },
-      ])
-      .exec();
+    const data = await bookingModel.find({ status });
+   
 
     return res.status(201).json({
       success: true,
