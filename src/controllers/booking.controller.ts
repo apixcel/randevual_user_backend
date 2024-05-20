@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
+import mongoose from "mongoose";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import bookingModel from "../models/booking.model";
-import mongoose from "mongoose";
 const { ObjectId } = mongoose.Types;
 
 export const createBookingController = catchAsyncErrors(
@@ -16,8 +16,57 @@ export const createBookingController = catchAsyncErrors(
       });
     } else {
       try {
-        const { ...bookingData } = req.body;
-        const booking = await bookingModel.create(bookingData);
+        const {
+          list,
+          total,
+          date,
+          time,
+          team,
+          phone,
+          notes,
+          visit,
+          payment,
+          status,
+          user_id,
+          shop_id,
+        } = req.body;
+
+        // if no team id
+        if (team === "any" || !team) {
+          const booking = await bookingModel.create({
+            list,
+            total,
+            date,
+            time,
+            phone,
+            notes,
+            visit,
+            payment,
+            status,
+            user_id,
+            shop_id,
+          });
+          return res.status(201).json({
+            success: true,
+            msg: "Booking has been created successfully.",
+            booking,
+          });
+        }
+
+        const booking = await bookingModel.create({
+          team,
+          list,
+          total,
+          date,
+          time,
+          phone,
+          notes,
+          visit,
+          payment,
+          status,
+          user_id,
+          shop_id,
+        });
         return res.status(201).json({
           success: true,
           msg: "Booking has been created successfully.",
@@ -96,7 +145,6 @@ export const getBookingByShopIdController = catchAsyncErrors(
     //   },
     // ]);
 
-
     const data = await bookingModel.find(find).populate("user_id");
     return res.status(201).json({
       success: true,
@@ -112,47 +160,21 @@ export const getUserBookingController = catchAsyncErrors(
     const user_id = req.params.id;
 
     const { filterType } = req.query;
-    let compareDateStage;
+    let filter: { [key: string]: any } = {
+      user_id,
+    };
 
     if (filterType === "upcoming") {
-      compareDateStage = {
-        $gte: new Date(),
-      };
+      filter.status = 0;
     }
     if (filterType === "previous") {
-      compareDateStage = {
-        $lt: new Date(),
-      };
+      filter.status = 1;
+    }
+    if (filterType === "cancel") {
+      filter.status = 2;
     }
 
-    const data = await bookingModel
-      .aggregate([
-        // stage -1 => find id based user booking
-        {
-          $match: {
-            user_id: user_id,
-          },
-        },
-
-        // stage - 2 => overwrite the existing date with dateString formate
-        {
-          $addFields: {
-            date: {
-              $dateFromString: {
-                dateString: "$date",
-              },
-            },
-          },
-        },
-
-        // stage-3 => find data based on the upcoming/previous
-        {
-          $match: {
-            date: compareDateStage,
-          },
-        },
-      ])
-      .exec();
+    const data = await bookingModel.find(filter);
 
     return res.status(201).json({
       success: true,

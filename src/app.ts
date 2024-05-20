@@ -9,7 +9,9 @@ import routes from "./routes/v1";
 
 const app: Application = express();
 app.use(
-  cors()
+  cors({
+    origin: "*",
+  })
 );
 app.use(morgan("dev"));
 // Connect to Database

@@ -21,7 +21,7 @@ const shopScheama = new mongoose.Schema(
         required: false,
       },
       gallery: {
-        e2: { type: String  },
+        e2: { type: String },
         f1: { type: String },
         f2: { type: String },
       },
@@ -72,9 +72,12 @@ const shopScheama = new mongoose.Schema(
       type: [String] || String,
       // required: true,
     },
-    location: {
+    address: {
       type: String,
-      // required: true,
+    },
+    location: {
+      type: { type: String, enum: ["Point"], required: true },
+      coordinates: { type: [Number], required: true },
     },
     website: {
       type: String,
@@ -114,5 +117,6 @@ const shopScheama = new mongoose.Schema(
     versionKey: false,
   }
 );
+shopScheama.index({ location: '2dsphere' });
 
 export default mongoose.model("shop", shopScheama);

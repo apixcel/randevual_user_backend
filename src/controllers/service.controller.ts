@@ -64,7 +64,6 @@ export const getOwnerService = catchAsyncErrors(
   }
 );
 
-
 export const deleteServiceController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
