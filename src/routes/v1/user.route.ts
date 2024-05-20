@@ -11,7 +11,7 @@ const router = express.Router();
 // /user
 
 // get singleUserBy access Token
-router.get("/u/auth", isValidToekn, getAuthor);
+router.get("/u/g/auth", isValidToekn, getAuthor);
 
 // Route to get a single user by ID
 router.get("/u/:id", getSingleUser);
