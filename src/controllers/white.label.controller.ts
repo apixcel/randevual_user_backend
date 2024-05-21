@@ -10,6 +10,13 @@ export const createWhiteLabelController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     const { shopId, label_id } = req.body;
+    const userId = req.user?._id;
+
+    if (!userId) {
+      return res
+        .status(200)
+        .json({ success: "false", message: "You are not authorized" });
+    }
 
     if (!errors.isEmpty()) {
       const firstError = errors.array().map((error) => error.msg)[0];
@@ -38,8 +45,6 @@ export const createWhiteLabelController = catchAsyncErrors(
             errors: "This white label already exsit!. Please try another",
           });
         }
-
-        const data = shop;
 
         const template = `
         <!DOCTYPE html>
@@ -112,7 +117,7 @@ export const createWhiteLabelController = catchAsyncErrors(
                 ></span>
               </p>
               <p class="text-secondaryTxt relative">
-                ${location}
+                ${shop?.location}
                 <span
                   class="absolute w-1 h-1 bg-secondaryTxt rounded-full top-[45%] right-[-12px]"
                 ></span>
@@ -697,13 +702,13 @@ export const createWhiteLabelController = catchAsyncErrors(
         fs.writeFileSync(outputFile, template);
 
         const live_url = `https://shop.randevual.co/${label_id}`;
-        console.log("live",live_url);
-        
+        console.log("live", live_url);
 
         const whiteLabel = await whiteLabelModel.create({
           shopId,
           label_id,
           live_url,
+          status: "no",
         });
 
         res.status(200).json({ success: true, whiteLabel });
@@ -714,5 +719,55 @@ export const createWhiteLabelController = catchAsyncErrors(
           .json({ error: "Unable to add customer and payment method" });
       }
     }
+  }
+);
+
+export const findWhiteLabelingByShopController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.user?._id;
+    const shopId = req.params.id;
+
+    if (userId) {
+      const whitelabel = await whiteLabelModel.findOne({ shopId: shopId });
+
+      return res.status(200).json({
+        success: true,
+        msg: "WhiteLabeling has been retrived successfully.",
+        whitelabel,
+      });
+    }
+    return res.status(200).json({
+      success: false,
+      msg: "Something went wrong",
+    });
+  }
+);
+export const updateWhiteLabelingByShopController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.user?._id;
+    const shopId = req.params.id;
+    const data = req.body;
+
+    console.log("body", data);
+
+    if (userId) {
+      const whitelabel = await whiteLabelModel.updateOne(
+        { shopId: shopId },
+        data,
+        {
+          new: true,
+        }
+      );
+
+      return res.status(200).json({
+        success: true,
+        msg: "WhiteLabeling status has been chnaged successfully.",
+        whitelabel,
+      });
+    }
+    return res.status(200).json({
+      success: false,
+      msg: "Something went wrong",
+    });
   }
 );

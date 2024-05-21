@@ -80,6 +80,10 @@ export const getShopByServiceController = catchAsyncErrors(
     try {
       // const { lng, lat, maxDistance = 5000 } = req.query;
       const { data: subService } = req.query;
+
+      console.log("query", req.query);
+      
+
 /*
 {
       location: {
