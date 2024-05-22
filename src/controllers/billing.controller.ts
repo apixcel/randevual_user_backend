@@ -8,8 +8,6 @@ export const createBillingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     const { userId, email, paymentMethodId, cardholderName } = req.body;
-    console.log(req.body, "thisi");
-
     if (!errors.isEmpty()) {
       const firstError = errors.array().map((error) => error.msg)[0];
       return res.status(422).json({

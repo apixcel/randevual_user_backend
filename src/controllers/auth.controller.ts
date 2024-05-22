@@ -63,6 +63,7 @@ export const registerCustomerController = async (
       lastname,
       password: hashedPassword,
       phone,
+      user_type: ["user"],
     });
 
     const token = createToken(user, "7d");
@@ -98,15 +99,13 @@ export const registerBusinessController = async (
     }
     const hashedPassword = await bcrypt.hash(password, 10);
 
-
-
     const user = await userModel.create({
       email,
       firstname,
       lastname,
       password: hashedPassword,
       phone,
-      // user_type: "business"
+      user_type: ["business"],
     });
 
     const existsShop = await shopModel.findOne({ business_id: user?._id });
@@ -169,10 +168,30 @@ export const signinController = async (
     if (!user) {
       throw new ErrorHandler("Email is not registered", 400);
     }
+
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
       throw new ErrorHandler("Password is not match", 400);
     }
+
+    if (
+      user.user_type.includes("user") &&
+      !user.user_type.includes("business")
+    ) {
+      user.user_type.push("business");
+      user.updatedAt = new Date();
+      await user.save();
+
+      const shop = await shopModel.findOne({ business_id: user._id });
+
+      if (!shop) {
+        const createEmtyshop = await shopModel.create({
+          business_id: user._id,
+        });
+      }
+      res.status(200).json(user);
+    }
+
     const token = createToken(user, "7d");
     const userWithoutPassword = user.toObject();
     const { password: _, ...userResponse } = userWithoutPassword;

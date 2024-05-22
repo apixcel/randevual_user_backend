@@ -23,7 +23,6 @@ export const createPaymentController = catchAsyncErrors(
       const customer = await stripe.customers.create({
         email,
       });
-      console.log(typeof amount, "amntathaafa");
 
       const intent = await stripe.paymentIntents.create({
         customer: customer.id,
@@ -62,7 +61,6 @@ export const createPaymentController = catchAsyncErrors(
 export const confirmPaymentController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-    
       const paymentIntentId = req.body.paymentIntentId;
 
       const paymentIntent = await stripe.paymentIntents.confirm(

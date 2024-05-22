@@ -171,11 +171,6 @@ export const getShopMoreINServiceController = async (
 export const updateShopByIdUpdateController = catchAsyncErrors(
   async (req: any, res: Response, next: NextFunction) => {
     const id = req.user?._id;
-
-    console.log("id", id);
-    console.log("body", req.body);
-    
-
     const newUserData = req.body;
     const shop = await shopModel.updateOne(
       { business_id: id },
