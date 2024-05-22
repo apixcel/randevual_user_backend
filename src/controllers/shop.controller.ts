@@ -91,6 +91,8 @@ export const getShopByServiceController = catchAsyncErrors(
           $maxDistance: parseInt(maxDistance), // Convert to meters
         },
       },
+      time:{},
+      
       categoryTitle: { $regex: new RegExp("^" + subService + "$", "i") },
     }
 */ 
@@ -189,3 +191,4 @@ export const getShopByIdUpdateController = catchAsyncErrors(
     });
   }
 );
+
