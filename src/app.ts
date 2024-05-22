@@ -8,16 +8,11 @@ import errorMiddleware from "./middlewares/error";
 import routes from "./routes/v1";
 
 const app: Application = express();
-
-const corsOptions = {
-  credentials: true,
-  origin: "*",
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: 'Content-Type,Authorization',
-};
-
-app.use(cors(corsOptions));
-
+app.use(
+  cors({
+    origin: ["http://localhost:8081", "http://localhost:3000", "*"],
+  })
+);
 app.use(morgan("dev"));
 // Connect to Database
 connectDB();

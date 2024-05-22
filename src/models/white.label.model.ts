@@ -17,10 +17,19 @@ const whiteLabelScheama = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    businessId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    status: {
+      type: String,
+      enum: ["yes", "no"],
+    },
   },
   {
     timestamps: true,
-    versionKey: false,
+    // versionKey: false,
   }
 );
 

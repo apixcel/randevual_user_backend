@@ -15,13 +15,13 @@ export const validateSign = [
       max: 32,
     })
     .withMessage("Last name must be between 3 to 32 characters"),
-  check("username", "Username is required")
-    .notEmpty()
-    .isLength({
-      min: 3,
-      max: 32,
-    })
-    .withMessage("Username must be between 3 to 32 characters"),
+  // check("username", "Username is required")
+  //   .notEmpty()
+  //   .isLength({
+  //     min: 3,
+  //     max: 32,
+  //   })
+  //   .withMessage("Username must be between 3 to 32 characters"),
   check("email").isEmail().withMessage("Must be a valid email address"),
   check("password", "password is required").notEmpty(),
   check("password")
