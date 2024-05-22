@@ -69,15 +69,15 @@ const shopScheama = new mongoose.Schema(
       default: 0,
     },
     paymentMethod: {
-      type: [String] || String,
+      type: String,
       // required: true,
     },
     address: {
       type: String,
     },
     location: {
-      type: { type: String, enum: ["Point"], required: true },
-      coordinates: { type: [Number], required: true },
+      type: { type: String, enum: ["Point"], required: false },
+      coordinates: { type: [Number], required: false },
     },
     website: {
       type: String,
@@ -120,3 +120,9 @@ const shopScheama = new mongoose.Schema(
 shopScheama.index({ location: '2dsphere' });
 
 export default mongoose.model("shop", shopScheama);
+
+
+// location: {
+//   type: "Point",
+//   coordinates: [-73.987501, 40.748817]
+// },

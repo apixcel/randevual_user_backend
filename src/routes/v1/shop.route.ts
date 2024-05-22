@@ -3,10 +3,10 @@ import {
   createShopController,
   findShopByuserIdController,
   getShopByIdController,
-  getShopByIdUpdateController,
   getShopByServiceController,
   getShopMoreController,
   getShopMoreINServiceController,
+  updateShopByIdUpdateController,
 } from "../../controllers/shop.controller";
 import { validateShop } from "../../helpers/valid/validShop";
 import { authorizeRoles, isAuthenticatedUser } from "../../middlewares/auth";
@@ -31,7 +31,7 @@ router.post("/s/create", validateShop, createShopController);
 router.patch(
   "/s/u/update",
   isAuthenticatedUser,
-  authorizeRoles("business"),
-  getShopByIdUpdateController
+  // authorizeRoles("business"),
+  updateShopByIdUpdateController
 );
 export default router;
