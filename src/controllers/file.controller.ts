@@ -52,6 +52,9 @@ export const replaceFile = async (
   try {
     // Check for validation errors
     const errors = validationResult(req);
+    const publicId = req.params.publicId;
+    console.log(publicId)
+    console.log(req)
     if (!errors.isEmpty()) {
       throw new ErrorHandler("Validation Error", 400);
     }
@@ -59,13 +62,13 @@ export const replaceFile = async (
       throw new ErrorHandler("No file uploaded", 400);
     }
 
-    const publicId = req.params.publicId;
 
     const folder = process.env.CN_Folder;
     // Perform deletion
     const result1 = await cloudinary.v2.uploader.destroy(
       `${folder}/${publicId}`
     );
+    console.log(result1)
     // Upload file to Cloudinary
     const result2 = await cloudinary.v2.uploader.upload(req.file.path, {
       folder: process.env.CN_Folder,
@@ -78,6 +81,7 @@ export const replaceFile = async (
     });
     res.status(200).json({ url: result2.secure_url });
   } catch (error) {
+    console.log(error)
     next(error);
   }
 };
