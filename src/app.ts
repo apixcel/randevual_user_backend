@@ -8,7 +8,11 @@ import errorMiddleware from "./middlewares/error";
 import routes from "./routes/v1";
 
 const app: Application = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(morgan("dev"));
 // Connect to Database
 connectDB();
