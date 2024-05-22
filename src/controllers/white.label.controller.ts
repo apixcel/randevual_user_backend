@@ -11,7 +11,7 @@ export const createWhiteLabelController = catchAsyncErrors(
     const errors = validationResult(req);
     const { shopId, label_id } = req.body;
     const userId = req.user?._id;
-
+    
     if (!userId) {
       return res
         .status(200)
@@ -709,6 +709,7 @@ export const createWhiteLabelController = catchAsyncErrors(
           label_id,
           live_url,
           status: "no",
+          businessId: userId
         });
 
         res.status(200).json({ success: true, whiteLabel });

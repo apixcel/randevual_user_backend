@@ -117,6 +117,7 @@ const shopScheama = new mongoose.Schema(
     versionKey: false,
   }
 );
+
 shopScheama.index({ location: '2dsphere' });
 
 export default mongoose.model("shop", shopScheama);

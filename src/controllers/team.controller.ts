@@ -19,8 +19,6 @@ export const createTeamController = catchAsyncErrors(
       const { ...teamData } = req.body;
       console.log("team", teamData);
 
-      const team = await teamModel.create(teamData);
-
       const shop = await shopModel.findOne({ business_id: userId });
 
       if (!shop) {
@@ -29,6 +27,10 @@ export const createTeamController = catchAsyncErrors(
           msg: "Shop not found.",
         });
       }
+
+      const team = await teamModel.create(teamData);
+
+      
 
       shop.team.push(team._id);
       await shop.save();

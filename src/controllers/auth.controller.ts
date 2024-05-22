@@ -98,13 +98,21 @@ export const registerBusinessController = async (
     }
     const hashedPassword = await bcrypt.hash(password, 10);
 
+
+
     const user = await userModel.create({
       email,
       firstname,
       lastname,
       password: hashedPassword,
       phone,
+      // user_type: "business"
     });
+
+    const existsShop = await shopModel.findOne({ business_id: user?._id });
+    if (!existsShop) {
+      await shopModel.create({ business_id: user?._id });
+    }
 
     const token = createToken(user, "7d");
     const userWithoutPassword = user.toObject();
@@ -203,13 +211,20 @@ export const signinBusinessController = async (
     }
     const token = createToken(user, "7d");
 
-
     const existsShop = await shopModel.findOne({ business_id: user?._id });
-    if (!existsShop) {
-      await shopModel.create({ business_id: user?._id });
-    }
+    // if (!existsShop) {
+    //   await shopModel.create({ business_id: user?._id });
+    //   await userModel.findByIdAndUpdate(
+    //     user?._id,
+    //     {
+    //       user_type: "business",
+    //     },
+    //     {
+    //       new: true,
+    //     }
+    //   );
+    // }
 
-    
     const userWithoutPassword = user.toObject();
     const { password: _, ...userResponse } = userWithoutPassword;
 

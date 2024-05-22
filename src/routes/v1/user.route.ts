@@ -6,6 +6,7 @@ import {
   updateSingleUser,
 } from "../../controllers/user.controller";
 import { isValidToekn } from "../../middlewares/checkToken";
+import { isAuthenticatedUser } from "../../middlewares/auth";
 
 const router = express.Router();
 // /user
@@ -17,7 +18,7 @@ router.get("/u/g/auth", isValidToekn, getAuthor);
 router.get("/u/:id", getSingleUser);
 
 // Route to update a user by ID
-router.put("/u/:id", updateSingleUser);
+router.patch("/u/update", isAuthenticatedUser, updateSingleUser);
 
 // Route to delete a user by ID
 router.delete("/u/:id", deleteSingleUser);

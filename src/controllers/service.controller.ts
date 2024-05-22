@@ -2,10 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import serviceModel from "../models/service.model";
+import shopModel from "../models/shop.model";
 
 export const createServiceController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
+    const userId = req.user?._id;
 
     if (!errors.isEmpty()) {
       const firstError = errors.array().map((error) => error.msg)[0];
@@ -14,7 +16,30 @@ export const createServiceController = catchAsyncErrors(
       });
     } else {
       const { ...serviceData } = req.body;
+
+      const shop = await shopModel.findOne({ business_id: userId });
+
+      if(!shop) {
+        return res.status(500).json({message: "failed"})
+      }
+
+      console.log("shop", shop);
+      
       const service = await serviceModel.create(serviceData);
+
+      // if(!service) {
+      //   throw new Error("Service");
+      // }
+
+      // shop.team.push(team._id);
+      // await shop.save();
+
+      shop &&
+        shop.updateOne(shop?._id, {
+          ...shop?.services,
+          serviceData,
+        });
+
       return res.status(201).json({
         success: true,
         msg: "Service has been created successfully.",
