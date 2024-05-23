@@ -19,26 +19,19 @@ export const createServiceController = catchAsyncErrors(
 
       const shop = await shopModel.findOne({ business_id: userId });
 
-      if(!shop) {
-        return res.status(500).json({message: "failed"})
+      if (!shop) {
+        return res.status(500).json({ message: "failed" });
       }
 
-      console.log("shop", shop);
-      
       const service = await serviceModel.create(serviceData);
+      console.log("service", service);
 
-      // if(!service) {
-      //   throw new Error("Service");
-      // }
-
-      // shop.team.push(team._id);
-      // await shop.save();
-
-      shop &&
-        shop.updateOne(shop?._id, {
-          ...shop?.services,
-          serviceData,
-        });
+      const serviceId = service && service?._id;
+      
+      await shopModel.updateOne(
+        { business_id: userId },
+        { $push: { services: serviceId } }
+      );
 
       return res.status(201).json({
         success: true,
@@ -91,13 +84,25 @@ export const getOwnerService = catchAsyncErrors(
 
 export const deleteServiceController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
-    const id = req.params.id;
-    const updateService = await serviceModel.findByIdAndDelete(id);
+    const deleteId = req.params.id;
+    const deleteService = await serviceModel.findByIdAndDelete(deleteId);
+
+    if (!deleteService) {
+      return res.status(404).json({
+        success: false,
+        msg: "Team member not found.",
+      });
+    }
+
+    await shopModel.updateOne(
+      { services: deleteId },
+      { $pull: { services: deleteId }, new: true }
+    );
 
     return res.status(201).json({
       success: true,
       msg: "service deleted successfully",
-      updateService,
+      deleteService,
     });
   }
 );
