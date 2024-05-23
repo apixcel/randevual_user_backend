@@ -9,14 +9,29 @@ import {
   getShopMoreINServiceController,
 } from "../../controllers/shop.controller";
 import { validateShop } from "../../helpers/valid/validShop";
+import { authorizeRoles, isAuthenticatedUser } from "../../middlewares/auth";
 
 const router = express.Router();
 
-router.post("/s/create", validateShop, createShopController);
 router.get("/s/more", getShopMoreController);
 router.get("/s/in", getShopMoreINServiceController);
-router.get("/s/u/:userId", findShopByuserIdController);
+
 router.get("/s/:id", getShopByIdController);
 router.get("/s/all/subservice", getShopByServiceController);
-router.patch("/s/update/:id",getShopByIdUpdateController);
+
+// business
+
+router.get(
+  "/s/u/get",
+  isAuthenticatedUser,
+  // authorizeRoles("business")
+  findShopByuserIdController
+);
+router.post("/s/create", validateShop, createShopController);
+router.patch(
+  "/s/u/update",
+  isAuthenticatedUser,
+  authorizeRoles("business"),
+  getShopByIdUpdateController
+);
 export default router;

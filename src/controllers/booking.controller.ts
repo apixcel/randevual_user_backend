@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
+import mongoose from "mongoose";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import bookingModel from "../models/booking.model";
+const { ObjectId } = mongoose.Types;
 
 export const createBookingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -30,14 +32,21 @@ export const createBookingController = catchAsyncErrors(
 
 export const getAllBookingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
+    const shop_id = req.params.id;
+
     try {
-      const booking = await bookingModel.find();
+      const booking = await bookingModel
+        .find({ shop_id })
+        .populate("shop_id")
+        .populate("user_id");
       return res.status(201).json({
         success: true,
         msg: "All Booking controller",
         booking,
       });
     } catch (error) {
+      console.log(error);
+
       res.status(500).json({
         success: false,
         msg: "Something went wrong",
@@ -62,7 +71,32 @@ export const getBookingByIdController = catchAsyncErrors(
 export const getBookingByShopIdController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const shop_id = req.params.id;
-    const data = await bookingModel.find({ shop_id });
+    const { date } = req.query;
+    let find: { [key: string]: any } = {
+      shop_id,
+    };
+
+    if (date) {
+      const startOfToday = new Date(date as string);
+      startOfToday.setUTCHours(0, 0, 0, 0);
+      const startOfTodayStr = startOfToday.toISOString();
+
+      // Get the start of tomorrow as a string
+      const startOfTomorrow = new Date(startOfToday);
+      startOfTomorrow.setUTCDate(startOfTomorrow.getUTCDate() + 1);
+      const startOfTomorrowStr = startOfTomorrow.toISOString();
+      find.date = { $gte: startOfTodayStr, $lt: startOfTomorrowStr };
+    }
+    // const data = await bookingModel.find(find).populate("user_id");
+    // const data = await bookingModel.aggregate([
+    //   {
+    //     $match: {
+    //       shop_id: new ObjectId(shop_id),
+    //     },
+    //   },
+    // ]);
+
+    const data = await bookingModel.find(find).populate("user_id");
     return res.status(201).json({
       success: true,
       msg: "Single shop bookings",

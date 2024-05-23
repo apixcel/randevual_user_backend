@@ -1,20 +1,15 @@
-import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
+import express, { Application, NextFunction, Request, Response } from "express";
 import http from "http";
-import errorMiddleware from "./middlewares/error";
 import morgan from "morgan";
-import connectDB from "./config/db";
-import routes from "./routes/v1";
 import path from "path";
+import connectDB from "./config/db";
+import errorMiddleware from "./middlewares/error";
+import routes from "./routes/v1";
 
 const app: Application = express();
-app.use(
-  cors({
-    origin: "*",
-  })
-);
+app.use(cors());
 app.use(morgan("dev"));
-
 // Connect to Database
 connectDB();
 

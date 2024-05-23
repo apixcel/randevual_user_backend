@@ -17,10 +17,12 @@ import support from "./support.route";
 import team from "./team.route";
 import user from "./user.route";
 import whiteLabel from "./white.label.route";
+import earning from "./earnning.route";
 
 router.use("/auth", auth);
 router.use("/users", user);
 router.use("/shop", shop);
+router.use("/earning", earning);
 router.use("/payment", payment);
 router.use("/booking", booking);
 router.use("/service", service);

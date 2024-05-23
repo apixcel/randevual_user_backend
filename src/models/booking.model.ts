@@ -40,7 +40,7 @@ const bookingScheama = new mongoose.Schema(
     team: {
       type: Schema.Types.ObjectId,
       ref: "team",
-      default: "any"
+      default: "any",
     },
     phone: {
       type: String,
@@ -66,12 +66,14 @@ const bookingScheama = new mongoose.Schema(
       default: 0, // 0=incomming, 1=complete, 2=cancelled
     },
     shop_id: {
-      type: String,
-      required: true,
+      type: Schema.Types.ObjectId,
+      ref: "shop",
+      default: "any",
     },
     user_id: {
-      type: String,
-      required: true,
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      default: "any",
     },
   },
   {

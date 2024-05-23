@@ -3,6 +3,7 @@ import catchAsyncError from "../middlewares/catchAsyncErrors";
 import { validationResult } from "express-validator";
 import bookingModel from "../models/booking.model";
 import { startOfMonth, endOfMonth, format, eachMonthOfInterval, parse } from 'date-fns';
+import mongoose from "mongoose";
 
 
 export const getShopEarningController = catchAsyncError(
@@ -15,13 +16,13 @@ export const getShopEarningController = catchAsyncError(
       return res.status(422).json({
         errors: firstError,
       });
-    } else {
+    } else 
+    {
       const bookings = await bookingModel.find({
         shop_id: shopId,
         status: 1,
       });
 
-      
       let totalEarnings = 0;
 
       bookings.forEach((booking) => {
@@ -65,7 +66,7 @@ export const CreateShopEarningStatsController = catchAsyncError(
         const earnings = await bookingModel.aggregate([
           {
             $match: {
-              shop_id: shopId,
+              shop_id: new mongoose.Types.ObjectId(shopId),
               status: 1,
               createdAt: {
                 $gte: new Date(currentYear, 0, 1), 
