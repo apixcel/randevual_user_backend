@@ -19,8 +19,6 @@ export const createTeamController = catchAsyncErrors(
       const { ...teamData } = req.body;
       console.log("team", teamData);
 
-      const team = await teamModel.create(teamData);
-
       const shop = await shopModel.findOne({ business_id: userId });
 
       if (!shop) {
@@ -30,8 +28,12 @@ export const createTeamController = catchAsyncErrors(
         });
       }
 
-      shop.team.push(team._id);
-      await shop.save();
+      const team = await teamModel.create(teamData);
+
+      await shopModel.updateOne(
+        { business_id: userId },
+        { $push: { team: team?._id } }
+      );
 
       return res.status(201).json({
         success: true,
@@ -68,11 +70,7 @@ export const getAllTeamAShopController = catchAsyncErrors(
 export const updateTeamController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
-
-    console.log("id", id);
-    console.log("body", req.body);
     
-
     const updateService = await teamModel.findByIdAndUpdate(id, req.body, {
       new: true,
     });

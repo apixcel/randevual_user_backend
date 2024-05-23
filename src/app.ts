@@ -10,7 +10,7 @@ import routes from "./routes/v1";
 const app: Application = express();
 app.use(
   cors({
-    origin: "*",
+    origin: ["http://localhost:8081", "http://localhost:3000", "*"],
   })
 );
 app.use(morgan("dev"));
