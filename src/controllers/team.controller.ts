@@ -2,10 +2,13 @@ import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import teamModel from "../models/team.model";
+import shopModel from "../models/shop.model";
 
 export const createTeamController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
+    const userId = req.user?._id;
+    console.log("Id", userId);
 
     if (!errors.isEmpty()) {
       const firstError = errors.array().map((error) => error.msg)[0];
@@ -14,7 +17,24 @@ export const createTeamController = catchAsyncErrors(
       });
     } else {
       const { ...teamData } = req.body;
+      console.log("team", teamData);
+
+      const shop = await shopModel.findOne({ business_id: userId });
+
+      if (!shop) {
+        return res.status(404).json({
+          success: false,
+          msg: "Shop not found.",
+        });
+      }
+
       const team = await teamModel.create(teamData);
+
+      await shopModel.updateOne(
+        { business_id: userId },
+        { $push: { team: team?._id } }
+      );
+
       return res.status(201).json({
         success: true,
         msg: "Team has been created successfully.",
@@ -50,6 +70,7 @@ export const getAllTeamAShopController = catchAsyncErrors(
 export const updateTeamController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
+    
     const updateService = await teamModel.findByIdAndUpdate(id, req.body, {
       new: true,
     });
@@ -64,13 +85,36 @@ export const updateTeamController = catchAsyncErrors(
 
 export const deleteTeamController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
-    const id = req.params.id;
-    const deleteService = await teamModel.findByIdAndDelete(id);
+    const teamId = req.params.id;
+    const userId = req.user?._id;
+    console.log("TeamId", teamId);
+    console.log("userId", userId);
 
-    return res.status(201).json({
-      success: true,
-      msg: "Team deleted successfully",
-      deleteService,
-    });
+    if (userId) {
+      const deleteTeam = await teamModel.findByIdAndDelete(teamId);
+
+      if (!deleteTeam) {
+        return res.status(404).json({
+          success: false,
+          msg: "Team member not found.",
+        });
+      }
+
+      await shopModel.updateOne(
+        { team: teamId },
+        { $pull: { team: teamId }, new: true }
+      );
+
+      return res.status(201).json({
+        success: true,
+        msg: "Team deleted successfully",
+        deleteTeam,
+      });
+    } else {
+      return res.status(201).json({
+        success: false,
+        msg: "Team deleted Failed",
+      });
+    }
   }
 );

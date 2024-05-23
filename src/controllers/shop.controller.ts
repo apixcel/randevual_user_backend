@@ -31,10 +31,7 @@ export const createShopController = catchAsyncErrors(
 
 export const findShopByuserIdController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
-  
     const userId = req.user?._id;
-
-    
 
     const shop = await shopModel.findOne({ business_id: userId });
 
@@ -72,9 +69,35 @@ export const getShopByIdController = catchAsyncErrors(
 
 export const getShopByServiceController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
+
+    /*
+    address: '123 Main St',
+    location: {
+      type: 'Point',
+      coordinates: [-73.856077, 40.848447],
+    }
+    */ 
     try {
+      // const { lng, lat, maxDistance = 5000 } = req.query;
       const { data: subService } = req.query;
 
+      console.log("query", req.query);
+      
+
+/*
+{
+      location: {
+        $near: {
+          $geometry: {
+            type: 'Point',
+            coordinates: [parseFloat(lng), parseFloat(lat)],
+          },
+          $maxDistance: parseInt(maxDistance), // Convert to meters
+        },
+      },
+      categoryTitle: { $regex: new RegExp("^" + subService + "$", "i") },
+    }
+*/ 
       const shop = await shopModel
         .find({
           categoryTitle: { $regex: new RegExp("^" + subService + "$", "i") },
@@ -83,7 +106,6 @@ export const getShopByServiceController = catchAsyncErrors(
         .populate("team")
         .populate("services")
         .populate("reviews");
-
 
       return res.status(200).json({
         success: true,
@@ -144,15 +166,28 @@ export const getShopMoreINServiceController = async (
   }
 };
 
-export const getShopByIdUpdateController = catchAsyncErrors(
+export const updateShopByIdUpdateController = catchAsyncErrors(
   async (req: any, res: Response, next: NextFunction) => {
     const id = req.user?._id;
+
+    console.log("id", id);
+    console.log("body", req.body);
+    
+
     const newUserData = req.body;
-    const shop = await shopModel.findByIdAndUpdate(id, newUserData, {
-      new: true,
-      runValidators: true,
-      useFindAndModify: false,
-    });
+    const shop = await shopModel.updateOne(
+      { business_id: id },
+      {
+        $set: {
+          ...newUserData,
+        },
+      },
+      {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+      }
+    );
 
     return res.status(200).json({
       success: true,
