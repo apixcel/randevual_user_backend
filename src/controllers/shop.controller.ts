@@ -32,6 +32,7 @@ export const createShopController = catchAsyncErrors(
 export const findShopByuserIdController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user?._id;
+    console.log(userId, "oy yoyoyoy");
 
     const shop = await shopModel.findOne({ business_id: userId });
 
@@ -69,22 +70,20 @@ export const getShopByIdController = catchAsyncErrors(
 
 export const getShopByServiceController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
-
     /*
     address: '123 Main St',
     location: {
       type: 'Point',
       coordinates: [-73.856077, 40.848447],
     }
-    */ 
+    */
     try {
       // const { lng, lat, maxDistance = 5000 } = req.query;
       const { data: subService } = req.query;
 
       console.log("query", req.query);
-      
 
-/*
+      /*
 {
       location: {
         $near: {
@@ -97,7 +96,7 @@ export const getShopByServiceController = catchAsyncErrors(
       },
       categoryTitle: { $regex: new RegExp("^" + subService + "$", "i") },
     }
-*/ 
+*/
       const shop = await shopModel
         .find({
           categoryTitle: { $regex: new RegExp("^" + subService + "$", "i") },
@@ -171,6 +170,8 @@ export const updateShopByIdUpdateController = catchAsyncErrors(
     const id = req.user?._id;
 
     const newUserData = req.body;
+    console.log(newUserData);
+
     const shop = await shopModel.updateOne(
       { business_id: id },
       {
