@@ -111,7 +111,7 @@ export const createWhiteLabelController = catchAsyncErrors(
                 ></span>
               </div>
               <p class="text-secondaryTxt relative">
-                Open until 8.00PM
+                Open until ${shop?.offHour}
                 <span
                   class="absolute w-1 h-1 bg-secondaryTxt rounded-full top-[45%] right-[-12px]"
                 ></span>
@@ -169,7 +169,7 @@ export const createWhiteLabelController = catchAsyncErrors(
               loop=""
               class="w-full h-full rounded"
             >
-              <source src="/assets/shop_video.mp4" type="video/mp4" />
+              <source src=${shop?.media?.gallery?.e2} />
             </video>
           </div>
           <div class="aspect-video">
@@ -181,7 +181,7 @@ export const createWhiteLabelController = catchAsyncErrors(
               decoding="async"
               data-nimg="1"
               class="w-full h-full object-cover"
-              src="/assets/facial.jpg"
+              src=${shop?.media?.gallery?.f1}
               style="color: transparent"
             />
           </div>
@@ -194,7 +194,7 @@ export const createWhiteLabelController = catchAsyncErrors(
               decoding="async"
               data-nimg="1"
               class="w-full h-full object-cover"
-              src="/assets/hairmaker.jpeg"
+              src=${shop?.media?.gallery?.f2}
               style="color: transparent"
             />
           </div>
@@ -215,7 +215,9 @@ export const createWhiteLabelController = catchAsyncErrors(
                   class="rounded-[28px] border-2 customTransition text-[13px] md:text-[15px] px-[20px] py-[8px] text-nowrap whitespace-no-wrap bg-violet-600 text-white border-violet-600"
                 >
                   Beauty Salon</button
-                ><button
+                >
+                
+                <button
                   class="rounded-[28px] border-2 customTransition text-[13px] md:text-[15px] px-[20px] py-[8px] text-nowrap whitespace-no-wrap border-borderColor hover:border-primary"
                 >
                   Facial</button
@@ -513,15 +515,7 @@ export const createWhiteLabelController = catchAsyncErrors(
                 About
               </h4>
               <p class="text-[14px] font-normal text-justify mt-[10px]">
-                Bellini is a multi-award winning Nail &amp; Beauty Salon in
-                Glasgow. Offering Lash Treatments, Brows Enhancements, Waxing,
-                Nails and Nail Art, Massages and Reflexology. Shortlisted as the
-                top 5 Finalists for Nail Salon of the Year by Scratch Stars
-                Awards in 2019/20/21, Highly Recommended 2019 by The Scottish
-                Hair &amp; Beauty Awards - Bellini Nails thrives to be the best
-                in the area. Also, indulge in our at home range and treat your
-                skin to some Bellini bliss everyday as we offer a whole range of
-                products from cuticle oil to body butter and even cleanser.
+                ${shop?.about}
               </p>
               <iframe
                 title="Google Map"
@@ -557,7 +551,7 @@ export const createWhiteLabelController = catchAsyncErrors(
                 </li>
                 <li class="flex justify-between py-1">
                   <span class="text-gray-700">Saturday</span
-                  ><span class="text-gray-700">10:00 AM - 4:00 PM</span>
+                  ><span class="text-gray-700">9:00 AM - 6:00 PM</span>
                 </li>
                 <li class="flex justify-between py-1">
                   <span class="text-gray-700">Sunday</span
@@ -617,7 +611,7 @@ export const createWhiteLabelController = catchAsyncErrors(
               <h5 class="text-[20px] font-medium">Selected Service (0)</h5>
               <ul class="list-disc ml-[20px]"></ul>
             </div>
-            <a href="/booking?step=1"
+            <a href="/"
               ><button
                 class="w-full bg-primary hover:bg-primary_dark rounded-[12px] py-[8px] text-white mt-[20px]"
               >

@@ -52,15 +52,21 @@ export const updateSingleUser = catchAsyncErrors(
       );
     }
 
+    console.log("update data", newUserData);
+
+
     const updateUserData = await User.findByIdAndUpdate(
       id,
-      newUserData,
+      {$set: newUserData},
       {
         new: true,
         runValidators: true,
         useFindAndModify: false,
       }
     );
+
+    console.log("update", updateUserData);
+    
 
     res.status(200).json({
       success: true,
