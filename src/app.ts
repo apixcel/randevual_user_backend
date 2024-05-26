@@ -8,9 +8,11 @@ import errorMiddleware from "./middlewares/error";
 import routes from "./routes/v1";
 
 const app: Application = express();
+
+// Apply CORS middleware
 app.use(
   cors({
-    origin: ["http://localhost:8081", "http://localhost:3000", "*"],
+    origin: "*",
   })
 );
 app.use(morgan("dev"));
