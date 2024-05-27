@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
+import connectedAccountModel from "../models/connectedAccount.model";
 import paymentModel from "../models/payment.model";
+import userModel from "../models/user.model";
 const stripe = require("stripe")(process.env.STRIPE_S_K);
 
 export const createPaymentController = catchAsyncErrors(
@@ -62,12 +64,21 @@ export const createPaymentController = catchAsyncErrors(
 export const confirmPaymentController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-    
       const paymentIntentId = req.body.paymentIntentId;
+      const customer = await paymentModel.findOne({ userId: req.body.userId });
+      if (!customer) {
+        return res.json({
+          message: "no customer foundd",
+          succsess: false,
+          data: null,
+        });
+      }
+      console.log(customer.paymentIntentId, "hello intent");
 
       const paymentIntent = await stripe.paymentIntents.confirm(
-        paymentIntentId
+        customer.paymentIntentId
       );
+      console.log(paymentIntent);
 
       return res.status(400).json({
         success: false,
@@ -82,3 +93,63 @@ export const confirmPaymentController = catchAsyncErrors(
     }
   }
 );
+
+export const createConectedAccount = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { body } = req;
+    if (!body) {
+      return;
+    }
+
+    const user = await userModel.findOne({ email: body.email });
+    if (!user) {
+      return res.status(400).json({
+        message: "user not found",
+        success: false,
+        data: null,
+      });
+    }
+    const isExistAccount = await connectedAccountModel.findOne({
+      email: user.email,
+    });
+
+    if (isExistAccount) {
+      return res.status(400).json({
+        message: "user already have account",
+        success: false,
+        data: { duplicate: true },
+      });
+    }
+
+    const account = await stripe.accounts.create({
+      type: "custom",
+      country: "US",
+      email: user.email,
+      capabilities: {
+        card_payments: { requested: true },
+        transfers: { requested: true },
+      },
+    });
+
+    const accountObj = {
+      userId: user._id,
+      email: user.email,
+      accountId: account.id,
+    };
+
+    await connectedAccountModel.create(accountObj);
+    res.send({
+      message: "unable to create account",
+      success: true,
+      data: null,
+    });
+  }
+);
+
+/*
+todo
+* create an account in stripe
+* 
+* 
+* 
+*/
