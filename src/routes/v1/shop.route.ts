@@ -2,6 +2,7 @@ import express from "express";
 import {
   createShopController,
   findShopByuserIdController,
+  getFilteredShopsController,
   getShopByIdController,
   getShopByServiceController,
   getShopMoreController,
@@ -34,4 +35,12 @@ router.patch(
   // authorizeRoles("business"),
   updateShopByIdUpdateController
 );
+router.get(
+  "/s/u/get/filter",
+  getFilteredShopsController
+);
+
+
+
+
 export default router;

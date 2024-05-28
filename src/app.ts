@@ -10,9 +10,14 @@ import routes from "./routes/v1";
 const app: Application = express();
 app.use(
   cors({
-    origin: ["http://localhost:8081", "http://localhost:3000", "*"],
+    origin: "*"
   })
 );
+// app.use(
+//   cors({
+//     origin: ["http://localhost:8081", "http://localhost:3000", "*"],
+//   })
+// );
 app.use(morgan("dev"));
 // Connect to Database
 connectDB();

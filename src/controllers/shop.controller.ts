@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import shopModel from "../models/shop.model";
+import { SortOrder } from "mongoose";
 
 export const createShopController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -191,5 +192,85 @@ export const updateShopByIdUpdateController = catchAsyncErrors(
       msg: "Shop has been updated successfully.",
       shop,
     });
+  }
+);
+
+// for app only filter
+export const getFilteredShopsController = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { sortBy, maxPrice, latitude, longitude } = req.query;
+
+    console.log("aaaa", req.query);
+
+    const parsedMaxPrice = maxPrice ? Number(maxPrice) : null;
+    const parsedLatitude = latitude ? Number(latitude) : null;
+    const parsedLongitude = longitude ? Number(longitude) : null;
+
+    // ========= sorting =========
+    let sortCriteria: { [key: string]: SortOrder } = {};
+    
+    if (sortBy === "top-rated") {
+      sortCriteria = { ratings: -1 };
+    } else if (sortBy === "newest") {
+      sortCriteria = { ratings: 1 };
+    }
+
+   
+
+    try {
+      const queryConditions: any = {
+        $or: [
+          { shopName: { $ne: "" } },
+          { about: { $ne: "" } },
+          { username: { $ne: "" } },
+          { paymentMethod: { $ne: "" } },
+          { location: { $ne: "" } },
+        ],
+      };
+
+      if (parsedMaxPrice !== null && !isNaN(parsedMaxPrice)) {
+        queryConditions["services[option].cost"] = { $lte: parsedMaxPrice };
+      }
+
+      if (parsedLatitude !== null && parsedLongitude !== null) {
+        if(parsedLatitude !== 0 && parsedLongitude !== 0) {
+
+          queryConditions.location = {
+            $near: {
+              $geometry: {
+              type: "Point",
+              coordinates: [parsedLongitude, parsedLatitude],
+            },
+            $maxDistance: 10000,
+          },
+        };
+      }
+      }
+
+      const shops = await shopModel
+        .find(queryConditions)
+        .populate("categories")
+        .populate("team")
+        .populate("services")
+        .populate("reviews")
+        .populate({
+          path: "reviews",
+          populate: {
+            path: "user",
+          },
+        })
+        .sort(sortCriteria)
+        .limit(10);
+
+      return res.status(200).json({
+        success: true,
+        msg: "Shops retrieved successfully.",
+        shops,
+      });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ success: false, error: "Internal server error" });
+    }
   }
 );

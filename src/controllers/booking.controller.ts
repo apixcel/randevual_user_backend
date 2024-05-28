@@ -9,6 +9,9 @@ export const createBookingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
 
+    console.log("booking", req.body);
+    
+
     if (!errors.isEmpty()) {
       const firstError = errors.array().map((error) => error.msg)[0];
       return res.status(422).json({
