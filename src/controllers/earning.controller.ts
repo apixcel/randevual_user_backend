@@ -1,27 +1,30 @@
+import { eachMonthOfInterval, format } from "date-fns";
 import { NextFunction, Request, Response } from "express";
-import catchAsyncError from "../middlewares/catchAsyncErrors";
 import { validationResult } from "express-validator";
-import bookingModel from "../models/booking.model";
-import { startOfMonth, endOfMonth, format, eachMonthOfInterval, parse } from 'date-fns';
 import mongoose from "mongoose";
-
+import catchAsyncError from "../middlewares/catchAsyncErrors";
+import bookingModel from "../models/booking.model";
 
 export const getShopEarningController = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     const shopId = req.params.id;
-
+    const { payment } = req.query;
     if (!errors.isEmpty()) {
       const firstError = errors.array().map((error) => error.msg)[0];
       return res.status(422).json({
         errors: firstError,
       });
-    } else 
-    {
-      const bookings = await bookingModel.find({
+    } else {
+      let find: { [key: string]: any } = {
         shop_id: shopId,
         status: 1,
-      });
+      };
+      if (payment) {
+        find.payment = payment;
+      }
+
+      const bookings = await bookingModel.find(find);
 
       let totalEarnings = 0;
 
@@ -38,8 +41,6 @@ export const getShopEarningController = catchAsyncError(
   }
 );
 
-
-
 export const CreateShopEarningStatsController = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
@@ -54,12 +55,12 @@ export const CreateShopEarningStatsController = catchAsyncError(
       try {
         const currentYear = new Date().getFullYear();
         const monthsArray = eachMonthOfInterval({
-          start: new Date(currentYear, 0), 
+          start: new Date(currentYear, 0),
           end: new Date(currentYear, 11),
         });
 
         const earningsData = monthsArray.map((month) => ({
-          month: format(month, 'MMMM'),
+          month: format(month, "MMMM"),
           totalEarnings: 0,
         }));
 
@@ -69,7 +70,7 @@ export const CreateShopEarningStatsController = catchAsyncError(
               shop_id: new mongoose.Types.ObjectId(shopId),
               status: 1,
               createdAt: {
-                $gte: new Date(currentYear, 0, 1), 
+                $gte: new Date(currentYear, 0, 1),
                 $lt: new Date(currentYear + 1, 0, 1),
               },
             },
@@ -84,7 +85,9 @@ export const CreateShopEarningStatsController = catchAsyncError(
 
         earnings.forEach((earning) => {
           const monthIndex = earningsData.findIndex(
-            (data) => data.month.toLowerCase() === format(new Date(earning._id), 'MMMM').toLowerCase() 
+            (data) =>
+              data.month.toLowerCase() ===
+              format(new Date(earning._id), "MMMM").toLowerCase()
           );
           if (monthIndex !== -1) {
             earningsData[monthIndex].totalEarnings = earning.totalEarnings;

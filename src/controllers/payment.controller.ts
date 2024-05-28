@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
+import bookingModel from "../models/booking.model";
+import cashBillingModel from "../models/cashBilling.model";
 import connectedAccountModel from "../models/connectedAccount.model";
 import paymentModel from "../models/payment.model";
 import userModel from "../models/user.model";
@@ -91,6 +93,38 @@ export const confirmPaymentController = catchAsyncErrors(
         error: "Internal server error",
       });
     }
+  }
+);
+
+export const confirmCashPaymentController = catchAsyncErrors(
+  async (req, res, next) => {
+    const { body } = req;
+    const booking = await bookingModel.findOne({ _id: body.bookingId });
+    if (!booking) {
+      return res.send({
+        success: false,
+        message: "Booking not found",
+        data: null,
+      });
+    }
+
+    if (booking.payment !== "cash") {
+      return res.status(400).json({
+        success: false,
+        message: "Booking is not in cash",
+        data: null,
+      });
+    }
+
+    // create cash payment
+    const result = await cashBillingModel.create(body);
+    // update booking status
+    await bookingModel.findByIdAndUpdate(body.bookingId, { status: 1 });
+    res.status(200).json({
+      success: true,
+      message: "Payment confirm",
+      data: result,
+    });
   }
 );
 
