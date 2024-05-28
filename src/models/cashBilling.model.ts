@@ -16,8 +16,8 @@ const cashbillingScheama = new mongoose.Schema(
       ref: "booking",
     },
     payment: {
-      // dont need to send it from client
       required: false,
+      // dont need to send it from client
       type: String,
     },
   },

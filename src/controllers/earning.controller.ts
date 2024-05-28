@@ -20,6 +20,7 @@ export const getShopEarningController = catchAsyncError(
         shop_id: shopId,
         status: 1,
       };
+
       if (payment) {
         find.payment = payment;
       }

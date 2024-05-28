@@ -2,9 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import bookingModel from "../models/booking.model";
-import cashBillingModel from "../models/cashBilling.model";
 import connectedAccountModel from "../models/connectedAccount.model";
 import paymentModel from "../models/payment.model";
+import transactionModel from "../models/transaction.model";
 import userModel from "../models/user.model";
 const stripe = require("stripe")(process.env.STRIPE_S_K);
 
@@ -66,21 +66,56 @@ export const createPaymentController = catchAsyncErrors(
 export const confirmPaymentController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const paymentIntentId = req.body.paymentIntentId;
-      const customer = await paymentModel.findOne({ userId: req.body.userId });
+      const { body } = req;
+
+      const user = await userModel.findById(body.userId);
+
+      if (!user) {
+        return res.json({
+          sucsess: false,
+          message: "user not found",
+          data: null,
+        });
+      }
+
+      if (user.user_type !== "business") {
+        return res.json({
+          sucsess: false,
+          message: "not a business owner",
+          data: null,
+        });
+      }
+      const customer = await paymentModel.findOne({ userId: user._id });
       if (!customer) {
         return res.json({
-          message: "no customer foundd",
+          message: "no customer found",
           succsess: false,
           data: null,
         });
       }
-      console.log(customer.paymentIntentId, "hello intent");
 
+      console.log(customer, "hello payment");
       const paymentIntent = await stripe.paymentIntents.confirm(
         customer.paymentIntentId
       );
-      console.log(paymentIntent);
+
+      const account = await connectedAccountModel.findOne({ userId: user._id });
+      if (!account) {
+        return res.json({
+          success: false,
+          message: "No connected account found",
+          data: null,
+        });
+      }
+      const transfer = await stripe.transfers.create({
+        amount: paymentIntent.amount, // Amount to transfer
+        currency: paymentIntent.currency,
+        destination: account?.accountId,
+        transfergroup: `group${paymentIntent.id}`,
+        // transfergroup: `group${confirmedPaymentIntent.id}`,
+      });
+
+      await transactionModel.create({ ...body });
 
       return res.status(400).json({
         success: false,
@@ -117,7 +152,7 @@ export const confirmCashPaymentController = catchAsyncErrors(
     }
 
     // create cash payment
-    const result = await cashBillingModel.create(body);
+    const result = await transactionModel.create(body);
     // update booking status
     await bookingModel.findByIdAndUpdate(body.bookingId, { status: 1 });
     res.status(200).json({
