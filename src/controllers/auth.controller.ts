@@ -48,6 +48,8 @@ export const registerCustomerController = async (
   try {
     const { email, firstname, lastname, password, phone } = req.body;
     const errors = validationResult(req);
+    console.log("sss", req.body);
+    
     if (!errors.isEmpty()) {
       throw new ErrorHandler(errors.array()[0].msg, 422);
     }

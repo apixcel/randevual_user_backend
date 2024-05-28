@@ -100,6 +100,11 @@ export const getShopByServiceController = catchAsyncErrors(
 */
       const shop = await shopModel
         .find({
+          $or: [
+            { shopName: { $ne: "" } },
+            { about: { $ne: "" } },
+            { username: { $ne: "" } },
+          ],
           categoryTitle: { $regex: new RegExp("^" + subService + "$", "i") },
         })
         .populate("categories")
@@ -126,7 +131,13 @@ export const getShopMoreController = catchAsyncErrors(
     const skip = (Number(page) - 1) * Number(limit);
 
     const shop = await shopModel
-      .find()
+      .find({
+        $or: [
+          { shopName: { $ne: "" } },
+          { about: { $ne: "" } },
+          { username: { $ne: "" } },
+        ],
+      })
       .skip(Number(skip))
       .limit(Number(limit))
       .select("shopName media categoryTitle ratings numOfratings")
@@ -149,7 +160,13 @@ export const getShopMoreINServiceController = async (
     const { page = 1, limit = 10 } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
     const shops = await shopModel
-      .find()
+      .find({
+        $or: [
+          { shopName: { $ne: "" } },
+          { about: { $ne: "" } },
+          { username: { $ne: "" } },
+        ],
+      })
       .skip(skip)
       .limit(Number(limit))
       .select("shopName media categoryTitle")
@@ -200,26 +217,25 @@ export const getFilteredShopsController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const { sortBy, maxPrice, latitude, longitude } = req.query;
 
-    console.log("aaaa", req.query);
-
     const parsedMaxPrice = maxPrice ? Number(maxPrice) : null;
     const parsedLatitude = latitude ? Number(latitude) : null;
     const parsedLongitude = longitude ? Number(longitude) : null;
 
     // ========= sorting =========
     let sortCriteria: { [key: string]: SortOrder } = {};
-    
+
     if (sortBy === "top-rated") {
       sortCriteria = { ratings: -1 };
     } else if (sortBy === "newest") {
       sortCriteria = { ratings: 1 };
     }
-
-   
+    else {
+      sortCriteria = {};
+    }
 
     try {
       const queryConditions: any = {
-        $or: [
+        $and: [
           { shopName: { $ne: "" } },
           { about: { $ne: "" } },
           { username: { $ne: "" } },
@@ -229,22 +245,31 @@ export const getFilteredShopsController = catchAsyncErrors(
       };
 
       if (parsedMaxPrice !== null && !isNaN(parsedMaxPrice)) {
-        queryConditions["services[option].cost"] = { $lte: parsedMaxPrice };
+        queryConditions["services"] = {
+          $elemMatch: {
+            list: {
+              $elemMatch: {
+                option: {
+                  $elemMatch: { cost: { $lte: parsedMaxPrice } }
+                }
+              }
+            }
+          }
+        };
       }
 
       if (parsedLatitude !== null && parsedLongitude !== null) {
-        if(parsedLatitude !== 0 && parsedLongitude !== 0) {
-
+        if (parsedLatitude !== 0 && parsedLongitude !== 0) {
           queryConditions.location = {
             $near: {
               $geometry: {
-              type: "Point",
-              coordinates: [parsedLongitude, parsedLatitude],
+                type: "Point",
+                coordinates: [parsedLongitude, parsedLatitude],
+              },
+              $maxDistance: 10000,
             },
-            $maxDistance: 10000,
-          },
-        };
-      }
+          };
+        }
       }
 
       const shops = await shopModel
@@ -268,6 +293,8 @@ export const getFilteredShopsController = catchAsyncErrors(
         shops,
       });
     } catch (error) {
+      console.log(error);
+      
       return res
         .status(500)
         .json({ success: false, error: "Internal server error" });

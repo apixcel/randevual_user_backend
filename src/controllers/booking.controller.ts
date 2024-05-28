@@ -177,7 +177,8 @@ export const getUserBookingController = catchAsyncErrors(
       filter.status = 2;
     }
 
-    const data = await bookingModel.find(filter);
+    const data = await bookingModel.find(filter).populate("shop_id")
+    .populate("user_id");;
 
     return res.status(201).json({
       success: true,

@@ -14,7 +14,7 @@ import {
 const router = express.Router();
 
 router.post("/u/exist", checkEmailController);
-router.post("/register", registerCustomerController);
+// router.post("/register", registerCustomerController);
 
 // router.post("/login", signinController);
 router.post("/register", validateSign, registerCustomerController);
