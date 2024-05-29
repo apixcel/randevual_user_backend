@@ -3,6 +3,7 @@ import { validationResult } from "express-validator";
 import mongoose from "mongoose";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import bookingModel from "../models/booking.model";
+import paymentModel from "../models/payment.model";
 const { ObjectId } = mongoose.Types;
 
 export const createBookingController = catchAsyncErrors(
@@ -29,6 +30,7 @@ export const createBookingController = catchAsyncErrors(
           status,
           user_id,
           shop_id,
+          paymentIntentId,
         } = req.body;
 
         // if no team id
@@ -45,6 +47,7 @@ export const createBookingController = catchAsyncErrors(
             status,
             user_id,
             shop_id,
+            paymentIntentId,
           });
           return res.status(201).json({
             success: true,
@@ -66,7 +69,11 @@ export const createBookingController = catchAsyncErrors(
           status,
           user_id,
           shop_id,
+          paymentIntentId
         });
+
+        await paymentModel.updateOne({});
+
         return res.status(201).json({
           success: true,
           msg: "Booking has been created successfully.",
@@ -174,7 +181,7 @@ export const getUserBookingController = catchAsyncErrors(
       filter.status = 2;
     }
 
-    const data = await bookingModel.find(filter);
+    const data = await bookingModel.find(filter).populate("shop_id");
 
     return res.status(201).json({
       success: true,

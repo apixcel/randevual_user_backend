@@ -75,6 +75,7 @@ const bookingScheama = new mongoose.Schema(
       ref: "user",
       default: "any",
     },
+    paymentIntentId: { type: String, required: true, default: "" },
   },
   {
     timestamps: true,

@@ -7,7 +7,6 @@ export const getTransactionByPaymentMethod = catchAsyncError(
   async (req, res, next) => {
     // const userId = "664486de398ef34320e2f4f1";
     const userId = req.user?._id;
-    console.log(userId);
 
     const result = await transactionModel.aggregate([
       {
@@ -20,7 +19,7 @@ export const getTransactionByPaymentMethod = catchAsyncError(
 
     res.json({
       success: false,
-      message: "successfully get withdraw earning history",
+      message: "successfully get withdraw history",
       data: result,
     });
   }

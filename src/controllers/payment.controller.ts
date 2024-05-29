@@ -27,7 +27,6 @@ export const createPaymentController = catchAsyncErrors(
       const customer = await stripe.customers.create({
         email,
       });
-      console.log(typeof amount, "amntathaafa");
 
       const intent = await stripe.paymentIntents.create({
         customer: customer.id,
@@ -65,69 +64,64 @@ export const createPaymentController = catchAsyncErrors(
 
 export const confirmPaymentController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { body } = req;
+    const { userId, paymentIntentId } = req.body;
 
-      const user = await userModel.findById(body.userId);
+    const businessOwner = await userModel.findById(userId);
 
-      if (!user) {
-        return res.json({
-          sucsess: false,
-          message: "user not found",
-          data: null,
-        });
-      }
-
-      if (user.user_type !== "business") {
-        return res.json({
-          sucsess: false,
-          message: "not a business owner",
-          data: null,
-        });
-      }
-      const customer = await paymentModel.findOne({ userId: user._id });
-      if (!customer) {
-        return res.json({
-          message: "no customer found",
-          succsess: false,
-          data: null,
-        });
-      }
-
-      console.log(customer, "hello payment");
-      const paymentIntent = await stripe.paymentIntents.confirm(
-        customer.paymentIntentId
-      );
-
-      const account = await connectedAccountModel.findOne({ userId: user._id });
-      if (!account) {
-        return res.json({
-          success: false,
-          message: "No connected account found",
-          data: null,
-        });
-      }
-      const transfer = await stripe.transfers.create({
-        amount: paymentIntent.amount, // Amount to transfer
-        currency: paymentIntent.currency,
-        destination: account?.accountId,
-        transfergroup: `group${paymentIntent.id}`,
-        // transfergroup: `group${confirmedPaymentIntent.id}`,
-      });
-
-      await transactionModel.create({ ...body });
-
-      return res.status(400).json({
+    if (!businessOwner) {
+      return res.json({
         success: false,
-        error: "Payment confirmation failed",
-      });
-    } catch (error) {
-      console.error("Error confirming payment:", error);
-      return res.status(500).json({
-        success: false,
-        error: "Internal server error",
+        message: "user not found",
+        data: null,
       });
     }
+
+    if (businessOwner.user_type !== "business") {
+      return res.json({
+        success: false,
+        message: "not a business owner",
+        data: null,
+      });
+    }
+
+    const paymentIntent = await stripe.paymentIntents.confirm(paymentIntentId, {
+      return_url: "http://localhost:3000/",
+    });
+
+    const account = await connectedAccountModel.findOne({
+      userId: businessOwner._id,
+    });
+    if (!account) {
+      return res.json({
+        success: false,
+        message: "No connected account found",
+        data: null,
+      });
+    }
+
+    const accountDetails = await stripe.accounts.retrieve(account.accountId);
+    if (accountDetails.capabilities.transfers !== "active") {
+      return res.json({
+        success: false,
+        message: "Connected account does not have transfers capability enabled",
+        data: null,
+      });
+    }
+
+    const transfer = await stripe.transfers.create({
+      amount: paymentIntent.amount, // Amount to transfer
+      currency: paymentIntent.currency,
+      destination: account.accountId,
+      transfer_group: `group${paymentIntent.id}`,
+    });
+
+    await transactionModel.create({ ...req.body, payment: "credit_card" });
+
+    return res.status(200).json({
+      success: true,
+      transfer,
+      paymentIntent,
+    });
   }
 );
 
@@ -163,33 +157,39 @@ export const confirmCashPaymentController = catchAsyncErrors(
   }
 );
 
-export const createConectedAccount = catchAsyncErrors(
+export const createConnectedAccount = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const { body } = req;
     if (!body) {
-      return;
+      return res.status(400).json({
+        message: "Request body is missing",
+        success: false,
+        data: null,
+      });
     }
 
     const user = await userModel.findOne({ email: body.email });
     if (!user) {
       return res.status(400).json({
-        message: "user not found",
+        message: "User not found",
         success: false,
         data: null,
       });
     }
+
     const isExistAccount = await connectedAccountModel.findOne({
       email: user.email,
     });
 
     if (isExistAccount) {
       return res.status(400).json({
-        message: "user already have account",
+        message: "User already has an account",
         success: false,
         data: { duplicate: true },
       });
     }
 
+    // Create Stripe account with initial capabilities
     const account = await stripe.accounts.create({
       type: "custom",
       country: "US",
@@ -200,17 +200,40 @@ export const createConectedAccount = catchAsyncErrors(
       },
     });
 
+    // Update Stripe account with additional information
+    const updatedAccount = await stripe.accounts.update(account.id, {
+      business_type: "individual", // or 'company' based on the user's type
+      individual: {
+        first_name: "John",
+        last_name: "Doe",
+        dob: { day: 1, month: 1, year: 1980 },
+        ssn_last_4: "1234",
+        address: {
+          line1: "1234 Main St",
+          city: "San Francisco",
+          state: "CA",
+          postal_code: "94111",
+          country: "US",
+        },
+      },
+      tos_acceptance: {
+        date: Math.floor(Date.now() / 1000),
+        ip: req.ip,
+      },
+    });
+
+    // Save the account details in your database
     const accountObj = {
       userId: user._id,
       email: user.email,
-      accountId: account.id,
+      accountId: updatedAccount.id,
     };
 
     await connectedAccountModel.create(accountObj);
     res.send({
-      message: "unable to create account",
+      message: "Account created successfully",
       success: true,
-      data: null,
+      data: accountObj,
     });
   }
 );
