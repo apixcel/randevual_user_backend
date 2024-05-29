@@ -3,6 +3,7 @@ import { validationResult } from "express-validator";
 import mongoose from "mongoose";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import bookingModel from "../models/booking.model";
+import ErrorHandler from "../utils/errorhandler";
 const { ObjectId } = mongoose.Types;
 
 export const createBookingController = catchAsyncErrors(
@@ -197,6 +198,46 @@ export const deleteBookingByIdController = catchAsyncErrors(
       success: true,
       msg: "Booking deleted successfully",
       deleteBooking,
+    });
+  }
+);
+
+
+
+export const cancelSingleBooking = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    // const newBoookingData = req.body;
+    const id = req.user?._id
+    const shop_id = req.params.id
+
+    console.log("========== patch", shop_id);
+    
+
+    if (!id) {
+      return next(
+        new ErrorHandler(`User does not exist`, 400)
+      );
+    }
+
+    // console.log("update data", newBoookingData);
+
+
+    const updateBooking = await bookingModel.findByIdAndUpdate(
+      shop_id,
+      {status: 2},
+      {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+      }
+    );
+
+    console.log("update", updateBooking);
+    
+
+    res.status(200).json({
+      success: true,
+      updateBooking,
     });
   }
 );
