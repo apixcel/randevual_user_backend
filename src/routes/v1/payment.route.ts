@@ -13,7 +13,7 @@ import catchAsyncError from "../../middlewares/catchAsyncErrors";
 const router = express.Router();
 
 router.post("/create", validatePayment, createPaymentController);
-router.post("/create/conected", createConnectedAccount);
+router.post("/create/connected", createConnectedAccount);
 // confirm card payment
 router.post("/confirm/card", confirmPaymentController);
 // confirm cash payments
