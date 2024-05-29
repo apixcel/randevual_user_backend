@@ -158,7 +158,7 @@ export const confirmCashPaymentController = catchAsyncErrors(
 );
 
 export const createConnectedAccount = catchAsyncErrors(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req, res, next) => {
     const { body } = req;
     if (!body) {
       return res.status(400).json({
