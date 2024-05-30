@@ -69,7 +69,7 @@ export const createBookingController = catchAsyncErrors(
           status,
           user_id,
           shop_id,
-          paymentIntentId
+          paymentIntentId,
         });
 
         await paymentModel.updateOne({});
@@ -152,7 +152,10 @@ export const getBookingByShopIdController = catchAsyncErrors(
     //   },
     // ]);
 
-    const data = await bookingModel.find(find).populate("user_id");
+    const data = await bookingModel
+      .find(find)
+      .populate("user_id")
+      .populate("shop_id");
     return res.status(201).json({
       success: true,
       msg: "Single shop bookings",
