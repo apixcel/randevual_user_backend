@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const transactionScheama = new mongoose.Schema(
+const cashbillingScheama = new mongoose.Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
@@ -16,9 +16,9 @@ const transactionScheama = new mongoose.Schema(
       ref: "booking",
     },
     payment: {
-      required: true,
+      required: false,
+      // dont need to send it from client
       type: String,
-      enum: ["credit_card", "cash"],
     },
   },
   {
@@ -27,4 +27,10 @@ const transactionScheama = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("transaction", transactionScheama);
+cashbillingScheama.pre("save", function (next) {
+  const doc = this;
+  doc.payment = "cash";
+  next();
+});
+
+export default mongoose.model("cashBilling", cashbillingScheama);

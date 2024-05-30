@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import bookingModel from "../models/booking.model";
 import ErrorHandler from "../utils/errorhandler";
+import paymentModel from "../models/payment.model";
 const { ObjectId } = mongoose.Types;
 
 export const createBookingController = catchAsyncErrors(
@@ -33,6 +34,7 @@ export const createBookingController = catchAsyncErrors(
           status,
           user_id,
           shop_id,
+          paymentIntentId,
         } = req.body;
 
         // if no team id
@@ -49,6 +51,7 @@ export const createBookingController = catchAsyncErrors(
             status,
             user_id,
             shop_id,
+            paymentIntentId,
           });
           return res.status(201).json({
             success: true,
@@ -70,7 +73,11 @@ export const createBookingController = catchAsyncErrors(
           status,
           user_id,
           shop_id,
+          paymentIntentId,
         });
+
+        await paymentModel.updateOne({});
+
         return res.status(201).json({
           success: true,
           msg: "Booking has been created successfully.",
@@ -149,7 +156,10 @@ export const getBookingByShopIdController = catchAsyncErrors(
     //   },
     // ]);
 
-    const data = await bookingModel.find(find).populate("user_id");
+    const data = await bookingModel
+      .find(find)
+      .populate("user_id")
+      .populate("shop_id");
     return res.status(201).json({
       success: true,
       msg: "Single shop bookings",
@@ -180,6 +190,7 @@ export const getUserBookingController = catchAsyncErrors(
 
     const data = await bookingModel.find(filter).populate("shop_id")
     .populate("user_id");;
+    // const data = await bookingModel.find(filter).populate("shop_id");
 
     return res.status(201).json({
       success: true,
