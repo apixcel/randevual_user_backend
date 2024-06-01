@@ -4,6 +4,7 @@ import { validationResult } from "express-validator";
 import mongoose from "mongoose";
 import catchAsyncError from "../middlewares/catchAsyncErrors";
 import bookingModel from "../models/booking.model";
+import shopModel from "../models/shop.model";
 
 export const getShopEarningController = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -109,3 +110,72 @@ export const CreateShopEarningStatsController = catchAsyncError(
     }
   }
 );
+
+export const getLastWeekState = catchAsyncError(async (req, res, next) => {
+  const user = req.user;
+  console.log(user, "user");
+
+  if (!user) {
+    return res.json({
+      success: false,
+      message: "no user found",
+      data: null,
+    });
+  }
+
+  if (!user || user.user_type !== "business") {
+    return res.status(403).json({
+      success: false,
+      message: "forbiden access",
+      data: null,
+    });
+  }
+
+  // find users shop
+  const shop = await shopModel.findOne({ business_id: user._id });
+  if (!shop) {
+    return res.status(401).json({
+      success: false,
+      message: "no shop found",
+      data: null,
+    });
+  }
+
+  const now = new Date();
+  const lastWeek = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() - 7
+  );
+
+  const result = await bookingModel.aggregate([
+    // stage 1 : matcj
+    {
+      $match: {
+        createdAt: {
+          $gte: lastWeek,
+          $lt: now,
+        },
+        shop_id: shop._id,
+      },
+    },
+
+    // stage2: count amount
+    {
+      $group: {
+        _id: {
+          year: { $year: "$createdAt" },
+          month: { $month: "$createdAt" },
+          day: { $dayOfMonth: "$createdAt" },
+        },
+        total: { $sum: "$total" },
+      },
+    },
+  ]);
+
+  res.json({
+    success: true,
+    message: "Successfully get earing data for last 1 week",
+    data: result,
+  });
+});
