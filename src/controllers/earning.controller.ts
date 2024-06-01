@@ -149,7 +149,7 @@ export const getLastWeekState = catchAsyncError(async (req, res, next) => {
   );
 
   const result = await bookingModel.aggregate([
-    // stage 1 : matcj
+    // stage 1 : match
     {
       $match: {
         createdAt: {
@@ -157,10 +157,11 @@ export const getLastWeekState = catchAsyncError(async (req, res, next) => {
           $lt: now,
         },
         shop_id: shop._id,
+        status: 1,
       },
     },
 
-    // stage2: count amount
+    // stage2: group based on the day and count total amount
     {
       $group: {
         _id: {
