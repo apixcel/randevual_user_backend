@@ -161,6 +161,8 @@ export const confirmCashPaymentController = catchAsyncErrors(
 export const createConnectedAccount = catchAsyncErrors(
   async (req, res, next) => {
     const { body } = req;
+    console.log(body);
+
     if (!body) {
       return res.status(400).json({
         message: "Request body is missing",
@@ -169,72 +171,83 @@ export const createConnectedAccount = catchAsyncErrors(
       });
     }
 
-    const user = await userModel.findOne({ email: body.email });
-    if (!user) {
-      return res.status(400).json({
-        message: "User not found",
-        success: false,
-        data: null,
-      });
-    }
+    // const user = await userModel.findOne({ email: body.email });
+    // if (!user) {
+    //   return res.status(400).json({
+    //     message: "User not found",
+    //     success: false,
+    //     data: null,
+    //   });
+    // }
 
-    const isExistAccount = await connectedAccountModel.findOne({
-      email: user.email,
-    });
+    // const isExistAccount = await connectedAccountModel.findOne({
+    //   email: user.email,
+    // });
 
-    if (isExistAccount) {
-      return res.status(400).json({
-        message: "User already has an account",
-        success: false,
-        data: { duplicate: true },
-      });
-    }
+    // if (isExistAccount) {
+    //   return res.status(400).json({
+    //     message: "User already has an account",
+    //     success: false,
+    //     data: { duplicate: true },
+    //   });
+    // }
 
     // Create Stripe account with initial capabilities
     const account = await stripe.accounts.create({
       type: "custom",
       country: "US",
-      email: user.email,
+      email: "new50@gmail.com",
       capabilities: {
         card_payments: { requested: true },
         transfers: { requested: true },
       },
     });
 
-    // Update Stripe account with additional information
-    const updatedAccount = await stripe.accounts.update(account.id, {
-      business_type: "individual", // or 'company' based on the user's type
-      individual: {
-        first_name: "John",
-        last_name: "Doe",
-        dob: { day: 1, month: 1, year: 1980 },
-        ssn_last_4: "1234",
-        address: {
-          line1: "1234 Main St",
-          city: "San Francisco",
-          state: "CA",
-          postal_code: "94111",
-          country: "US",
-        },
-      },
-      tos_acceptance: {
-        date: Math.floor(Date.now() / 1000),
-        ip: req.ip,
-      },
+    const loginLink = await stripe.accounts.createLoginLink(account.id);
+    console.log(loginLink, "this");
+
+    const accountLink = await stripe.accountLinks.create({
+      account: account?.id,
+      refresh_url: "https://example.com/reauth",
+      return_url: "https://example.com/return",
+      type: "account_onboarding",
     });
+    console.log(accountLink);
 
-    // Save the account details in your database
-    const accountObj = {
-      userId: user._id,
-      email: user.email,
-      accountId: updatedAccount.id,
-    };
+    // // Update Stripe account with additional information
+    // const updatedAccount = await stripe.accounts.update(account.id, {
+    //   business_type: "individual", // or 'company' based on the user's type
+    //   individual: {
+    //     first_name: "John",
+    //     last_name: "Doe",
+    //     dob: { day: 1, month: 1, year: 1980 },
+    //     ssn_last_4: "1234",
+    //     address: {
+    //       line1: "1234 Main St",
+    //       city: "San Francisco",
+    //       state: "CA",
+    //       postal_code: "94111",
+    //       country: "US",
+    //     },
+    //   },
+    //   tos_acceptance: {
+    //     date: Math.floor(Date.now() / 1000),
+    //     ip: req.ip,
+    //   },
+    // });
 
-    await connectedAccountModel.create(accountObj);
-    res.send({
+    // // Save the account details in your database
+    // const accountObj = {
+    //   userId: user._id,
+    //   email: user.email,
+    //   accountId: updatedAccount.id,
+    // };
+
+    // await connectedAccountModel.create(accountObj);
+    res.status(201).json({
       message: "Account created successfully",
       success: true,
-      data: accountObj,
+      data: loginLink,
     });
   }
 );
