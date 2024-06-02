@@ -2,11 +2,6 @@ import mongoose, { Schema } from "mongoose";
 
 const transactionScheama = new mongoose.Schema(
   {
-    userId: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: "user",
-    },
     amount: {
       type: Number,
       required: true,
@@ -14,6 +9,10 @@ const transactionScheama = new mongoose.Schema(
     bookingId: {
       type: Schema.Types.ObjectId,
       ref: "booking",
+    },
+    shopId: {
+      type: Schema.Types.ObjectId,
+      ref: "shop",
     },
     payment: {
       required: true,

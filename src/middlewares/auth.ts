@@ -10,7 +10,6 @@ export const isAuthenticatedUser = async (
 ) => {
   try {
     const getToken = req.header("Authorization");
-    console.log("auth token", getToken);
 
     if (!getToken)
       return res.status(400).json({ msg: "Invalid Authentication." });
