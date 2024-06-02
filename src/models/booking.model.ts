@@ -75,13 +75,18 @@ const bookingScheama = new mongoose.Schema(
       ref: "user",
       default: "any",
     },
-    paymentIntentId: { type: String, required: true, default: "" },
+    // paymentIntentId: { type: String, required: true, default: "" },
   },
   {
     timestamps: true,
     versionKey: false,
   }
 );
+bookingScheama.pre("save", function (next) {
+  this.payment = "cash";
+  console.log("pre vai");
+  next();
+});
 
 export default mongoose.model("booking", bookingScheama);
 
