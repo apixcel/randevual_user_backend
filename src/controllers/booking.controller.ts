@@ -2,8 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import bookingModel from "../models/booking.model";
+import userModel from "../models/user.model";
 import ErrorHandler from "../utils/errorhandler";
-
 
 export const createBookingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -82,8 +82,39 @@ export const createBookingController = catchAsyncErrors(
 export const getAllBookingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const shop_id = req.params.id;
+    const { query } = req.query;
 
     try {
+      let user;
+      if (query) {
+        user = await userModel.find({
+          $or: [
+            { firstname: { $regex: query || "", $options: "i" } },
+            { lastname: { $regex: query || "", $options: "i" } },
+            { email: query },
+          ],
+        });
+
+        if (!user) {
+          return res.send({
+            success: false,
+            data: [],
+            message: "no user found",
+          });
+        }
+        const userIds = user.map((u) => u._id);
+        const booking = await bookingModel
+          .find({ shop_id, user_id: { $in: userIds } })
+          .populate("shop_id")
+          .populate("user_id");
+
+        return res.status(201).json({
+          success: true,
+          msg: "All Booking controller",
+          booking,
+        });
+      }
+
       const booking = await bookingModel
         .find({ shop_id })
         .populate("shop_id")
@@ -177,8 +208,10 @@ export const getUserBookingController = catchAsyncErrors(
       filter.status = 2;
     }
 
-    const data = await bookingModel.find(filter).populate("shop_id")
-    .populate("user_id");;
+    const data = await bookingModel
+      .find(filter)
+      .populate("shop_id")
+      .populate("user_id");
     // const data = await bookingModel.find(filter).populate("shop_id");
 
     return res.status(201).json({
@@ -202,29 +235,23 @@ export const deleteBookingByIdController = catchAsyncErrors(
   }
 );
 
-
-
 export const cancelSingleBooking = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     // const newBoookingData = req.body;
-    const id = req.user?._id
-    const shop_id = req.params.id
+    const id = req.user?._id;
+    const shop_id = req.params.id;
 
     console.log("========== patch", shop_id);
-    
 
     if (!id) {
-      return next(
-        new ErrorHandler(`User does not exist`, 400)
-      );
+      return next(new ErrorHandler(`User does not exist`, 400));
     }
 
     // console.log("update data", newBoookingData);
 
-
     const updateBooking = await bookingModel.findByIdAndUpdate(
       shop_id,
-      {status: 2},
+      { status: 2 },
       {
         new: true,
         runValidators: true,
@@ -233,7 +260,6 @@ export const cancelSingleBooking = catchAsyncErrors(
     );
 
     console.log("update", updateBooking);
-    
 
     res.status(200).json({
       success: true,
