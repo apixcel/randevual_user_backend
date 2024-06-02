@@ -52,6 +52,10 @@ const userScheama = new mongoose.Schema(
       enum: ["regular", "business"],
       default: "regular",
     },
+    stripeCustomerId: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,

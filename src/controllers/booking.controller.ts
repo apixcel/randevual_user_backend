@@ -1,19 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
-import mongoose from "mongoose";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import bookingModel from "../models/booking.model";
 import ErrorHandler from "../utils/errorhandler";
-import paymentModel from "../models/payment.model";
-const { ObjectId } = mongoose.Types;
+
 
 export const createBookingController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
-
-    console.log("booking", req.body);
-    
-
     if (!errors.isEmpty()) {
       const firstError = errors.array().map((error) => error.msg)[0];
       return res.status(422).json({
@@ -34,7 +28,6 @@ export const createBookingController = catchAsyncErrors(
           status,
           user_id,
           shop_id,
-          paymentIntentId,
         } = req.body;
 
         // if no team id
@@ -51,7 +44,6 @@ export const createBookingController = catchAsyncErrors(
             status,
             user_id,
             shop_id,
-            paymentIntentId,
           });
           return res.status(201).json({
             success: true,
@@ -73,10 +65,7 @@ export const createBookingController = catchAsyncErrors(
           status,
           user_id,
           shop_id,
-          paymentIntentId,
         });
-
-        await paymentModel.updateOne({});
 
         return res.status(201).json({
           success: true,

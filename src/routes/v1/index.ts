@@ -2,7 +2,6 @@ import express from "express";
 const router = express.Router();
 
 import auth from "./auth.route";
-import billings from "./billing.route";
 import blog from "./blog.route";
 import booking from "./booking.route";
 import category from "./category.route";
@@ -18,7 +17,8 @@ import support from "./support.route";
 import team from "./team.route";
 import transaction from "./transaction.route";
 import user from "./user.route";
-import whiteLabel from "./white.label.route";
+import subscription from "./subscription.route";
+
 
 router.use("/auth", auth);
 router.use("/users", user);
@@ -32,10 +32,10 @@ router.use("/team", team);
 router.use("/review", userReview);
 router.use("/contact", contact);
 router.use("/support", support);
-router.use("/billings", billings);
 router.use("/file", uploadFile);
 router.use("/blog", blog);
-router.use("/whitelabel", whiteLabel);
 router.use("/subscribe", subscribe);
 router.use("/transaction", transaction);
+router.use("/subscription", subscription);
+
 export default router;
