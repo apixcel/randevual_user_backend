@@ -35,12 +35,6 @@ export const createPaymentController = catchAsyncErrors(
         currency: "usd",
         confirm: confirmNow,
       });
-
-      // // Attach the payment method to the customer
-      // await stripe.paymentMethods.attach(paymentMethodId, {
-      //   customer: customer.id,
-      // });
-
       const payment = await paymentModel.create({
         customerId: customer.id,
         userId,
@@ -85,10 +79,6 @@ export const confirmPaymentController = catchAsyncErrors(
       });
     }
 
-    const paymentIntent = await stripe.paymentIntents.confirm(paymentIntentId, {
-      return_url: "http://localhost:3000/",
-    });
-
     const account = await connectedAccountModel.findOne({
       userId: businessOwner._id,
     });
@@ -99,6 +89,10 @@ export const confirmPaymentController = catchAsyncErrors(
         data: null,
       });
     }
+
+    const paymentIntent = await stripe.paymentIntents.confirm(paymentIntentId, {
+      return_url: "http://localhost:3000/",
+    });
 
     const accountDetails = await stripe.accounts.retrieve(account.accountId);
     if (accountDetails.capabilities.transfers !== "active") {
@@ -238,11 +232,3 @@ export const createConnectedAccount = catchAsyncErrors(
     });
   }
 );
-
-/*
-todo
-* create an account in stripe
-* 
-* 
-* 
-*/
