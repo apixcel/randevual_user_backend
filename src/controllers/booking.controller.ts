@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
+import mongoose from "mongoose";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import bookingModel from "../models/booking.model";
 import userModel from "../models/user.model";
@@ -221,6 +222,28 @@ export const getUserBookingController = catchAsyncErrors(
     });
   }
 );
+
+// get shop booking state(all type booking count)
+export const getBookingCounter = catchAsyncErrors(async (req, res, next) => {
+  const { shopId } = req.params;
+  const result = await bookingModel.aggregate([
+    // stage-1
+    {
+      $match: { shop_id: new mongoose.Types.ObjectId(shopId) },
+    },
+
+    // groupe based on status
+    {
+      $group: { _id: "$status", total: { $sum: 1 } },
+    },
+  ]);
+
+  res.send({
+    success: true,
+    message: "Successfully get booking state count",
+    data: result,
+  });
+});
 
 export const deleteBookingByIdController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {

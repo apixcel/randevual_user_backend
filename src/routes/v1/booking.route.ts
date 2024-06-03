@@ -6,6 +6,7 @@ import {
   getAllBookingController,
   getBookingByIdController,
   getBookingByShopIdController,
+  getBookingCounter,
   getUserBookingController,
 } from "../../controllers/booking.controller";
 import { validateBooking } from "../../helpers/valid/validBooking";
@@ -18,7 +19,8 @@ router.get("/s/more/:id", getAllBookingController);
 router.get("/s/:id", getBookingByIdController);
 router.get("/s/shop/:id", getBookingByShopIdController);
 router.get("/u/bookings/:id", getUserBookingController);
+router.get("/s/stats/count/:shopId", getBookingCounter);
 router.delete("/b/delete/:id", deleteBookingByIdController);
-router.patch("/b/update/:id",isAuthenticatedUser, cancelSingleBooking);
+router.patch("/b/update/:id", isAuthenticatedUser, cancelSingleBooking);
 
 export default router;
