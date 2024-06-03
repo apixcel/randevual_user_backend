@@ -20,7 +20,11 @@ router.get("/s/:id", getBookingByIdController);
 router.get("/s/shop/:id", getBookingByShopIdController);
 router.get("/u/bookings/:id", getUserBookingController);
 router.get("/s/stats/count/:shopId", getBookingCounter);
-router.delete("/b/delete/:id", deleteBookingByIdController);
+router.delete(
+  "/b/delete/:id",
+  isAuthenticatedUser,
+  deleteBookingByIdController
+);
 router.patch("/b/update/:id", isAuthenticatedUser, cancelSingleBooking);
 
 export default router;

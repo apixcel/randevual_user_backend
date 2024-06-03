@@ -248,6 +248,26 @@ export const getBookingCounter = catchAsyncErrors(async (req, res, next) => {
 export const deleteBookingByIdController = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
+    const user = req.user;
+    if (!user) {
+      return;
+    }
+
+    const booking = await bookingModel.findById(id);
+    if (!booking) {
+      return res.status(400).json({
+        success: false,
+        message: "Booking not found",
+        data: null,
+      });
+    }
+    if (booking.user_id.toString() !== user._id) {
+      return res.status(401).json({
+        success: false,
+        message: "Forbiden access",
+        data: null,
+      });
+    }
     const deleteBooking = await bookingModel.findByIdAndDelete(id);
 
     return res.status(201).json({
