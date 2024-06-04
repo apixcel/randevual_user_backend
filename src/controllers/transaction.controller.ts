@@ -54,7 +54,9 @@ export const getAllTransaction = catchAsyncError(async (req, res) => {
     .find({ shopId: shop._id })
     .skip(skip)
     .limit(limitNumber);
-  const totalDocument = await transactionModel.countDocuments();
+  const totalDocument = await transactionModel.countDocuments({
+    shopId: shop._id,
+  });
 
   res.send({
     success: true,
