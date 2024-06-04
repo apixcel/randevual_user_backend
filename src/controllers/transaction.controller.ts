@@ -33,10 +33,10 @@ export const getTotalTransaction = catchAsyncError(async (req, res, next) => {
 });
 
 export const getAllTransaction = catchAsyncError(async (req, res) => {
-  const { page = 1, limit = 10 } = req.query;
+  const { page, limit = 10 } = req.query;
 
-  const pageNumber = parseInt(page as string, 10);
-  const limitNumber = parseInt(limit as string, 10);
+  const pageNumber = page ? parseInt(page as string, 10) : 0;
+  const limitNumber = limit ? parseInt(limit as string, 10) : 0;
   const skip = (pageNumber - 1) * limitNumber;
 
   const userId = req.user?._id;
@@ -50,17 +50,21 @@ export const getAllTransaction = catchAsyncError(async (req, res) => {
     });
   }
 
-  const result = await transactionModel
-    .find({ shopId: shop._id })
-    .skip(skip)
-    .limit(limitNumber);
+  let result = transactionModel.find({ shopId: shop._id });
+
+  if (pageNumber) {
+    result = result.skip(skip).limit(limitNumber);
+  }
+
+  const transactions = await result;
+
   const totalDocument = await transactionModel.countDocuments({
     shopId: shop._id,
   });
 
   res.send({
     success: true,
-    data: { result, totalDoc: totalDocument },
+    data: { result: transactions, totalDoc: totalDocument },
     message: "Successfully get transaction history",
   });
 });
