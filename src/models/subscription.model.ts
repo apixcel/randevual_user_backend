@@ -3,8 +3,9 @@ import mongoose, { Schema } from "mongoose";
 const subscriptionSchema = new Schema(
   {
     userId: {
-      type: String,
+      type: Schema.ObjectId,
       required: true,
+      ref: "user",
     },
     stripeSubscriptionId: {
       type: String,

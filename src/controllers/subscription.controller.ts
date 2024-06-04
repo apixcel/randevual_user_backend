@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-const stripe = require("stripe")(process.env.STRIPE_S_K);
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
+import pricingModel from "../models/pricing.model";
 import subscriptionModel from "../models/subscription.model";
 import userModel from "../models/user.model";
-import pricingModel from "../models/pricing.model";
+const stripe = require("stripe")(process.env.STRIPE_S_K);
 
 export const InitializeStripePlans = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -66,6 +66,27 @@ export const GetStripePricingPlans = catchAsyncErrors(
     } catch (error) {
       res.status(500).json({ error });
     }
+  }
+);
+
+export const getShopOwnerSubscription = catchAsyncErrors(
+  async (req, res, next) => {
+    const currUser = req.user;
+
+    const result = await subscriptionModel.findOne({ userId: currUser?._id });
+    if (!result) {
+      return res.send({
+        success: false,
+        message: "NO PLAN FOUND THIS USER",
+        data: null,
+      });
+    }
+
+    res.status(201).json({
+      success: true,
+      message: "successfully plan found for this  user",
+      data: result,
+    });
   }
 );
 
